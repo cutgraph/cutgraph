@@ -1,0 +1,64 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.Python
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# Node
+node_modules/
+.tsbuild/
+.vite-cache/
+*.tsbuildinfo
+coverage/
+
+# Environment and local credentials
+.env*
+!.env.example
+
+# Media and generated output
+data/
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+outputs/broll/
+outputs/encoded/
+outputs/reframed/
+outputs/final/
+outputs/audio/
+outputs/previews/
+outputs/preview/
+outputs/proxies/
+outputs/thumbs/
+outputs/overlays/
+outputs/jobs/
+
+# Models and caches
+*.pt
+*.bin
+*.safetensors
+*.gguf
+.cache/
+_scratch/
+
+# Logs and editor files
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/settings.json
+*.swp
+
+# Local scratch
+.worktrees/
+.jobs/
+.tmp/

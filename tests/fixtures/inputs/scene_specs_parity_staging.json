@@ -1,0 +1,441 @@
+{
+  "library": [
+    {
+      "workspaceId": "garden-space",
+      "asset": {
+        "id": "a1b2c3d4e5f60718",
+        "name": "Sample image",
+        "kind": "image",
+        "file": "a1b2c3d4e5f60718.png"
+      }
+    },
+    {
+      "workspaceId": "garden-space",
+      "asset": {
+        "id": "9999aaaa0000bbbb",
+        "name": "Sample video",
+        "kind": "video",
+        "file": "9999aaaa0000bbbb.mp4"
+      }
+    },
+    {
+      "workspaceId": "brand",
+      "asset": {
+        "id": "a1b2c3d4e5f60718",
+        "name": "Sample image",
+        "kind": "image",
+        "file": "a1b2c3d4e5f60718.jpeg"
+      }
+    },
+    {
+      "workspaceId": "brand",
+      "asset": {
+        "id": "0f1e2d3c4b5a6978",
+        "name": "Sample image",
+        "kind": "image",
+        "file": "0f1e2d3c4b5a6978.jpg"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "name": "three-screens",
+      "project": {
+        "schemaVersion": 3,
+        "name": "three-screens",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "three-screens",
+            "title": "three-screens",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "layout": "screen",
+              "screen": {
+                "asset": "0f1e2d3c4b5a6978",
+                "more": [
+                  "a1b2c3d4e5f60718",
+                  "ffffffffffffffff"
+                ]
+              },
+              "backdrop": "work",
+              "headline": "Seedlings"
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "unmarked-card",
+      "project": {
+        "schemaVersion": 3,
+        "name": "unmarked-card",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "unmarked-card",
+            "title": "unmarked-card",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "layout": "signoff",
+              "headline": "End of sample",
+              "backdrop": "black",
+              "eyebrow": ""
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "camera-push",
+      "project": {
+        "schemaVersion": 3,
+        "name": "camera-push",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "camera-push",
+            "title": "camera-push",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "diagram": "none",
+              "camera": "push-in",
+              "pose": "rest"
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "missing-image",
+      "project": {
+        "schemaVersion": 3,
+        "name": "missing-image",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "missing-image",
+            "title": "missing-image",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "layout": "screen",
+              "screen": {
+                "asset": "9999aaaa0000bbbb",
+                "more": [
+                  "0f1e2d3c4b5a6978"
+                ]
+              },
+              "backdrop": "work",
+              "headline": "Rainfall",
+              "cueWord": 18
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "badge-contrast",
+      "project": {
+        "schemaVersion": 3,
+        "name": "badge-contrast",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "badge-contrast",
+            "title": "badge-contrast",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "layout": "title",
+              "backdrop": "black",
+              "headline": "Tone reference",
+              "badges": [
+                {
+                  "text": "NOTES",
+                  "tone": "ink"
+                },
+                {
+                  "text": "INDEX",
+                  "tone": "paper"
+                }
+              ]
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "single-screen",
+      "project": {
+        "schemaVersion": 3,
+        "name": "single-screen",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "single-screen",
+            "title": "single-screen",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "layout": "screen",
+              "screen": {
+                "asset": "a1b2c3d4e5f60718"
+              },
+              "backdrop": "work",
+              "headline": "Flowers"
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "staged-footage",
+      "project": {
+        "schemaVersion": 3,
+        "name": "staged-footage",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "staged-footage",
+            "title": "staged-footage",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "layout": "title",
+              "badges": [
+                {
+                  "text": "HIDDEN",
+                  "tone": "accent"
+                }
+              ]
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "camera-pull",
+      "project": {
+        "schemaVersion": 3,
+        "name": "camera-pull",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "camera-pull",
+            "title": "camera-pull",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "diagram": "none",
+              "camera": "pull-out",
+              "pose": "point"
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    }
+  ]
+}

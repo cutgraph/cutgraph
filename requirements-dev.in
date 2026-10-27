@@ -1,0 +1,6 @@
+# Dev / CI dependencies: everything the gates need (core + co-pilot + tools).
+-r requirements-agent.in
+pytest==9.1.1
+ruff==0.16.4
+pyright==1.1.411
+pyyaml==6.0.3

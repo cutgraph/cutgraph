@@ -1,0 +1,55 @@
+/* Library tiles and cue controls below the player. */
+.v3 .story .drawer { padding: 16px; flex: 1 1 auto; min-height: 0; overflow: auto; }
+.v3 .story .drawer-head h3 { font-size: 14px; }
+.v3 .story .drawer-head p { margin: 2px 0 12px; font-size: 12px; }
+.v3 .story .drawer .pills { margin-bottom: 12px; }
+/* The shared pill hover colour outranks .on and blanks the active pill's label. */
+.v3 .story .drawer .pills button.on { color: #111; }
+.v3 .story .drawer-empty { font-size: 13px; color: var(--muted); padding: 18px; border: 1px dashed var(--line2); border-radius: 12px; text-align: center; }
+
+.v3 .story .shot-card { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 13px; background: var(--panel); margin-bottom: 20px; }
+.v3 .story .shot-card canvas { width: 100%; aspect-ratio: 16/9; border-radius: 8px; display: block; }
+.v3 .story .shot-card p { font-size: 13px; margin: 2px 0 9px; }
+
+.v3 .story .tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.v3 .story .tile { display: grid; align-content: start; min-width: 0; text-align: left; border: 1px solid var(--line); border-radius: 11px; overflow: hidden; background: var(--panel); cursor: grab; padding: 0 0 9px; }
+.v3 .story .tile:hover { border-color: #3d464f; }
+.v3 .story .tile img, .v3 .story .tile video, .v3 .story .tile .gfx-frame, .v3 .story .tile canvas { width: 100%; aspect-ratio: 16/9; display: block; margin-bottom: 7px; object-fit: cover; }
+.v3 .story .tile img, .v3 .story .tile video { background: var(--raised); }
+.v3 .story .tile-ic { display: grid; place-items: center; height: 54px; font-size: 22px; background: var(--raised); margin-bottom: 7px; }
+.v3 .story .t-broll .tile-ic { aspect-ratio: 16/9; height: auto; color: var(--blue); }
+.v3 .story .t-music .tile-ic { color: var(--green); }
+.v3 .story .t-sfx .tile-ic { color: var(--cyan); }
+.v3 .story .tile-name { font-size: 12.5px; font-weight: 600; padding: 0 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v3 .story .tile small { font-size: 11px; color: var(--dim); padding: 0 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* A 1920×1080 graphic scaled into its box over a still of the video. */
+.v3 .story .gfx-frame { background: linear-gradient(135deg, #1d242b, #111519); overflow: hidden; }
+
+.v3 .story .cue-card { display: grid; gap: 10px; }
+.v3 .story .cue-card-head { display: flex; justify-content: space-between; align-items: center; }
+.v3 .story .cue-card .cue-preview { width: 100%; aspect-ratio: 16/9; border-radius: 10px; display: block; object-fit: cover; background-color: #000; }
+.v3 .story .cue-audio { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); font-size: 12.5px; }
+.v3 .story .cue-audio .play { width: 36px; height: 36px; flex: none; border-radius: 50%; background: var(--yellow); color: #111; font-size: 12px; font-weight: 800; display: grid; place-items: center; }
+.v3 .story .cue-audio .tile-ic { height: auto; margin: 0; background: none; font-size: 18px; }
+.v3 .story .cue-card h3 { font-size: 16px; overflow-wrap: anywhere; }
+.v3 .story .cue-card p.muted { font-size: 12px; margin-top: -6px; }
+.v3 .story .cue-field { display: grid; gap: 4px; font-size: 12px; color: var(--muted); }
+.v3 .story .cue-field span { text-transform: capitalize; }
+.v3 .story .cue-field input { width: 100%; background: var(--panel); border: 1px solid var(--line2); border-radius: 9px; padding: 8px 10px; outline: none; color: var(--text); }
+.v3 .story .cue-field input:focus { border-color: #4d5760; }
+.v3 .story .row-end { display: flex; justify-content: flex-end; }
+.v3 .story .ghost.danger:hover { color: var(--coral); border-color: var(--coral); }
+
+.v3 .story .drawer .cue { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; line-height: 1; padding: 5px 9px; border-radius: 999px; border: 1px solid transparent; font-weight: 650; white-space: nowrap; }
+.v3 .story .drawer .cue-broll { background: rgba(143,179,255,.14); color: #aac4ff; border-color: rgba(143,179,255,.3); }
+.v3 .story .drawer .cue-music { background: rgba(144,202,165,.14); color: #a9dcbb; border-color: rgba(144,202,165,.3); }
+.v3 .story .drawer .cue-graphic { background: rgba(245,197,24,.12); color: #f3d467; border-color: rgba(245,197,24,.3); }
+.v3 .story .drawer .cue-sfx { background: rgba(121,213,223,.12); color: #9fe0e8; border-color: rgba(121,213,223,.3); }
+
+/* A drawer tile dragged over a transcript word. */
+.v3 .story [data-word-idx].word-drop { background: rgba(245,197,24,.5); outline: 2px dashed var(--yellow); border-radius: 4px; }
+
+@media (max-width: 860px) {
+  .v3 .story .drawer { order: 5; border-top: 1px solid var(--line); }
+}

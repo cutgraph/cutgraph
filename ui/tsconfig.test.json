@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "composite": false,
+    "tsBuildInfoFile": "./.tsbuild/tsconfig.test.tsbuildinfo",
+    "types": ["node"]
+  },
+  "include": ["test", "src", "../motion-core/src"]
+}

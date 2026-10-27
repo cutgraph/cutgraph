@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "name": "pasta-supper-01",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "revision": 1,
+  "transcript": "transcript.json",
+  "tracks": [
+    {
+      "id": "speech",
+      "kind": "speech",
+      "clips": [
+        {
+          "id": "c1",
+          "media": {
+            "source": "media/A001.mp4",
+            "proxy": "proxies/A001_540.mp4"
+          },
+          "srcInF": 0,
+          "srcOutF": 1152,
+          "tlStartF": 0,
+          "gainDb": 0
+        }
+      ]
+    },
+    {
+      "id": "broll",
+      "kind": "video",
+      "clips": [
+        {
+          "id": "b1",
+          "media": {
+            "source": "media/garlic-chopping.mp4",
+            "proxy": null
+          },
+          "srcInF": 0,
+          "srcOutF": 165,
+          "tlStartF": 1152,
+          "anchor": {
+            "mode": "word",
+            "ref": {
+              "media": "media/A001.mp4",
+              "wordIdx": 41
+            },
+            "offsetF": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "text",
+      "kind": "text",
+      "items": [
+        {
+          "id": "t1",
+          "text": "THREE SIMPLE INGREDIENTS",
+          "preset": "hook",
+          "pos": {
+            "x": 0.5,
+            "y": 0.12
+          },
+          "tlStartF": 15,
+          "durF": 93,
+          "anchor": {
+            "mode": "time"
+          }
+        }
+      ]
+    },
+    {
+      "id": "music",
+      "kind": "audio",
+      "clips": [
+        {
+          "id": "m1",
+          "media": {
+            "source": "media/lofi.mp3",
+            "proxy": null
+          },
+          "srcInF": 0,
+          "srcOutF": 34560,
+          "tlStartF": 0,
+          "gainDb": -18,
+          "anchor": {
+            "mode": "time"
+          },
+          "duckDb": -8
+        }
+      ]
+    }
+  ]
+}

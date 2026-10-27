@@ -1,0 +1,31 @@
+/* The context bar, a breadcrumb on every screen, and its workspace switcher. */
+.v3 .main { display: flex; flex-direction: column; min-width: 0; height: 100vh; }
+.v3 .context-bar { flex: none; display: flex; align-items: center; min-width: 0; height: 42px; padding: 0 16px; border-bottom: 1px solid var(--line); background: #0b0d10; }
+.v3 .crumbs { min-width: 0; }
+.v3 .crumbs ol { display: flex; align-items: center; min-width: 0; margin: 0; padding: 0; list-style: none; font-size: 13px; }
+.v3 .crumbs li { display: flex; align-items: center; min-width: 0; }
+.v3 .crumbs li:first-child { flex: none; }
+.v3 .crumb { min-width: 0; padding: 3px 7px; border-radius: 7px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.v3 a.crumb:hover { color: var(--text); background: var(--raised); }
+.v3 .crumb[aria-current="page"] { color: var(--text); font-weight: 650; }
+.v3 .crumb-sep { flex: none; padding: 0 2px; color: var(--dim); }
+.v3 .switcher { flex: none; }
+.v3 .switcher-caret { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 7px; color: var(--muted); }
+.v3 .switcher-caret svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.v3 .switcher-caret:hover, .v3 .switcher-caret[aria-expanded="true"] { background: var(--raised); color: var(--text); }
+.v3 .switcher-btn { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; padding: 0 2px; font-size: 13px; font-weight: 600; color: var(--cyan); }
+.v3 .switcher-btn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v3 .switcher-btn i { font-style: normal; color: var(--muted); font-size: 11px; }
+.v3 .switcher-btn:hover, .v3 .switcher-btn[aria-expanded="true"] { text-decoration: underline; }
+.v3 .switcher-menu { left: 0; right: auto; }
+.v3 .switcher-menu [aria-checked="true"] b { color: var(--yellow); }
+
+@media (max-width: 860px) {
+  .v3 .main { height: auto; }
+  .v3 .context-bar { position: relative; padding: 0 10px; }
+  .v3 .switcher-menu { width: min(280px, calc(100vw - 32px)); }
+  .v3 .switcher-caret { width: 32px; height: 32px; }
+  /* A ▾ far along a long trail would push its menu off screen: it opens from the bar's left edge instead. */
+  .v3 .context-bar .switcher { position: static; }
+  .v3 .context-bar .switcher-menu { left: 10px; top: calc(100% + 4px); }
+}

@@ -1,0 +1,26 @@
+# Normalize line endings: store as LF, checkout as-is on all platforms
+* text=auto eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+
+# Binary files — never diff or modify
+*.mp4 binary
+*.mov binary
+*.avi binary
+*.pt binary
+*.bin binary
+*.safetensors binary
+*.png binary
+*.ico binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.wav binary
+*.jpg binary
+
+schema/*.json linguist-generated=true
+ui/src/types/project.ts linguist-generated=true

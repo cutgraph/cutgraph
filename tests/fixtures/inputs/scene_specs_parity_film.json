@@ -1,0 +1,205 @@
+{
+  "project": {
+    "schemaVersion": 3,
+    "name": "synthetic-story",
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "revision": 2,
+    "transcript": null,
+    "tracks": [
+      {
+        "id": "speech",
+        "kind": "speech",
+        "clips": [
+          {
+            "id": "opening",
+            "media": {
+              "source": "data/source/synthetic-story.mp4",
+              "proxy": null
+            },
+            "srcInF": 0,
+            "srcOutF": 196,
+            "tlStartF": 0,
+            "gainDb": 0.0
+          },
+          {
+            "id": "after-cut",
+            "media": {
+              "source": "data/source/synthetic-story.mp4",
+              "proxy": null
+            },
+            "srcInF": 209,
+            "srcOutF": 900,
+            "tlStartF": 196,
+            "gainDb": 0.0
+          }
+        ]
+      }
+    ],
+    "scenes": [
+      {
+        "id": "scene-1",
+        "title": "title",
+        "role": "Beat",
+        "startWord": 0,
+        "shot": {
+          "mode": "animation",
+          "character": "default-character",
+          "layout": "title",
+          "backdrop": "black",
+          "headline": "Rainy Day Museum Visit",
+          "eyebrow": "",
+          "badges": [
+            {
+              "text": "INDOORS",
+              "tone": "accent"
+            }
+          ],
+          "accent": "#2bb3a3"
+        }
+      },
+      {
+        "id": "scene-2",
+        "title": "meet",
+        "role": "Beat",
+        "startWord": 7,
+        "shot": {
+          "mode": "animation",
+          "character": "default-character",
+          "backdrop": "work",
+          "diagram": "none",
+          "headline": "Meet at the entrance",
+          "pose": "wave",
+          "move": "wave",
+          "expression": "happy",
+          "costar": {
+            "character": "visitor-guide",
+            "pose": "rest",
+            "move": "idle",
+            "bubble": "say"
+          },
+          "ensemble": [
+            {
+              "character": "visitor-reader",
+              "pose": "point",
+              "move": "nod"
+            }
+          ],
+          "headlineAt": "costar",
+          "cueWord": 9
+        }
+      },
+      {
+        "id": "scene-3",
+        "title": "route",
+        "role": "Beat",
+        "startWord": 14,
+        "shot": {
+          "mode": "animation",
+          "character": "default-character",
+          "backdrop": "route",
+          "diagram": "grid",
+          "hideHeadline": true,
+          "pose": "point",
+          "move": "idle",
+          "boardLabels": [
+            "Map",
+            "Gallery",
+            "Cafe"
+          ],
+          "cueWord": 16
+        }
+      },
+      {
+        "id": "scene-4",
+        "title": "tickets",
+        "role": "Beat",
+        "startWord": 21,
+        "shot": {
+          "mode": "animation",
+          "character": "default-character",
+          "layout": "screen",
+          "backdrop": "work",
+          "headline": "Keep your ticket handy",
+          "eyebrow": "",
+          "screen": {
+            "asset": "0f1e2d3c4b5a6978"
+          },
+          "accent": "#2bb3a3"
+        }
+      },
+      {
+        "id": "scene-5",
+        "title": "gallery",
+        "role": "Beat",
+        "startWord": 28,
+        "shot": {
+          "mode": "animation",
+          "character": "default-character",
+          "camera": "pan",
+          "backdrop": "work",
+          "diagram": "none",
+          "headline": "Choose one gallery",
+          "pose": "rest",
+          "expression": "curious",
+          "move": "idle",
+          "costar": {
+            "character": "visitor-guide",
+            "pose": "point",
+            "move": "idle"
+          }
+        }
+      },
+      {
+        "id": "scene-6",
+        "title": "ask",
+        "role": "Beat",
+        "startWord": 35,
+        "shot": {
+          "mode": "animation",
+          "character": "default-character",
+          "backdrop": "result",
+          "diagram": "none",
+          "headline": "Ask about quiet rooms",
+          "pose": "rest",
+          "move": "nod",
+          "expression": "curious",
+          "bubble": "question",
+          "cueWord": 37
+        }
+      },
+      {
+        "id": "scene-7",
+        "title": "signoff",
+        "role": "Wrap",
+        "startWord": 42,
+        "shot": {
+          "mode": "animation",
+          "character": "default-character",
+          "layout": "signoff",
+          "backdrop": "black",
+          "headline": "Enjoy your visit",
+          "eyebrow": "",
+          "mark": "TOUR",
+          "pose": "rest",
+          "expression": "happy",
+          "move": "idle",
+          "accent": "#2bb3a3"
+        }
+      },
+      {
+        "id": "footage",
+        "title": "Source control",
+        "role": "Beat",
+        "startWord": 50,
+        "shot": {
+          "camera": "pan",
+          "diagram": "none"
+        }
+      }
+    ],
+    "workspaceId": "garden-space"
+  },
+  "castInput": "acting_cast.json"
+}

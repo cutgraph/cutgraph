@@ -1,0 +1,6 @@
+/* First-run Story tour. */
+.v3 .coach { position: fixed; z-index: 40; width: 300px; background: var(--text); color: #15181b; border-radius: 14px; padding: 14px 16px 12px; box-shadow: 0 20px 60px rgba(0, 0, 0, .55); }
+.v3 .coach p { margin: 0 0 12px; font-size: 14px; line-height: 1.5; }
+.v3 .coach div { display: flex; gap: 8px; justify-content: flex-end; }
+.v3 .coach small { color: #6a6f74; font-size: 11px; }
+.v3 .coach .ghost { color: #555; border-color: #cfcabb; }

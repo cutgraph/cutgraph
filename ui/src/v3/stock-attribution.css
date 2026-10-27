@@ -1,0 +1,5 @@
+.v3 .stock-attribution, .v3 .story .tile .stock-attribution { display: block; white-space: normal; overflow-wrap: anywhere; }
+.v3 .stock-attribution a { color: inherit; text-decoration: underline; }
+.v3 .asset-tile { min-width: 0; }
+.v3 .asset-tile > .tile { width: 100%; }
+.v3 .asset-tile > .stock-attribution { padding: 4px 10px; }

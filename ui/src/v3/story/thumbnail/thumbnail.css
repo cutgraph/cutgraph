@@ -1,0 +1,28 @@
+/* Thumbnails: the Export sheet's section, the editor (the Shot view's layer and recipe, shot.css)
+   and the poster canvas wherever it is drawn. */
+.v3 .poster-picture { display: block; width: 100%; height: auto; }
+.v3 .cover-scene .poster-picture { height: 100%; object-fit: cover; }
+.v3 .vrow i .cover { width: 100%; height: 100%; border-radius: 7px; overflow: hidden; }
+
+.v3 .story .sheet .thumb { display: grid; gap: 10px; }
+.v3 .story .sheet .thumb-frame { border: 1px solid var(--line2); border-radius: 12px; overflow: hidden; background: #0a0c0e; display: grid; place-items: center; }
+.v3 .story .sheet .thumb-frame[data-format="9:16"] .poster-picture { width: auto; height: 300px; }
+.v3 .story .sheet .thumb-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.v3 .story .sheet .thumb-downloads { display: flex; gap: 8px; flex-wrap: wrap; }
+.v3 .story .sheet .thumb-downloads .ghost { font-size: 13px; }
+.v3 .story .sheet .thumb-status { font-size: 12.5px; color: var(--muted); }
+.v3 .story .sheet .thumb-status.error { color: var(--coral); }
+
+.v3 .story .thumb-stage { display: grid; gap: 14px; justify-items: center; align-content: start; }
+.v3 .story .thumb-stage .thumb-big { width: min(100%, calc(62vh * var(--ar))); border-radius: 12px; overflow: hidden; border: 1px solid var(--line2); }
+.v3 .story .thumb-stage .thumb-small { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 12.5px; }
+.v3 .story .thumb-stage .thumb-small canvas { width: auto; height: auto; border-radius: 4px; outline: 1px solid var(--line2); image-rendering: auto; }
+.v3 .story .thumb-stage .mode-hint { text-align: center; }
+.v3 .story .thumb-words { font-size: 12px; color: var(--muted); margin-top: 6px; }
+.v3 .story .thumb-words.warn { color: var(--coral); }
+
+@media (max-width: 860px) {
+  .v3 .story [data-slot="thumbnail"] .shot-top { flex-wrap: wrap; }
+  .v3 .story [data-slot="thumbnail"] .shot-top .seg { order: 1; flex: 1 1 100%; display: flex; }
+  .v3 .story [data-slot="thumbnail"] .shot-top .seg button { flex: 1; }
+}

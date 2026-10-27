@@ -1,0 +1,63 @@
+/* A fixed export overlay keeps the shared Story grid in place. */
+.v3 .story .sheet {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(440px, 100vw);
+  background: var(--panel);
+  border-left: 1px solid var(--line2);
+  padding: 22px;
+  overflow: auto;
+  z-index: 20;
+  box-shadow: -24px 0 60px rgba(0, 0, 0, .35);
+  animation: export-slide .2s ease-out;
+}
+.v3 .story .sheet-backdrop { position: fixed; inset: 0; z-index: 19; background: rgba(5, 7, 9, .62); backdrop-filter: blur(4px); animation: export-fade .2s ease-out; }
+.v3 .story .sheet header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.v3 .story .sheet header h2 { font-size: 22px; }
+.v3 .story .sheet .eyebrow { margin: 18px 0 10px; }
+
+.v3 .story .sheet .formats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.v3 .story .sheet .formats button { display: grid; justify-items: center; gap: 6px; padding: 14px 6px; border: 1px solid var(--line2); border-radius: 12px; background: transparent; color: var(--text); }
+.v3 .story .sheet .formats button:hover { border-color: #454e57; }
+.v3 .story .sheet .formats button.on { border-color: var(--yellow); background: rgba(245, 197, 24, .06); }
+.v3 .story .sheet .formats i { height: 40px; border: 2px solid var(--muted); border-radius: 4px; display: block; font-style: normal; }
+.v3 .story .sheet .formats button.on i { border-color: var(--yellow); }
+.v3 .story .sheet .formats b { font-size: 13px; }
+.v3 .story .sheet .formats small { color: var(--muted); font-size: 11px; }
+
+.v3 .story .sheet .ex-list { display: grid; gap: 10px; margin-top: 20px; }
+.v3 .story .sheet .ex-row { border: 1px solid var(--line2); border-radius: 12px; padding: 12px 14px; display: grid; gap: 8px; }
+.v3 .story .sheet .ex-row-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font-size: 13px; }
+.v3 .story .sheet .ex-row-head b { font-weight: 650; }
+.v3 .story .sheet .ex-stage { color: var(--muted); font-size: 12px; }
+.v3 .story .sheet .ex-bar { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.v3 .story .sheet .ex-bar > b { display: block; height: 100%; width: 0; background: var(--cyan); transition: width .3s; }
+.v3 .story .sheet .ex-row.done .ex-bar > b { background: var(--green); }
+.v3 .story .sheet .ex-row.error .ex-bar > b { background: var(--coral); }
+.v3 .story .sheet .ex-scenes { list-style: none; display: grid; gap: 7px; margin: 2px 0 0; padding: 0; }
+.v3 .story .sheet .ex-scene { display: grid; grid-template-columns: minmax(0, 1fr) 70px 86px; gap: 10px; align-items: center; font-size: 13px; }
+.v3 .story .sheet .ex-scene span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.v3 .story .sheet .ex-scene i { height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.v3 .story .sheet .ex-scene i b { display: block; height: 100%; width: 0; background: var(--cyan); transition: width .35s; }
+.v3 .story .sheet .ex-scene.rendering i b { width: 55%; animation: export-pulse 1.2s ease-in-out infinite; }
+.v3 .story .sheet .ex-scene.rendered i b { width: 100%; }
+.v3 .story .sheet .ex-scene.cached i b { width: 100%; background: var(--green); transition: width .1s; }
+.v3 .story .sheet .ex-scene small { color: var(--muted); text-align: right; font-size: 12px; }
+.v3 .story .sheet .ex-scene.cached small { color: var(--green); }
+.v3 .story .sheet .ex-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.v3 .story .sheet .ex-error { color: var(--coral); font-size: 12.5px; }
+.v3 .story .sheet .ex-preview { width: 100%; border-radius: 10px; margin-top: 2px; background: #000; }
+
+.v3 .story .sheet .primary.full { width: 100%; padding: 12px; margin-top: 22px; font-size: 15px; justify-content: center; }
+.v3 .story .sheet .primary.full:disabled { opacity: .5; cursor: default; }
+.v3 .story .sheet .fineprint { font-size: 11px; color: var(--dim); margin-top: 12px; }
+
+@keyframes export-slide { from { transform: translateX(30px); opacity: 0; } }
+@keyframes export-fade { from { opacity: 0; } }
+@keyframes export-pulse { 50% { opacity: .35; } }
+
+@media (max-width: 480px) {
+  .v3 .story .sheet { width: 100vw; }
+}

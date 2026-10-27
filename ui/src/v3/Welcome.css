@@ -1,0 +1,15 @@
+.v3 .welcome-intro { max-width: 600px; color: var(--muted); font-size: 17px; line-height: 1.6; margin-top: -14px; }
+.v3 .first-workspace .card-text b { white-space: normal; overflow: visible; }
+.v3 .welcome-setup { margin: 30px 0; }
+.v3 .welcome-setup h2 { font-size: 18px; margin-bottom: 8px; }
+.v3 .welcome-setup h2 small { font-size: 12px; font-weight: 400; color: var(--muted); margin-left: 10px; }
+.v3 .welcome-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+.v3 .welcome-cards .addon-card { padding: 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); min-width: 0; }
+.v3 .welcome-cards .conn { padding: 0; gap: 10px; flex-wrap: wrap; }
+.v3 .welcome-cards .conn > div { flex: 1; min-width: 130px; }
+.v3 .welcome-cards .conn .icon { flex-shrink: 0; }
+.v3 .welcome-cards .addon-actions { align-items: center; }
+@media (max-width: 700px) {
+  .v3 .welcome-cards { grid-template-columns: minmax(0, 1fr); }
+  .v3 .welcome-cards .addon-card { padding: 16px; }
+}

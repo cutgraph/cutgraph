@@ -1,0 +1,441 @@
+{
+  "cast": {
+    "characters": [
+      {
+        "id": "default-character",
+        "name": "Lens",
+        "rig": "lens",
+        "art": [],
+        "palette": "periwinkle",
+        "approved": true,
+        "expressions": [
+          {
+            "id": "smug",
+            "name": "Smug",
+            "spec": {
+              "eyes": "side",
+              "mouth": "smile"
+            },
+            "createdAt": "2026-09-24T00:00:00.000000Z"
+          }
+        ],
+        "createdAt": "",
+        "workspaceId": "brand"
+      },
+      {
+        "id": "notes-guest",
+        "name": "Visitor guide",
+        "rig": "lens",
+        "art": [],
+        "palette": "periwinkle",
+        "approved": true,
+        "expressions": [],
+        "createdAt": "",
+        "workspaceId": "garden"
+      },
+      {
+        "id": "visitor-reader",
+        "name": "Visitor Reader",
+        "rig": "lens",
+        "art": [],
+        "palette": "periwinkle",
+        "approved": true,
+        "expressions": [
+          {
+            "id": "smile",
+            "name": "Smile",
+            "spec": {
+              "eyes": "wide",
+              "mouth": "round"
+            },
+            "createdAt": "2026-09-24T00:00:00.000000Z"
+          }
+        ],
+        "createdAt": "",
+        "workspaceId": "garden"
+      },
+      {
+        "id": "reviewer",
+        "name": "Visitor helper",
+        "rig": "lens",
+        "art": [],
+        "palette": "periwinkle",
+        "approved": true,
+        "expressions": [],
+        "createdAt": "",
+        "workspaceId": "garden"
+      },
+      {
+        "id": "stored-character",
+        "name": "Stored character",
+        "rig": "retired-rig",
+        "available": false,
+        "art": [],
+        "palette": "stored-palette",
+        "approved": true,
+        "workspaceId": "brand",
+        "createdAt": "",
+        "expressions": [
+          {
+            "id": "stored-look",
+            "name": "Stored look",
+            "spec": {
+              "old-part": "old-option"
+            },
+            "createdAt": ""
+          }
+        ]
+      }
+    ],
+    "default": "notes-guest",
+    "workspace": {
+      "id": "garden",
+      "name": "Garden"
+    },
+    "brand": {
+      "name": "MUSEUM VISIT",
+      "accent": "#d7263d"
+    }
+  },
+  "cases": [
+    {
+      "name": "defaults: the title, the first animated scene's lead, the rest of the cast behind it",
+      "format": "16:9",
+      "project": {
+        "schemaVersion": 3,
+        "name": "sample-notes",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 4,
+        "transcript": null,
+        "workspaceId": "garden",
+        "tracks": [],
+        "title": "Museum Visit",
+        "scenes": [
+          {
+            "id": "s1",
+            "title": "Scene 1",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "footage",
+              "character": "reviewer"
+            }
+          },
+          {
+            "id": "s2",
+            "title": "Scene 2",
+            "role": "Beat",
+            "startWord": 5,
+            "shot": {
+              "mode": "animation",
+              "character": "default-character"
+            }
+          },
+          {
+            "id": "s3",
+            "title": "Scene 3",
+            "role": "Beat",
+            "startWord": 9,
+            "shot": {
+              "mode": "cameo"
+            }
+          }
+        ]
+      },
+      "request": {
+        "width": 1280,
+        "height": 720,
+        "poster": {
+          "headline": "Museum Visit",
+          "eyebrow": "",
+          "character": "lens",
+          "ensemble": [
+            {
+              "character": "lens",
+              "palette": "periwinkle"
+            },
+            {
+              "character": "lens",
+              "palette": "periwinkle"
+            },
+            {
+              "character": "lens",
+              "palette": "periwinkle"
+            }
+          ],
+          "palette": "periwinkle",
+          "accent": "#d7263d"
+        }
+      }
+    },
+    {
+      "name": "a stored thumbnail: custom faces on the lead and a member, one member's lost face dropped, an eyebrow and a badge",
+      "format": "9:16",
+      "project": {
+        "schemaVersion": 3,
+        "name": "sample-notes",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 4,
+        "transcript": null,
+        "workspaceId": "garden",
+        "tracks": [],
+        "title": "Museum Visit",
+        "scenes": [
+          {
+            "id": "s1",
+            "title": "Scene 1",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "character": "reviewer"
+            }
+          }
+        ],
+        "thumbnail": {
+          "headline": "Museum Visit",
+          "eyebrow": "New series",
+          "badges": [
+            {
+              "text": "EP 1",
+              "tone": "accent"
+            }
+          ],
+          "character": "default-character",
+          "pose": "cheer",
+          "expression": "smug",
+          "ensemble": [
+            {
+              "character": "visitor-reader",
+              "pose": "wave",
+              "expression": "smile"
+            },
+            {
+              "character": "notes-guest",
+              "pose": "wave"
+            },
+            {
+              "character": "reviewer",
+              "expression": "gone"
+            }
+          ],
+          "backdrop": "vision"
+        }
+      },
+      "request": {
+        "width": 1080,
+        "height": 1920,
+        "poster": {
+          "headline": "Museum Visit",
+          "eyebrow": "New series",
+          "badges": [
+            {
+              "text": "EP 1",
+              "tone": "accent"
+            }
+          ],
+          "character": "lens",
+          "pose": "cheer",
+          "expression": "smug",
+          "ensemble": [
+            {
+              "character": "lens",
+              "pose": "wave",
+              "expression": "smile",
+              "palette": "periwinkle",
+              "custom": {
+                "eyes": "wide",
+                "mouth": "round"
+              }
+            },
+            {
+              "character": "lens",
+              "pose": "wave",
+              "palette": "periwinkle"
+            },
+            {
+              "character": "lens",
+              "palette": "periwinkle"
+            }
+          ],
+          "backdrop": "vision",
+          "palette": "periwinkle",
+          "accent": "#d7263d",
+          "custom": {
+            "eyes": "side",
+            "mouth": "smile"
+          }
+        }
+      }
+    },
+    {
+      "name": "no title and no animated scene: the slug and the cast's default lead; an empty ensemble stays empty",
+      "format": "16:9",
+      "project": {
+        "schemaVersion": 3,
+        "name": "quiet-video",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 4,
+        "transcript": null,
+        "workspaceId": "garden",
+        "tracks": [],
+        "scenes": [
+          {
+            "id": "s1",
+            "title": "Scene 1",
+            "role": "Beat",
+            "startWord": 0
+          }
+        ],
+        "thumbnail": {
+          "ensemble": []
+        }
+      },
+      "request": {
+        "width": 1280,
+        "height": 720,
+        "poster": {
+          "headline": "quiet-video",
+          "eyebrow": "",
+          "ensemble": [],
+          "character": "lens",
+          "palette": "periwinkle",
+          "accent": "#d7263d"
+        }
+      }
+    },
+    {
+      "name": "a lead the video can't see falls back to the default, and the others stand behind it; a pose its rig lacks is dropped",
+      "format": "16:9",
+      "project": {
+        "schemaVersion": 3,
+        "name": "sample-notes",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 4,
+        "transcript": null,
+        "workspaceId": "garden",
+        "tracks": [],
+        "title": "Museum Visit",
+        "thumbnail": {
+          "character": "someone-else",
+          "pose": "shrug",
+          "backdrop": "work"
+        }
+      },
+      "request": {
+        "width": 1280,
+        "height": 720,
+        "poster": {
+          "headline": "Museum Visit",
+          "eyebrow": "",
+          "character": "lens",
+          "pose": "shrug",
+          "backdrop": "work",
+          "ensemble": [
+            {
+              "character": "lens",
+              "palette": "periwinkle"
+            },
+            {
+              "character": "lens",
+              "palette": "periwinkle"
+            },
+            {
+              "character": "lens",
+              "palette": "periwinkle"
+            }
+          ],
+          "palette": "periwinkle",
+          "accent": "#d7263d"
+        }
+      }
+    },
+    {
+      "name": "unavailable lead and ensemble",
+      "format": "16:9",
+      "project": {
+        "schemaVersion": 3,
+        "name": "sample-notes",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 4,
+        "transcript": null,
+        "workspaceId": "garden",
+        "tracks": [],
+        "title": "Museum Visit",
+        "scenes": [
+          {
+            "id": "s1",
+            "title": "Scene 1",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "footage",
+              "character": "reviewer"
+            }
+          },
+          {
+            "id": "s2",
+            "title": "Scene 2",
+            "role": "Beat",
+            "startWord": 5,
+            "shot": {
+              "mode": "animation",
+              "character": "default-character"
+            }
+          },
+          {
+            "id": "s3",
+            "title": "Scene 3",
+            "role": "Beat",
+            "startWord": 9,
+            "shot": {
+              "mode": "cameo"
+            }
+          }
+        ],
+        "thumbnail": {
+          "character": "stored-character",
+          "expression": "stored-look",
+          "pose": "wave",
+          "headline": "Stored look",
+          "ensemble": [
+            {
+              "character": "stored-character",
+              "expression": "stored-look",
+              "pose": "wave"
+            }
+          ]
+        }
+      },
+      "request": {
+        "width": 1280,
+        "height": 720,
+        "poster": {
+          "headline": "Stored look",
+          "eyebrow": "",
+          "character": "retired-rig",
+          "pose": "wave",
+          "ensemble": [
+            {
+              "character": "retired-rig",
+              "pose": "wave",
+              "palette": "periwinkle"
+            }
+          ],
+          "palette": "periwinkle",
+          "accent": "#d7263d"
+        }
+      }
+    }
+  ]
+}

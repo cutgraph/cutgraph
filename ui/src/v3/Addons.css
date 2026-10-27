@@ -1,0 +1,12 @@
+.v3 .addon-card { padding: 4px 0 18px; border-bottom: 1px solid var(--line); }
+.v3 .addon-card p { margin: 10px 0; }
+.v3 .addon-card select { margin-left: 8px; padding: 6px 10px; color: var(--text); background: var(--bg); border: 1px solid var(--line2); border-radius: 8px; }
+.v3 .addon-card details { margin: 12px 0; }
+.v3 .addon-card ul { padding-left: 20px; }
+.v3 .addon-accept { display: flex; align-items: flex-start; gap: 8px; margin: 12px 0; }
+.v3 .addon-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.v3 .addon-card progress { width: 100%; accent-color: var(--accent); }
+.v3 .addon-notice { padding: 16px 0; }
+.v3 .addon-notice p { margin-bottom: 10px; }
+.v3 .addon-card a, .v3 .addon-notice a { color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; }
+.v3 .addon-card { overflow-wrap: anywhere; }

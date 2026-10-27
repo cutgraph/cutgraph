@@ -1,0 +1,14 @@
+{
+  "include": [
+    "config.py",
+    "runtime.py",
+    "pipeline",
+    "scripts",
+    "studio",
+    "tests"
+  ],
+  "venvPath": ".",
+  "venv": ".venv",
+  "typeCheckingMode": "basic",
+  "pythonVersion": "3.12"
+}

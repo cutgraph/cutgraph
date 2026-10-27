@@ -1,0 +1,247 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  build:
+    if: ${{ (!github.event.repository.private || vars.HOSTED_CI == 'true') && (github.event_name == 'push' || github.ref == 'refs/heads/main') }}
+    runs-on: windows-latest
+    timeout-minutes: 90
+    permissions:
+      contents: read
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    env:
+      CI: 'true'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version-file: .python-version
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Isolate build state
+        run: |
+          "CUTGRAPH_STATE_HOME=$(Join-Path $env:RUNNER_TEMP 'release-state')" >> $env:GITHUB_ENV
+
+      - name: Install locked dependencies
+        run: |
+          python -m venv .venv
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $python = Join-Path $env:GITHUB_WORKSPACE '.venv/Scripts/python.exe'
+          & $python -m pip install --require-hashes -r requirements-dev.txt
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "STUDIO_PYTHON=$python" >> $env:GITHUB_ENV
+          npm --prefix ui ci
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm --prefix motion-core ci
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Validate stable version and tag
+        id: version
+        run: |
+          $version = & $env:STUDIO_PYTHON -c 'import tomllib; from installer.release_manifest import stable_version; v=tomllib.load(open("pyproject.toml", "rb"))["project"]["version"]; stable_version(v); print(v)'
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if ($env:GITHUB_REF_TYPE -eq 'tag' -and $env:GITHUB_REF_NAME -ne "v$version") { throw 'Tag must match the product version' }
+          $tagCommit = git rev-parse --verify "refs/tags/v$version^{commit}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if ($tagCommit -ne $env:GITHUB_SHA) { throw 'Release tag must identify the built commit' }
+          git merge-base --is-ancestor $env:GITHUB_SHA origin/main
+          if ($LASTEXITCODE -ne 0) { throw 'Release commit must be an ancestor of origin/main' }
+          "version=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Prepare verified test ffmpeg
+        run: |
+          $archive = Join-Path $env:RUNNER_TEMP 'test-ffmpeg.zip'
+          Invoke-WebRequest -Uri 'https://github.com/GyanD/codexffmpeg/releases/download/8.1.1/ffmpeg-8.1.1-essentials_build.zip' -OutFile $archive
+          $expected = '6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541'
+          if ((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expected) { throw 'Test ffmpeg checksum mismatch' }
+          $destination = Join-Path $env:RUNNER_TEMP 'test-ffmpeg'
+          Expand-Archive -LiteralPath $archive -DestinationPath $destination
+          $bins = @(Get-ChildItem -LiteralPath $destination -Directory -Recurse -Filter bin)
+          if ($bins.Count -ne 1) { throw 'Expected one ffmpeg bin directory' }
+          $bins[0].FullName >> $env:GITHUB_PATH
+
+      - name: Python tests
+        run: '& $env:STUDIO_PYTHON -m pytest -q -p no:cacheprovider --basetemp "$env:RUNNER_TEMP/pytest"'
+
+      - name: Python lint
+        run: '& $env:STUDIO_PYTHON -m ruff check .'
+
+      - name: Python types
+        run: '& $env:STUDIO_PYTHON -m pyright'
+
+      - name: Environment doctor
+        run: '& $env:STUDIO_PYTHON scripts/bootstrap.py'
+
+      - name: Source SBOMs and licence policy
+        run: |
+          & $env:STUDIO_PYTHON scripts/model_manifest.py dist/sbom/model-manifest.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & $env:STUDIO_PYTHON scripts/sbom.py --output-dir dist/sbom --model-manifest dist/sbom/model-manifest.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & $env:STUDIO_PYTHON scripts/license_policy.py --sbom-dir dist/sbom --report dist/sbom/license-policy-report.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: UI tests
+        run: npm --prefix ui test
+
+      - name: UI types
+        run: npm --prefix ui run typecheck
+
+      - name: UI build
+        run: npm --prefix ui run build
+
+      - name: Motion-core tests
+        working-directory: motion-core
+        run: node --test (Get-ChildItem test/*.test.ts).FullName
+
+      - name: Browser e2e
+        run: '& $env:STUDIO_PYTHON tests/e2e/run.py'
+
+      - name: Prepare pinned compiler
+        run: ./installer/prepare_compiler.ps1 -Destination (Join-Path $env:RUNNER_TEMP 'inno')
+
+      - name: Build unsigned bundle and installer
+        run: |
+          & $env:STUDIO_PYTHON installer/build.py --out "$env:RUNNER_TEMP/bundle" --cache "$env:RUNNER_TEMP/downloads"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & $env:STUDIO_PYTHON installer/build.py --installer --bundle "$env:RUNNER_TEMP/bundle" --keep-payload --out "$env:RUNNER_TEMP/installer" --cache "$env:RUNNER_TEMP/downloads" --iscc "$env:RUNNER_TEMP/inno/ISCC.exe"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Bundle smoke using Media Foundation
+        env:
+          CUTGRAPH_TEST_ENCODERS: h264_mf
+        run: '& $env:STUDIO_PYTHON installer/smoke.py "$env:RUNNER_TEMP/installer/payload" --temp-root "$env:RUNNER_TEMP" --expected-encoder h264_mf'
+
+      - name: Launcher smoke
+        run: '& $env:STUDIO_PYTHON installer/launcher/smoke.py "$env:RUNNER_TEMP/installer/payload" --temp-root "$env:RUNNER_TEMP"'
+
+      - name: Installer lifecycle smoke
+        run: |
+          $receipt = Get-Content -LiteralPath "$env:RUNNER_TEMP/installer/installer-build.json" -Raw | ConvertFrom-Json
+          & $env:STUDIO_PYTHON installer/lifecycle_smoke.py (Join-Path "$env:RUNNER_TEMP/installer" $receipt.installer) --temp-root "$env:RUNNER_TEMP" --i-am-on-a-disposable-machine
+
+      - name: Collect notices, SBOM and matching source with installer
+        run: '& $env:STUDIO_PYTHON installer/release_assets.py collect "$env:RUNNER_TEMP/installer" --out "$env:RUNNER_TEMP/assets"'
+
+      - name: Upload unsigned assets
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: unsigned-release
+          path: ${{ runner.temp }}/assets/*
+          if-no-files-found: error
+          retention-days: 30
+
+  attest-and-draft:
+    needs: build
+    if: ${{ !github.event.repository.private }}
+    environment: release
+    runs-on: windows-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    env:
+      RELEASE_VERSION: ${{ needs.build.outputs.version }}
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version-file: .python-version
+
+      - name: Install locked release tools
+        run: |
+          python -m pip install --require-hashes --only-binary=:all: -r requirements-release.txt
+
+      - name: Download unsigned assets
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: unsigned-release
+          path: ${{ runner.temp }}/assets
+
+      # Disabled until signing is configured before final inventory; never sign FFmpeg.
+      - name: Authenticode signing seam (disabled)
+        if: ${{ success() && false }}
+        run: throw 'Configure Authenticode in the builder before enabling this seam.'
+
+      - name: Generate release manifest
+        run: |
+          $assets = Join-Path $env:RUNNER_TEMP 'assets'
+          $receipt = Get-Content -LiteralPath (Join-Path $assets 'installer-build.json') -Raw | ConvertFrom-Json
+          if ($receipt.version -ne $env:RELEASE_VERSION -or $receipt.sourceRevision -ne $env:GITHUB_SHA) { throw 'Build identity mismatch' }
+          $minimumVersion = python -c 'import tomllib; print(tomllib.load(open("pyproject.toml", "rb"))["tool"]["cutgraph"]["minimum-supported-version"])'
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $base = "https://github.com/$env:GITHUB_REPOSITORY/releases"
+          python installer/release_manifest.py generate --installer (Join-Path $assets $receipt.installer) --version $env:RELEASE_VERSION --url "$base/download/v$env:RELEASE_VERSION/$($receipt.installer)" --minimum-version $minimumVersion --release-notes-url "$base/tag/v$env:RELEASE_VERSION" --out (Join-Path $assets 'release.json')
+
+      - name: Sign release manifest
+        env:
+          RELEASE_ED25519_KEY: ${{ secrets.RELEASE_ED25519_KEY }}
+        run: python installer/release_manifest.py sign "$env:RUNNER_TEMP/assets/release.json" --out "$env:RUNNER_TEMP/assets/release.json.sig"
+
+      - name: Verify signature and installer hash
+        env:
+          RELEASE_PUBLIC_KEY: ${{ vars.RELEASE_ED25519_PUBLIC_KEY }}
+        run: |
+          $publicKey = Join-Path $env:RUNNER_TEMP 'release-public-key.txt'
+          $env:RELEASE_PUBLIC_KEY | Set-Content -LiteralPath $publicKey -Encoding ascii
+          $receipt = Get-Content -LiteralPath "$env:RUNNER_TEMP/assets/installer-build.json" -Raw | ConvertFrom-Json
+          python installer/release_manifest.py verify "$env:RUNNER_TEMP/assets/release.json" --signature "$env:RUNNER_TEMP/assets/release.json.sig" --public-key $publicKey --installer (Join-Path "$env:RUNNER_TEMP/assets" $receipt.installer)
+
+      - name: Hash every release asset
+        run: python installer/release_assets.py checksums "$env:RUNNER_TEMP/assets"
+
+      - name: Attest every asset including checksums
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: ${{ runner.temp }}/assets/*
+
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $assets = @(Get-ChildItem -LiteralPath "$env:RUNNER_TEMP/assets" -File | Sort-Object Name | ForEach-Object FullName)
+          $remoteTags = git ls-remote --exit-code origin "refs/tags/v$env:RELEASE_VERSION" "refs/tags/v$env:RELEASE_VERSION^{}"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $tagRefs = @{}
+          foreach ($line in $remoteTags) {
+            $parts = $line -split '\s+', 2
+            $tagRefs[$parts[1]] = $parts[0]
+          }
+          $tagCommit = $tagRefs["refs/tags/v$env:RELEASE_VERSION^{}"]
+          if (-not $tagCommit) { $tagCommit = $tagRefs["refs/tags/v$env:RELEASE_VERSION"] }
+          if ($tagCommit -ne $env:GITHUB_SHA) { throw 'Release tag no longer identifies the built commit' }
+          gh release create "v$env:RELEASE_VERSION" @assets --repo $env:GITHUB_REPOSITORY --verify-tag --draft --title "Cutgraph Studio $env:RELEASE_VERSION" --generate-notes

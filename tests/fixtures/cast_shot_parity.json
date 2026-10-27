@@ -1,0 +1,713 @@
+{
+  "cast": {
+    "characters": [
+      {
+        "id": "default-character",
+        "name": "Lens",
+        "rig": "lens",
+        "art": [],
+        "palette": "periwinkle",
+        "expressions": [
+          {
+            "id": "smug",
+            "name": "Smug",
+            "spec": {
+              "eyes": "side",
+              "mouth": "smile"
+            },
+            "createdAt": "2026-09-23T00:00:00.000000Z"
+          }
+        ],
+        "createdAt": "",
+        "workspaceId": "brand",
+        "approved": true
+      },
+      {
+        "id": "notes-guest",
+        "name": "Visitor guide (placeholder: Character rig)",
+        "rig": "lens",
+        "art": [],
+        "palette": "periwinkle",
+        "expressions": [
+          {
+            "id": "grin",
+            "name": "Grin",
+            "spec": {
+              "eyes": "arc",
+              "mouth": "smile"
+            },
+            "createdAt": "2026-09-23T00:00:00.000000Z"
+          }
+        ],
+        "createdAt": "2026-09-23T00:00:00.000000Z",
+        "workspaceId": "garden-space",
+        "approved": true
+      },
+      {
+        "id": "visitor-guide",
+        "name": "Visitor guide",
+        "rig": "sample-rig",
+        "art": [],
+        "palette": "fern",
+        "approved": true,
+        "expressions": [
+          {
+            "id": "focus",
+            "name": "Quiet focus",
+            "spec": {
+              "brows": "raised",
+              "eyes": "open",
+              "mouth": "closed"
+            },
+            "createdAt": "2026-09-23T00:00:00.000000Z"
+          }
+        ],
+        "createdAt": "2026-09-23T00:00:00.000000Z",
+        "workspaceId": "garden-space"
+      },
+      {
+        "id": "stored-character",
+        "name": "Stored character",
+        "rig": "retired-rig",
+        "available": false,
+        "art": [],
+        "palette": "stored-palette",
+        "approved": true,
+        "workspaceId": "brand",
+        "createdAt": "",
+        "expressions": [
+          {
+            "id": "stored-look",
+            "name": "Stored look",
+            "spec": {
+              "old-part": "old-option"
+            },
+            "createdAt": ""
+          }
+        ]
+      }
+    ],
+    "default": "default-character",
+    "workspace": {
+      "id": "garden-space",
+      "name": "Garden"
+    },
+    "brand": {
+      "name": "MUSEUM VISIT",
+      "accent": "#2bb3a3"
+    }
+  },
+  "cases": [
+    {
+      "role": "Hook",
+      "title": "Open",
+      "shot": {
+        "mode": "animation",
+        "expression": "smug",
+        "pose": "cheer"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "expression": "smug",
+          "pose": "cheer",
+          "character": "lens",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": {
+          "eyes": "side",
+          "mouth": "smile"
+        }
+      }
+    },
+    {
+      "role": "Wrap",
+      "title": "Close",
+      "shot": {
+        "mode": "cameo",
+        "expression": "deleted-one",
+        "move": "hop"
+      },
+      "expected": {
+        "shot": {
+          "mode": "cameo",
+          "move": "hop",
+          "character": "lens",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Beat",
+      "title": "Middle",
+      "shot": {
+        "mode": "cameo",
+        "expression": "happy"
+      },
+      "expected": {
+        "shot": {
+          "mode": "cameo",
+          "expression": "happy",
+          "character": "lens",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Build",
+      "title": "Build it",
+      "shot": {
+        "mode": "animation",
+        "headline": "Go"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "headline": "Go",
+          "character": "lens",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Payoff",
+      "title": "Done",
+      "shot": null,
+      "expected": {
+        "shot": {
+          "character": "lens",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Hook",
+      "title": "Open",
+      "shot": {
+        "mode": "cameo",
+        "character": "notes-guest",
+        "expression": "grin",
+        "move": "wave"
+      },
+      "expected": {
+        "shot": {
+          "mode": "cameo",
+          "character": "lens",
+          "expression": "grin",
+          "move": "wave",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": {
+          "eyes": "arc",
+          "mouth": "smile"
+        }
+      }
+    },
+    {
+      "role": "Check",
+      "title": "Review",
+      "shot": {
+        "mode": "animation",
+        "character": "notes-guest",
+        "expression": "smug"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "character": "lens",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Beat",
+      "title": "Middle",
+      "shot": {
+        "mode": "animation",
+        "character": "notes-guest",
+        "expression": "curious"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "character": "lens",
+          "expression": "curious",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Wrap",
+      "title": "Close",
+      "shot": {
+        "mode": "cameo",
+        "character": "gone-client-character",
+        "expression": "grin"
+      },
+      "expected": {
+        "shot": {
+          "mode": "cameo",
+          "character": "lens",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Payoff",
+      "title": "Launch",
+      "shot": {
+        "mode": "animation",
+        "expression": "smug",
+        "costar": {
+          "character": "notes-guest",
+          "expression": "grin",
+          "pose": "point"
+        },
+        "interaction": "fistbump"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "expression": "smug",
+          "costar": {
+            "character": "lens",
+            "expression": "grin",
+            "pose": "point",
+            "palette": "periwinkle",
+            "custom": {
+              "eyes": "arc",
+              "mouth": "smile"
+            }
+          },
+          "interaction": "fistbump",
+          "character": "lens",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": {
+          "eyes": "side",
+          "mouth": "smile"
+        }
+      }
+    },
+    {
+      "role": "Build",
+      "title": "Together",
+      "shot": {
+        "mode": "animation",
+        "character": "notes-guest",
+        "costar": {
+          "character": "gone-client-character",
+          "expression": "grin"
+        },
+        "interaction": "highfive"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "character": "lens",
+          "costar": {
+            "character": "lens",
+            "palette": "periwinkle"
+          },
+          "interaction": "highfive",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Wrap",
+      "title": "See you",
+      "shot": {
+        "mode": "animation",
+        "costar": {
+          "character": "default-character",
+          "expression": "smug",
+          "move": "hop"
+        },
+        "interaction": "point"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "costar": {
+            "character": "lens",
+            "expression": "smug",
+            "move": "hop",
+            "palette": "periwinkle",
+            "custom": {
+              "eyes": "side",
+              "mouth": "smile"
+            }
+          },
+          "interaction": "point",
+          "character": "lens",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Payoff",
+      "title": "Launch",
+      "shot": {
+        "mode": "animation",
+        "character": "visitor-guide",
+        "pose": "wave",
+        "expression": "happy",
+        "move": "nod"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "character": "sample-rig",
+          "pose": "wave",
+          "expression": "happy",
+          "move": "nod",
+          "palette": "fern",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Hook",
+      "title": "Open",
+      "shot": {
+        "mode": "cameo",
+        "character": "visitor-guide",
+        "expression": "focus",
+        "move": "nod"
+      },
+      "expected": {
+        "shot": {
+          "mode": "cameo",
+          "character": "sample-rig",
+          "expression": "focus",
+          "move": "nod",
+          "palette": "fern",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": {
+          "brows": "raised",
+          "eyes": "open",
+          "mouth": "closed"
+        }
+      }
+    },
+    {
+      "role": "Beat",
+      "title": "Middle",
+      "shot": {
+        "mode": "animation",
+        "character": "visitor-guide",
+        "pose": "not-a-pose",
+        "expression": "not-a-look",
+        "move": "wave"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "character": "sample-rig",
+          "move": "wave",
+          "palette": "fern",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Wrap",
+      "title": "Close",
+      "shot": {
+        "mode": "cameo",
+        "character": "visitor-guide",
+        "expression": "grin",
+        "pose": "wave"
+      },
+      "expected": {
+        "shot": {
+          "mode": "cameo",
+          "character": "sample-rig",
+          "pose": "wave",
+          "palette": "fern",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Payoff",
+      "title": "Launch",
+      "shot": {
+        "mode": "animation",
+        "character": "default-character",
+        "pose": "point",
+        "costar": {
+          "character": "visitor-guide",
+          "pose": "not-a-pose",
+          "expression": "focus"
+        },
+        "interaction": "fistbump"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "character": "lens",
+          "pose": "point",
+          "costar": {
+            "character": "sample-rig",
+            "expression": "focus",
+            "palette": "fern",
+            "custom": {
+              "brows": "raised",
+              "eyes": "open",
+              "mouth": "closed"
+            }
+          },
+          "interaction": "fistbump",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Payoff",
+      "title": "Launch",
+      "shot": {
+        "mode": "animation",
+        "character": "visitor-guide",
+        "pose": "wave",
+        "eyebrow": "FIELD NOTES"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "character": "sample-rig",
+          "pose": "wave",
+          "eyebrow": "FIELD NOTES",
+          "palette": "fern",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "role": "Wrap",
+      "title": "See you",
+      "shot": {
+        "mode": "animation",
+        "eyebrow": "",
+        "costar": {
+          "character": "visitor-guide"
+        },
+        "interaction": "highfive"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "eyebrow": "",
+          "costar": {
+            "character": "sample-rig",
+            "palette": "fern"
+          },
+          "interaction": "highfive",
+          "character": "lens",
+          "palette": "periwinkle",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "name": "unavailable lead",
+      "role": "Beat",
+      "title": "Stored look",
+      "shot": {
+        "mode": "animation",
+        "character": "stored-character",
+        "expression": "stored-look",
+        "pose": "wave",
+        "move": "idle"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "character": "retired-rig",
+          "pose": "wave",
+          "move": "idle",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "name": "unavailable co-star",
+      "role": "Beat",
+      "title": "Stored look",
+      "shot": {
+        "mode": "animation",
+        "costar": {
+          "character": "stored-character",
+          "expression": "stored-look",
+          "pose": "wave",
+          "move": "idle"
+        },
+        "interaction": "face"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "costar": {
+            "character": "retired-rig",
+            "pose": "wave",
+            "move": "idle",
+            "palette": "periwinkle"
+          },
+          "interaction": "face",
+          "character": "lens",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "name": "unavailable ensemble entrance",
+      "role": "Beat",
+      "title": "Stored look",
+      "shot": {
+        "mode": "animation",
+        "ensemble": [
+          {
+            "character": "stored-character",
+            "expression": "stored-look",
+            "pose": "wave",
+            "move": "enter"
+          }
+        ]
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "ensemble": [
+            {
+              "character": "retired-rig",
+              "pose": "wave",
+              "move": "enter",
+              "palette": "periwinkle"
+            }
+          ],
+          "character": "lens",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "name": "unavailable cameo",
+      "role": "Beat",
+      "title": "Stored look",
+      "shot": {
+        "mode": "cameo",
+        "character": "stored-character",
+        "expression": "stored-look",
+        "pose": "wave",
+        "move": "idle"
+      },
+      "expected": {
+        "shot": {
+          "mode": "cameo",
+          "character": "retired-rig",
+          "pose": "wave",
+          "move": "idle",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "name": "signoff-unbranded",
+      "shot": {
+        "mode": "animation",
+        "layout": "signoff",
+        "eyebrow": ""
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "layout": "signoff",
+          "eyebrow": "",
+          "character": "lens",
+          "palette": "periwinkle",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    },
+    {
+      "name": "signoff-explicit-mark",
+      "shot": {
+        "mode": "animation",
+        "layout": "signoff",
+        "mark": "XYZ"
+      },
+      "expected": {
+        "shot": {
+          "mode": "animation",
+          "layout": "signoff",
+          "mark": "XYZ",
+          "character": "lens",
+          "palette": "periwinkle",
+          "eyebrow": "MUSEUM VISIT",
+          "accent": "#2bb3a3"
+        },
+        "custom": null
+      }
+    }
+  ]
+}

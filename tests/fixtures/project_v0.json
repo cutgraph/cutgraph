@@ -1,0 +1,53 @@
+{
+  "name": "legacy-clip-01",
+  "transcript": "transcript.json",
+  "tracks": [
+    {
+      "id": "speech",
+      "kind": "speech",
+      "clips": [
+        {
+          "id": "c1",
+          "media": "media/A001.mp4",
+          "srcInF": 0,
+          "srcOutF": 900,
+          "tlStartF": 0,
+          "gainDb": 0
+        }
+      ]
+    },
+    {
+      "id": "broll",
+      "kind": "video",
+      "clips": [
+        {
+          "id": "b1",
+          "media": "media/garlic-chopping.mp4",
+          "srcInF": 0,
+          "srcOutF": 120,
+          "tlStartF": 900
+        }
+      ]
+    },
+    {
+      "id": "text",
+      "kind": "text",
+      "items": [
+        {
+          "id": "t1",
+          "text": "OLD TITLE",
+          "preset": "hook",
+          "pos": {
+            "x": 0.5,
+            "y": 0.1
+          },
+          "tlStartF": 0,
+          "durF": 60,
+          "anchor": {
+            "mode": "time"
+          }
+        }
+      ]
+    }
+  ]
+}

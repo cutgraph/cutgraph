@@ -1,0 +1,79 @@
+{
+  "page": 1,
+  "per_page": 12,
+  "total_results": 8000,
+  "url": "https://www.pexels.com/search/videos/garden/",
+  "videos": [
+    {
+      "id": 900001,
+      "width": 4096,
+      "height": 2160,
+      "duration": 14,
+      "url": "https://www.pexels.com/video/example-video-900001/",
+      "image": "https://images.pexels.com/videos/900001/example-video-900001.jpg",
+      "user": {
+        "id": 900101,
+        "name": "Sample Photographer",
+        "url": "https://www.pexels.com/@example-900101"
+      },
+      "video_files": [
+        {
+          "id": 1,
+          "quality": "uhd",
+          "file_type": "video/mp4",
+          "width": 4096,
+          "height": 2160,
+          "link": "https://videos.pexels.com/video-files/900001/900001-uhd.mp4"
+        },
+        {
+          "id": 2,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1920,
+          "height": 1080,
+          "link": "https://videos.pexels.com/video-files/900001/900001-hd_1920_1080.mp4"
+        },
+        {
+          "id": 3,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 640,
+          "height": 360,
+          "link": "https://videos.pexels.com/video-files/900001/900001-sd_640_360.mp4"
+        }
+      ]
+    },
+    {
+      "id": 900002,
+      "width": 1280,
+      "height": 720,
+      "duration": 9,
+      "url": "https://www.pexels.com/video/example-video-900002/",
+      "image": "https://images.pexels.com/videos/900002/example-video-900002.jpg",
+      "user": {
+        "id": 900102,
+        "name": "Example Photographer",
+        "url": "https://www.pexels.com/@example"
+      },
+      "video_files": [
+        {
+          "id": 4,
+          "quality": "hd",
+          "file_type": "video/mp4",
+          "width": 1280,
+          "height": 720,
+          "link": "https://videos.pexels.com/video-files/900002/900002-hd_1280_720.mp4"
+        },
+        {
+          "id": 5,
+          "quality": "sd",
+          "file_type": "video/mp4",
+          "width": 426,
+          "height": 240,
+          "link": "https://videos.pexels.com/video-files/900002/900002-sd_426_240.mp4"
+        }
+      ]
+    }
+  ],
+  "next_page": "https://api.pexels.com/videos/search?page=2&per_page=12&query=garden"
+}

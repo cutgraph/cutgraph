@@ -1,0 +1,214 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://cyclonedx.org/schema/jsf-0.82.schema.json",
+  "type": "object",
+  "definitions": {
+    "signature": {
+      "type": "object",
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "signers": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/signer"
+              }
+            }
+          }
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "chain": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/signer"
+              }
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/signer"
+        }
+      ]
+    },
+    "signer": {
+      "type": "object",
+      "required": [
+        "algorithm",
+        "value"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": [
+                "RS256",
+                "RS384",
+                "RS512",
+                "PS256",
+                "PS384",
+                "PS512",
+                "ES256",
+                "ES384",
+                "ES512",
+                "Ed25519",
+                "Ed448",
+                "HS256",
+                "HS384",
+                "HS512"
+              ]
+            },
+            {
+              "type": "string",
+              "format": "uri"
+            }
+          ]
+        },
+        "keyId": {
+          "type": "string"
+        },
+        "publicKey": {
+          "$ref": "#/definitions/publicKey"
+        },
+        "certificatePath": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "excludes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "keyType": {
+      "type": "string",
+      "enum": [
+        "EC",
+        "OKP",
+        "RSA"
+      ]
+    },
+    "publicKey": {
+      "type": "object",
+      "required": [
+        "kty"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "kty": {
+          "$ref": "#/definitions/keyType"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kty": {
+                "const": "EC"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "kty",
+              "crv",
+              "x",
+              "y"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "kty": {
+                "$ref": "#/definitions/keyType"
+              },
+              "crv": {
+                "type": "string",
+                "enum": [
+                  "P-256",
+                  "P-384",
+                  "P-521"
+                ]
+              },
+              "x": {
+                "type": "string"
+              },
+              "y": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kty": {
+                "const": "OKP"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "kty",
+              "crv",
+              "x"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "kty": {
+                "$ref": "#/definitions/keyType"
+              },
+              "crv": {
+                "type": "string",
+                "enum": [
+                  "Ed25519",
+                  "Ed448"
+                ]
+              },
+              "x": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kty": {
+                "const": "RSA"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "kty",
+              "n",
+              "e"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "kty": {
+                "$ref": "#/definitions/keyType"
+              },
+              "n": {
+                "type": "string"
+              },
+              "e": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

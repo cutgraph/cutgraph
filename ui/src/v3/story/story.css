@@ -1,0 +1,35 @@
+/* Story grid layout; component styles live beside each region. */
+.v3 .story { display: grid; grid-template-columns: minmax(0, 1fr) 440px; grid-template-rows: auto auto minmax(0, 1fr) auto; height: 100%; }
+.v3 .story .top { grid-column: 1/-1; display: flex; align-items: center; gap: 16px; padding: 11px 20px; border-bottom: 1px solid var(--line); }
+.v3 .story .ptitle { display: flex; align-items: baseline; gap: 10px; min-width: 0; flex: 1; }
+.v3 .story .ptitle h1 { font-size: 18px; font-weight: 650; outline: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-radius: 6px; padding: 2px 6px; margin-left: -6px; }
+.v3 .story .ptitle h1[contenteditable]:hover, .v3 .story .ptitle h1[contenteditable]:focus { background: var(--raised); }
+.v3 .story .seg { display: flex; background: var(--panel); border: 1px solid var(--line); border-radius: 11px; padding: 3px; }
+.v3 .story .seg button { padding: 5px 13px; border-radius: 8px; color: var(--muted); font-size: 13px; }
+.v3 .story .seg button.on { background: #262c33; color: var(--text); }
+.v3 .story .top-actions { display: flex; gap: 8px; align-items: center; }
+.v3 .story .icon { width: 34px; height: 34px; border-radius: 9px; display: inline-grid; place-items: center; font-size: 18px; color: var(--muted); }
+.v3 .story .icon:hover:not(:disabled) { background: var(--raised); color: var(--text); }
+.v3 .story .arc { grid-column: 1/-1; padding: 10px 20px 12px; border-bottom: 1px solid var(--line); min-height: 12px; }
+.v3 .story .pane { grid-column: 1; grid-row: 3; overflow: auto; padding: 22px 28px 40px; min-width: 0; }
+/* Flex column, not a single scroller: the player stays pinned and only the drawer scrolls beneath it, even behind a tall cue card such as a lower third's text fields. */
+.v3 .story .side { grid-column: 2; grid-row: 3; border-left: 1px solid var(--line); display: flex; flex-direction: column; min-height: 0; }
+.v3 .story .ask { grid-column: 1/-1; border-top: 1px solid var(--line); padding: 10px 20px 12px; background: #0f1215; }
+.v3 .story .pending { margin: 16px; padding: 18px; border: 1px dashed var(--line2); border-radius: 12px; }
+.v3 .story .pending p { margin-top: 4px; font-size: 13px; }
+.v3 .story-loading, .v3 .story-error { padding: 48px 36px; color: var(--muted); }
+.v3 .story-error h1 { font-size: 22px; color: var(--text); margin-bottom: 8px; }
+
+@media (max-width: 1180px) {
+  .v3 .story { grid-template-columns: minmax(0, 1fr) 370px; }
+}
+@media (max-width: 860px) {
+  .v3 .story { display: flex; flex-direction: column; height: auto; }
+  .v3 .story .top { flex-wrap: wrap; padding: 10px 14px; }
+  .v3 .story .seg { order: 3; width: 100%; }
+  .v3 .story .seg button { flex: 1; }
+  .v3 .story .arc { padding: 10px 14px; overflow-x: auto; }
+  .v3 .story .side { display: contents; }
+  .v3 .story .pane { order: 4; overflow: visible; padding: 14px; }
+  .v3 .story .ask { order: 6; position: sticky; bottom: 0; padding: 8px 10px; }
+}

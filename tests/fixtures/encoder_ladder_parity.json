@@ -1,0 +1,575 @@
+{
+  "order": [
+    "h264_nvenc",
+    "h264_qsv",
+    "h264_amf",
+    "h264_mf",
+    "libx264"
+  ],
+  "unavailableMessage": "Video encoding isn't available on this PC. If your Windows edition name ends in \"N\", install the Media Feature Pack (Settings > System > Optional features), then restart your PC.",
+  "probeTimeoutMessage": "Checking video encoding support took too long. Please try again.",
+  "probeFailureMessage": "Video encoding support could not be checked. Please try again.",
+  "profiles": {
+    "export": {
+      "h264_nvenc": [
+        "-c:v",
+        "h264_nvenc",
+        "-preset",
+        "p7",
+        "-tune",
+        "hq",
+        "-rc",
+        "vbr",
+        "-cq",
+        "19",
+        "-spatial-aq",
+        "1",
+        "-temporal-aq",
+        "1"
+      ],
+      "h264_qsv": [
+        "-c:v",
+        "h264_qsv",
+        "-preset",
+        "slow",
+        "-global_quality",
+        "18"
+      ],
+      "h264_amf": [
+        "-c:v",
+        "h264_amf",
+        "-quality",
+        "quality",
+        "-rc",
+        "cqp",
+        "-qp_i",
+        "18",
+        "-qp_p",
+        "18",
+        "-qp_b",
+        "20"
+      ],
+      "h264_mf": [
+        "-c:v",
+        "h264_mf",
+        "-hw_encoding",
+        "0",
+        "-rate_control",
+        "quality",
+        "-quality",
+        "95"
+      ],
+      "libx264": [
+        "-c:v",
+        "libx264",
+        "-crf",
+        "18",
+        "-preset",
+        "slow"
+      ]
+    },
+    "proxy": {
+      "h264_nvenc": [
+        "-c:v",
+        "h264_nvenc",
+        "-g",
+        "12",
+        "-bf",
+        "0",
+        "-cq",
+        "28"
+      ],
+      "h264_qsv": [
+        "-c:v",
+        "h264_qsv",
+        "-preset",
+        "veryfast",
+        "-global_quality",
+        "28",
+        "-g",
+        "12",
+        "-bf",
+        "0"
+      ],
+      "h264_amf": [
+        "-c:v",
+        "h264_amf",
+        "-quality",
+        "speed",
+        "-rc",
+        "cqp",
+        "-qp_i",
+        "28",
+        "-qp_p",
+        "28",
+        "-g",
+        "12",
+        "-bf",
+        "0"
+      ],
+      "h264_mf": [
+        "-c:v",
+        "h264_mf",
+        "-hw_encoding",
+        "0",
+        "-rate_control",
+        "quality",
+        "-quality",
+        "70",
+        "-g",
+        "12",
+        "-bf",
+        "0"
+      ],
+      "libx264": [
+        "-c:v",
+        "libx264",
+        "-preset",
+        "veryfast",
+        "-crf",
+        "28",
+        "-g",
+        "12",
+        "-bf",
+        "0"
+      ]
+    },
+    "script": {
+      "h264_nvenc": [
+        "-c:v",
+        "h264_nvenc",
+        "-preset",
+        "p1",
+        "-tune",
+        "hq",
+        "-rc",
+        "vbr",
+        "-cq",
+        "23"
+      ],
+      "h264_qsv": [
+        "-c:v",
+        "h264_qsv",
+        "-preset",
+        "veryfast",
+        "-global_quality",
+        "23"
+      ],
+      "h264_amf": [
+        "-c:v",
+        "h264_amf",
+        "-quality",
+        "speed",
+        "-rc",
+        "cqp",
+        "-qp_i",
+        "23",
+        "-qp_p",
+        "23"
+      ],
+      "h264_mf": [
+        "-c:v",
+        "h264_mf",
+        "-hw_encoding",
+        "0",
+        "-rate_control",
+        "quality",
+        "-quality",
+        "80"
+      ],
+      "libx264": [
+        "-c:v",
+        "libx264",
+        "-preset",
+        "ultrafast",
+        "-tune",
+        "stillimage"
+      ]
+    },
+    "scene": {
+      "h264_nvenc": [
+        "-c:v",
+        "h264_nvenc",
+        "-preset",
+        "p5",
+        "-tune",
+        "hq",
+        "-rc",
+        "vbr",
+        "-cq",
+        "16"
+      ],
+      "h264_qsv": [
+        "-c:v",
+        "h264_qsv",
+        "-preset",
+        "medium",
+        "-global_quality",
+        "16"
+      ],
+      "h264_amf": [
+        "-c:v",
+        "h264_amf",
+        "-quality",
+        "quality",
+        "-rc",
+        "cqp",
+        "-qp_i",
+        "16",
+        "-qp_p",
+        "16",
+        "-qp_b",
+        "18"
+      ],
+      "h264_mf": [
+        "-c:v",
+        "h264_mf",
+        "-hw_encoding",
+        "0",
+        "-rate_control",
+        "quality",
+        "-quality",
+        "100"
+      ],
+      "libx264": [
+        "-c:v",
+        "libx264",
+        "-crf",
+        "16",
+        "-preset",
+        "medium"
+      ]
+    },
+    "conform": {
+      "h264_nvenc": [
+        "-c:v",
+        "h264_nvenc",
+        "-preset",
+        "p7",
+        "-tune",
+        "hq",
+        "-rc",
+        "vbr",
+        "-cq",
+        "19",
+        "-spatial-aq",
+        "1",
+        "-temporal-aq",
+        "1"
+      ],
+      "h264_qsv": [
+        "-c:v",
+        "h264_qsv",
+        "-preset",
+        "slow",
+        "-global_quality",
+        "18"
+      ],
+      "h264_amf": [
+        "-c:v",
+        "h264_amf",
+        "-quality",
+        "quality",
+        "-rc",
+        "cqp",
+        "-qp_i",
+        "18",
+        "-qp_p",
+        "18",
+        "-qp_b",
+        "20"
+      ],
+      "h264_mf": [
+        "-c:v",
+        "h264_mf",
+        "-hw_encoding",
+        "0",
+        "-rate_control",
+        "quality",
+        "-quality",
+        "95"
+      ],
+      "libx264": [
+        "-c:v",
+        "libx264",
+        "-preset",
+        "veryfast",
+        "-crf",
+        "18"
+      ]
+    }
+  },
+  "initFailures": {
+    "h264_nvenc": [
+      "cannot load nvcuda",
+      "cannot load libcuda",
+      "no nvenc capable devices",
+      "no capable devices found",
+      "cannot init cuda",
+      "driver does not support the required nvenc api version",
+      "openencodesessionex failed"
+    ],
+    "h264_qsv": [
+      "error creating a mfx loader",
+      "error creating a mfx session",
+      "error initializing an mfx session",
+      "failed to initialise vaapi connection",
+      "error initializing the encoder"
+    ],
+    "h264_amf": [
+      "dll amfrt64.dll failed to open",
+      "dll libamfrt64.so.1 failed to open",
+      "amf failed to initialise",
+      "failed to create  hardware device context (amf)",
+      "encoder->init() failed"
+    ],
+    "h264_mf": [
+      "dll mfplat.dll failed to open",
+      "dll mfplat.dll failed to find function",
+      "could not find any mft",
+      "could not create mft",
+      "could not initialize mediafoundation"
+    ],
+    "libx264": []
+  },
+  "selections": [
+    {
+      "file": "lgpl.txt",
+      "expected": {
+        "export": [
+          "h264_nvenc",
+          "h264_qsv",
+          "h264_amf",
+          "h264_mf"
+        ],
+        "proxy": [
+          "h264_nvenc",
+          "h264_qsv",
+          "h264_amf",
+          "h264_mf"
+        ],
+        "script": [
+          "h264_nvenc",
+          "h264_qsv",
+          "h264_amf",
+          "h264_mf"
+        ],
+        "scene": [
+          "h264_nvenc",
+          "h264_qsv",
+          "h264_amf",
+          "h264_mf"
+        ],
+        "conform": [
+          "h264_nvenc",
+          "h264_qsv",
+          "h264_amf",
+          "h264_mf"
+        ]
+      }
+    },
+    {
+      "file": "gpl.txt",
+      "expected": {
+        "export": [
+          "h264_nvenc",
+          "libx264"
+        ],
+        "proxy": [
+          "h264_nvenc",
+          "libx264"
+        ],
+        "script": [
+          "libx264"
+        ],
+        "scene": [
+          "h264_nvenc",
+          "libx264"
+        ],
+        "conform": [
+          "libx264"
+        ]
+      }
+    },
+    {
+      "file": "nvidia.txt",
+      "expected": {
+        "export": [
+          "h264_nvenc"
+        ],
+        "proxy": [
+          "h264_nvenc"
+        ],
+        "script": [
+          "h264_nvenc"
+        ],
+        "scene": [
+          "h264_nvenc"
+        ],
+        "conform": [
+          "h264_nvenc"
+        ]
+      }
+    },
+    {
+      "file": "intel.txt",
+      "expected": {
+        "export": [
+          "h264_qsv"
+        ],
+        "proxy": [
+          "h264_qsv"
+        ],
+        "script": [
+          "h264_qsv"
+        ],
+        "scene": [
+          "h264_qsv"
+        ],
+        "conform": [
+          "h264_qsv"
+        ]
+      }
+    },
+    {
+      "file": "amd.txt",
+      "expected": {
+        "export": [
+          "h264_amf"
+        ],
+        "proxy": [
+          "h264_amf"
+        ],
+        "script": [
+          "h264_amf"
+        ],
+        "scene": [
+          "h264_amf"
+        ],
+        "conform": [
+          "h264_amf"
+        ]
+      }
+    },
+    {
+      "file": "none.txt",
+      "expected": {
+        "export": [],
+        "proxy": [],
+        "script": [],
+        "scene": [],
+        "conform": []
+      }
+    }
+  ],
+  "restrictions": [
+    {
+      "available": [
+        "h264_nvenc",
+        "h264_qsv",
+        "h264_amf",
+        "h264_mf",
+        "libx264"
+      ],
+      "value": "libx264,h264_mf",
+      "expected": [
+        "libx264"
+      ],
+      "role": "export"
+    },
+    {
+      "available": [
+        "h264_nvenc",
+        "h264_mf"
+      ],
+      "value": "h264_qsv",
+      "expected": [],
+      "role": "export"
+    },
+    {
+      "available": [
+        "libopenh264"
+      ],
+      "value": "",
+      "expected": [],
+      "role": "export"
+    },
+    {
+      "available": [
+        "h264_nvenc",
+        "h264_qsv",
+        "h264_amf",
+        "h264_mf"
+      ],
+      "role": "script",
+      "value": "h264_mf,h264_qsv",
+      "expected": [
+        "h264_qsv",
+        "h264_mf"
+      ]
+    },
+    {
+      "available": [
+        "h264_nvenc",
+        "h264_mf",
+        "libx264"
+      ],
+      "role": "script",
+      "value": "h264_nvenc,h264_mf",
+      "expected": []
+    },
+    {
+      "available": [
+        "h264_nvenc",
+        "h264_qsv",
+        "h264_amf",
+        "h264_mf",
+        "libx264"
+      ],
+      "role": "conform",
+      "value": "libx264,h264_mf",
+      "expected": [
+        "libx264"
+      ]
+    }
+  ],
+  "genuineErrors": [
+    "configuration: --enable-nvenc --enable-libmfx --enable-amf --enable-mediafoundation\nmoov atom not found",
+    "Error while opening encoder - maybe incorrect parameters such as bit_rate, rate, width or height.",
+    "Error initializing output stream 0:0 -- Error while opening encoder",
+    "No such filter: zscale",
+    "Unknown encoder 'aac'",
+    "Permission denied",
+    "Error encoding frame: device failed after successful initialization",
+    "Failed processing input: 80004005",
+    "[h264_nvenc @ 0x0] Failed to initialize NVENC."
+  ],
+  "orders": {
+    "withLibx264": {
+      "export": [
+        "h264_nvenc",
+        "libx264"
+      ],
+      "proxy": [
+        "h264_nvenc",
+        "libx264"
+      ],
+      "script": [
+        "libx264"
+      ],
+      "scene": [
+        "h264_nvenc",
+        "libx264"
+      ],
+      "conform": [
+        "libx264"
+      ]
+    },
+    "withoutLibx264": [
+      "h264_nvenc",
+      "h264_qsv",
+      "h264_amf",
+      "h264_mf"
+    ]
+  }
+}

@@ -1,0 +1,582 @@
+{
+  "cases": [
+    {
+      "name": "headings, preamble, role prefixes, markup and an empty heading",
+      "script": "Morning light before any heading.\n\n## Hook: A tiny seed\nHave you seen a small seed grow **tall** beside a quiet garden wall?\n\n## A rainy day\nRain falls softly while the gardener walks\nalong the narrow path.\n\nAnother paragraph, same scene — still growing.\n\n## Empty heading\n\n## Wrap:\nMore leaves, brighter flowers. These are the signs of a new spring.",
+      "scenes": [
+        {
+          "title": "Morning light before any heading",
+          "role": "Hook",
+          "words": [
+            "Morning",
+            "light",
+            "before",
+            "any",
+            "heading."
+          ]
+        },
+        {
+          "title": "A tiny seed",
+          "role": "Hook",
+          "words": [
+            "Have",
+            "you",
+            "seen",
+            "a",
+            "small",
+            "seed",
+            "grow",
+            "tall",
+            "beside",
+            "a",
+            "quiet",
+            "garden",
+            "wall?"
+          ]
+        },
+        {
+          "title": "A rainy day",
+          "role": "Beat",
+          "words": [
+            "Rain",
+            "falls",
+            "softly",
+            "while",
+            "the",
+            "gardener",
+            "walks",
+            "along",
+            "the",
+            "narrow",
+            "path.",
+            "Another",
+            "paragraph,",
+            "same",
+            "scene",
+            "still",
+            "growing."
+          ]
+        },
+        {
+          "title": "More leaves, brighter flowers. These…",
+          "role": "Wrap",
+          "words": [
+            "More",
+            "leaves,",
+            "brighter",
+            "flowers.",
+            "These",
+            "are",
+            "the",
+            "signs",
+            "of",
+            "a",
+            "new",
+            "spring."
+          ]
+        }
+      ],
+      "timings": [
+        [
+          0.45,
+          0.9490000000000001
+        ],
+        [
+          0.9490000000000001,
+          1.354
+        ],
+        [
+          1.354,
+          1.806
+        ],
+        [
+          1.806,
+          2.117
+        ],
+        [
+          2.117,
+          2.996
+        ],
+        [
+          3.9960000000000004,
+          4.354
+        ],
+        [
+          4.354,
+          4.665
+        ],
+        [
+          4.665,
+          5.023
+        ],
+        [
+          5.023,
+          5.239999999999999
+        ],
+        [
+          5.239999999999999,
+          5.645
+        ],
+        [
+          5.645,
+          6.002999999999999
+        ],
+        [
+          6.002999999999999,
+          6.360999999999999
+        ],
+        [
+          6.360999999999999,
+          6.7189999999999985
+        ],
+        [
+          6.7189999999999985,
+          7.1709999999999985
+        ],
+        [
+          7.1709999999999985,
+          7.387999999999998
+        ],
+        [
+          7.387999999999998,
+          7.792999999999998
+        ],
+        [
+          7.792999999999998,
+          8.245
+        ],
+        [
+          8.245,
+          8.982999999999999
+        ],
+        [
+          9.982999999999999,
+          10.341
+        ],
+        [
+          10.341,
+          10.745999999999999
+        ],
+        [
+          10.745999999999999,
+          11.197999999999999
+        ],
+        [
+          11.197999999999999,
+          11.602999999999998
+        ],
+        [
+          11.602999999999998,
+          11.913999999999998
+        ],
+        [
+          11.913999999999998,
+          12.459999999999997
+        ],
+        [
+          12.459999999999997,
+          12.864999999999997
+        ],
+        [
+          12.864999999999997,
+          13.269999999999996
+        ],
+        [
+          13.269999999999996,
+          13.580999999999996
+        ],
+        [
+          13.580999999999996,
+          14.032999999999996
+        ],
+        [
+          14.032999999999996,
+          14.770999999999995
+        ],
+        [
+          14.770999999999995,
+          15.269999999999996
+        ],
+        [
+          15.269999999999996,
+          16.082999999999995
+        ],
+        [
+          16.082999999999995,
+          16.440999999999995
+        ],
+        [
+          16.440999999999995,
+          16.845999999999997
+        ],
+        [
+          16.845999999999997,
+          17.250999999999998
+        ],
+        [
+          17.250999999999998,
+          18.13
+        ],
+        [
+          19.13,
+          19.488
+        ],
+        [
+          19.488,
+          20.16
+        ],
+        [
+          20.16,
+          20.706
+        ],
+        [
+          20.706,
+          21.585
+        ],
+        [
+          21.585,
+          21.990000000000002
+        ],
+        [
+          21.990000000000002,
+          22.301000000000002
+        ],
+        [
+          22.301000000000002,
+          22.612000000000002
+        ],
+        [
+          22.612000000000002,
+          23.017000000000003
+        ],
+        [
+          23.017000000000003,
+          23.281000000000002
+        ],
+        [
+          23.281000000000002,
+          23.498
+        ],
+        [
+          23.498,
+          23.809
+        ],
+        [
+          23.809,
+          24.641000000000002
+        ]
+      ],
+      "duration": 25.191000000000003
+    },
+    {
+      "name": "paragraphs become scenes when there are no headings",
+      "script": "Well, um, here comes the rain.\nSmall flowers bloom beside the old gate.\n\n   \nLook now, a bird carries a seed.\n\nLeave the gate open.\n",
+      "scenes": [
+        {
+          "title": "Well, um, here comes the…",
+          "role": "Hook",
+          "words": [
+            "Well,",
+            "um,",
+            "here",
+            "comes",
+            "the",
+            "rain.",
+            "Small",
+            "flowers",
+            "bloom",
+            "beside",
+            "the",
+            "old",
+            "gate."
+          ]
+        },
+        {
+          "title": "Look now, a bird carries…",
+          "role": "Beat",
+          "words": [
+            "Look",
+            "now,",
+            "a",
+            "bird",
+            "carries",
+            "a",
+            "seed."
+          ]
+        },
+        {
+          "title": "Leave the gate open",
+          "role": "Wrap",
+          "words": [
+            "Leave",
+            "the",
+            "gate",
+            "open."
+          ]
+        }
+      ],
+      "timings": [
+        [
+          0.45,
+          1.028
+        ],
+        [
+          1.028,
+          1.448
+        ],
+        [
+          1.448,
+          1.806
+        ],
+        [
+          1.806,
+          2.2110000000000003
+        ],
+        [
+          2.2110000000000003,
+          2.5220000000000002
+        ],
+        [
+          2.5220000000000002,
+          3.2600000000000002
+        ],
+        [
+          3.2600000000000002,
+          3.665
+        ],
+        [
+          3.665,
+          4.164
+        ],
+        [
+          4.164,
+          4.569
+        ],
+        [
+          4.569,
+          5.021
+        ],
+        [
+          5.021,
+          5.332
+        ],
+        [
+          5.332,
+          5.643
+        ],
+        [
+          5.643,
+          6.381
+        ],
+        [
+          7.381,
+          7.739
+        ],
+        [
+          7.739,
+          8.27
+        ],
+        [
+          8.27,
+          8.487
+        ],
+        [
+          8.487,
+          8.845
+        ],
+        [
+          8.845,
+          9.344000000000001
+        ],
+        [
+          9.344000000000001,
+          9.561000000000002
+        ],
+        [
+          9.561000000000002,
+          10.299000000000001
+        ],
+        [
+          11.299000000000001,
+          11.704
+        ],
+        [
+          11.704,
+          12.015
+        ],
+        [
+          12.015,
+          12.373000000000001
+        ],
+        [
+          12.373000000000001,
+          13.111
+        ]
+      ],
+      "duration": 13.661000000000001
+    },
+    {
+      "name": "any heading level, case-insensitive roles, unknown prefixes, CRLF, caption metacharacters",
+      "script": "# problem: Dry soil\r\nRain arrives on {soft} garden soil.\r\n### Note: this is not a role\r\nIt falls by the gate - back\\slash `code` _too_.\r\n#hashtag is a word, not a heading",
+      "scenes": [
+        {
+          "title": "Dry soil",
+          "role": "Problem",
+          "words": [
+            "Rain",
+            "arrives",
+            "on",
+            "soft",
+            "garden",
+            "soil."
+          ]
+        },
+        {
+          "title": "Note: this is not a role",
+          "role": "Wrap",
+          "words": [
+            "It",
+            "falls",
+            "by",
+            "the",
+            "gate",
+            "backslash",
+            "code",
+            "too.",
+            "#hashtag",
+            "is",
+            "a",
+            "word,",
+            "not",
+            "a",
+            "heading"
+          ]
+        }
+      ],
+      "timings": [
+        [
+          0.45,
+          0.808
+        ],
+        [
+          0.808,
+          1.307
+        ],
+        [
+          1.307,
+          1.571
+        ],
+        [
+          1.571,
+          1.9289999999999998
+        ],
+        [
+          1.9289999999999998,
+          2.381
+        ],
+        [
+          2.381,
+          3.1189999999999998
+        ],
+        [
+          4.119,
+          4.383
+        ],
+        [
+          4.383,
+          4.788
+        ],
+        [
+          4.788,
+          5.0520000000000005
+        ],
+        [
+          5.0520000000000005,
+          5.363
+        ],
+        [
+          5.363,
+          5.721
+        ],
+        [
+          5.721,
+          6.314
+        ],
+        [
+          6.314,
+          6.672
+        ],
+        [
+          6.672,
+          7.3629999999999995
+        ],
+        [
+          7.3629999999999995,
+          7.861999999999999
+        ],
+        [
+          7.861999999999999,
+          8.126
+        ],
+        [
+          8.126,
+          8.343
+        ],
+        [
+          8.343,
+          8.921
+        ],
+        [
+          8.921,
+          9.232
+        ],
+        [
+          9.232,
+          9.449
+        ],
+        [
+          9.449,
+          9.948
+        ]
+      ],
+      "duration": 10.498000000000001
+    },
+    {
+      "name": "a single line is one Hook scene",
+      "script": "Just one seed.",
+      "scenes": [
+        {
+          "title": "Just one seed",
+          "role": "Hook",
+          "words": [
+            "Just",
+            "one",
+            "seed."
+          ]
+        }
+      ],
+      "timings": [
+        [
+          0.45,
+          0.808
+        ],
+        [
+          0.808,
+          1.1190000000000002
+        ],
+        [
+          1.1190000000000002,
+          1.8570000000000002
+        ]
+      ],
+      "duration": 2.407
+    },
+    {
+      "name": "nothing speakable makes no scenes",
+      "script": "## Only a heading\n\n- \n---\n",
+      "scenes": [],
+      "timings": [],
+      "duration": 0.0
+    }
+  ]
+}

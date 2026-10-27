@@ -1,0 +1,24 @@
+{
+  "cases": [
+    {
+      "name": "headings, preamble, role prefixes, markup and an empty heading",
+      "script": "Morning light before any heading.\n\n## Hook: A tiny seed\nHave you seen a small seed grow **tall** beside a quiet garden wall?\n\n## A rainy day\nRain falls softly while the gardener walks\nalong the narrow path.\n\nAnother paragraph, same scene — still growing.\n\n## Empty heading\n\n## Wrap:\nMore leaves, brighter flowers. These are the signs of a new spring."
+    },
+    {
+      "name": "paragraphs become scenes when there are no headings",
+      "script": "Well, um, here comes the rain.\nSmall flowers bloom beside the old gate.\n\n   \nLook now, a bird carries a seed.\n\nLeave the gate open.\n"
+    },
+    {
+      "name": "any heading level, case-insensitive roles, unknown prefixes, CRLF, caption metacharacters",
+      "script": "# problem: Dry soil\r\nRain arrives on {soft} garden soil.\r\n### Note: this is not a role\r\nIt falls by the gate - back\\slash `code` _too_.\r\n#hashtag is a word, not a heading"
+    },
+    {
+      "name": "a single line is one Hook scene",
+      "script": "Just one seed."
+    },
+    {
+      "name": "nothing speakable makes no scenes",
+      "script": "## Only a heading\n\n- \n---\n"
+    }
+  ]
+}

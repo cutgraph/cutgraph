@@ -1,0 +1,5 @@
+# Optional embedded-agent adapters. The core application starts without these.
+-r requirements-core.in
+-c requirements-core.txt
+claude-agent-sdk==0.2.121
+mcp==1.30.0

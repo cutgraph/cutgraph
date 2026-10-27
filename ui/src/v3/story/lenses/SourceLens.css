@@ -1,0 +1,15 @@
+/* Source lens and markup editor. */
+.v3 .story .source { max-width: 980px; margin: 0 auto; }
+.v3 .story .source-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
+.v3 .story .source-note { flex: 1; min-width: 0; font-size: 13px; color: var(--muted); }
+.v3 .story .source-note b { color: var(--text); }
+.v3 .story .mdx { margin: 0; overflow: auto; white-space: pre; background: #0a0c0e; border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; font: 13px/1.75 var(--mono); color: #c9d2d8; font-variant-ligatures: none; }
+.v3 .story .mdx .t { color: var(--yellow); }
+.v3 .story .mdx .s { color: var(--green); }
+.v3 .story .mdx .k { color: var(--violet); }
+.v3 .story .mdx .x { color: var(--coral); text-decoration: line-through; }
+.v3 .story .mdx .h { color: var(--text); font-weight: 700; }
+
+@media (max-width: 860px) {
+  .v3 .story .mdx { padding: 14px; font-size: 12px; }
+}

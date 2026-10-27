@@ -1,0 +1,3235 @@
+{
+  "project": {
+    "schemaVersion": 3,
+    "name": "synthetic-story",
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "revision": 2,
+    "transcript": null,
+    "tracks": [
+      {
+        "id": "speech",
+        "kind": "speech",
+        "clips": [
+          {
+            "id": "source-r251-s545",
+            "media": {
+              "source": "data/source/synthetic-story.mp4",
+              "proxy": null
+            },
+            "srcInF": 611,
+            "srcOutF": 696,
+            "tlStartF": 0,
+            "gainDb": 0.0
+          },
+          {
+            "id": "source",
+            "media": {
+              "source": "data/source/synthetic-story.mp4",
+              "proxy": null
+            },
+            "srcInF": 0,
+            "srcOutF": 179,
+            "tlStartF": 85,
+            "gainDb": 0.0
+          },
+          {
+            "id": "source-s179",
+            "media": {
+              "source": "data/source/synthetic-story.mp4",
+              "proxy": null
+            },
+            "srcInF": 179,
+            "srcOutF": 352,
+            "tlStartF": 264,
+            "gainDb": 0.0
+          },
+          {
+            "id": "source-r251",
+            "media": {
+              "source": "data/source/synthetic-story.mp4",
+              "proxy": null
+            },
+            "srcInF": 365,
+            "srcOutF": 611,
+            "tlStartF": 437,
+            "gainDb": 0.0
+          }
+        ]
+      }
+    ],
+    "scenes": [
+      {
+        "id": "scene-3",
+        "title": "Beat 45",
+        "role": "Wrap",
+        "startWord": 44,
+        "shot": {
+          "pose": "wave"
+        }
+      },
+      {
+        "id": "scene-1",
+        "title": "Beat 1",
+        "role": "Hook",
+        "startWord": 0,
+        "shot": {
+          "mode": "animation",
+          "pose": "cheer",
+          "cueWord": 8,
+          "headline": "Parity"
+        }
+      },
+      {
+        "id": "scene-2",
+        "title": "Beat 24",
+        "role": "Beat",
+        "startWord": 23,
+        "shot": {
+          "mode": "cameo",
+          "expression": "happy",
+          "cueWord": 26
+        }
+      }
+    ]
+  },
+  "cases": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "layout": [
+        1009.8000000000001,
+        46.0
+      ],
+      "budget": 54,
+      "pages": [
+        {
+          "on": 1,
+          "off": 298,
+          "words": [
+            {
+              "w": "and",
+              "start": 1,
+              "end": 33
+            },
+            {
+              "w": "peaceful",
+              "start": 38,
+              "end": 67
+            },
+            {
+              "w": "clouds",
+              "start": 73,
+              "end": 103
+            },
+            {
+              "w": "drifted",
+              "start": 109,
+              "end": 141
+            },
+            {
+              "w": "toward",
+              "start": 146,
+              "end": 175
+            },
+            {
+              "w": "the",
+              "start": 181,
+              "end": 211
+            },
+            {
+              "w": "distant",
+              "start": 217,
+              "end": 249
+            },
+            {
+              "w": "sea.",
+              "start": 254,
+              "end": 283
+            }
+          ]
+        },
+        {
+          "on": 298,
+          "off": 762,
+          "words": [
+            {
+              "w": "At",
+              "start": 298,
+              "end": 327
+            },
+            {
+              "w": "dawn",
+              "start": 333,
+              "end": 363
+            },
+            {
+              "w": "the",
+              "start": 369,
+              "end": 401
+            },
+            {
+              "w": "quiet",
+              "start": 406,
+              "end": 435
+            },
+            {
+              "w": "garden",
+              "start": 441,
+              "end": 471
+            },
+            {
+              "w": "opened",
+              "start": 477,
+              "end": 509
+            },
+            {
+              "w": "its",
+              "start": 514,
+              "end": 543
+            },
+            {
+              "w": "gate.",
+              "start": 549,
+              "end": 579
+            },
+            {
+              "w": "A",
+              "start": 585,
+              "end": 617
+            },
+            {
+              "w": "small",
+              "start": 692,
+              "end": 721
+            },
+            {
+              "w": "bird",
+              "start": 727,
+              "end": 757
+            }
+          ]
+        },
+        {
+          "on": 762,
+          "off": 1131,
+          "words": [
+            {
+              "w": "carried",
+              "start": 763,
+              "end": 795
+            },
+            {
+              "w": "a",
+              "start": 800,
+              "end": 829
+            },
+            {
+              "w": "seed",
+              "start": 835,
+              "end": 865
+            },
+            {
+              "w": "across",
+              "start": 871,
+              "end": 880
+            },
+            {
+              "w": "the",
+              "start": 908,
+              "end": 937
+            },
+            {
+              "w": "river.",
+              "start": 943,
+              "end": 973
+            },
+            {
+              "w": "Near",
+              "start": 979,
+              "end": 1011
+            },
+            {
+              "w": "noon",
+              "start": 1016,
+              "end": 1045
+            },
+            {
+              "w": "gentle",
+              "start": 1051,
+              "end": 1081
+            }
+          ]
+        },
+        {
+          "on": 1247,
+          "off": 1355,
+          "words": [
+            {
+              "w": "rain",
+              "start": 1247,
+              "end": 1279
+            },
+            {
+              "w": "filled",
+              "start": 1284,
+              "end": 1313
+            },
+            {
+              "w": "every",
+              "start": 1319,
+              "end": 1349
+            }
+          ]
+        },
+        {
+          "on": 1355,
+          "off": 1673,
+          "words": [
+            {
+              "w": "empty",
+              "start": 1355,
+              "end": 1387
+            },
+            {
+              "w": "cup.",
+              "start": 1392,
+              "end": 1421
+            },
+            {
+              "w": "By",
+              "start": 1427,
+              "end": 1457
+            },
+            {
+              "w": "bright",
+              "start": 1457,
+              "end": 1486
+            },
+            {
+              "w": "flowers",
+              "start": 1492,
+              "end": 1522
+            },
+            {
+              "w": "covered",
+              "start": 1528,
+              "end": 1560
+            },
+            {
+              "w": "the",
+              "start": 1560,
+              "end": 1560
+            },
+            {
+              "w": "hill",
+              "start": 1600,
+              "end": 1630
+            },
+            {
+              "w": "while",
+              "start": 1636,
+              "end": 1668
+            }
+          ]
+        },
+        {
+          "on": 1673,
+          "off": 1826,
+          "words": [
+            {
+              "w": "children",
+              "start": 1673,
+              "end": 1702
+            },
+            {
+              "w": "watched",
+              "start": 1708,
+              "end": 1738
+            },
+            {
+              "w": "from",
+              "start": 1743,
+              "end": 1776
+            }
+          ]
+        },
+        {
+          "on": 1931,
+          "off": 2262,
+          "words": [
+            {
+              "w": "a",
+              "start": 1931,
+              "end": 1960
+            },
+            {
+              "w": "stone",
+              "start": 1965,
+              "end": 1996
+            },
+            {
+              "w": "bridge.",
+              "start": 2001,
+              "end": 2033
+            },
+            {
+              "w": "Later",
+              "start": 2039,
+              "end": 2068
+            },
+            {
+              "w": "stars",
+              "start": 2074,
+              "end": 2104
+            },
+            {
+              "w": "shone",
+              "start": 2110,
+              "end": 2142
+            },
+            {
+              "w": "above",
+              "start": 2147,
+              "end": 2176
+            },
+            {
+              "w": "fields",
+              "start": 2182,
+              "end": 2212
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "start": 1,
+          "end": 33,
+          "page": 0,
+          "states": "CUUUUUUU"
+        },
+        {
+          "start": 33,
+          "end": 38,
+          "page": 0,
+          "states": "PUUUUUUU"
+        },
+        {
+          "start": 38,
+          "end": 67,
+          "page": 0,
+          "states": "PCUUUUUU"
+        },
+        {
+          "start": 67,
+          "end": 73,
+          "page": 0,
+          "states": "PPUUUUUU"
+        },
+        {
+          "start": 73,
+          "end": 103,
+          "page": 0,
+          "states": "PPCUUUUU"
+        },
+        {
+          "start": 103,
+          "end": 109,
+          "page": 0,
+          "states": "PPPUUUUU"
+        },
+        {
+          "start": 109,
+          "end": 141,
+          "page": 0,
+          "states": "PPPCUUUU"
+        },
+        {
+          "start": 141,
+          "end": 146,
+          "page": 0,
+          "states": "PPPPUUUU"
+        },
+        {
+          "start": 146,
+          "end": 175,
+          "page": 0,
+          "states": "PPPPCUUU"
+        },
+        {
+          "start": 175,
+          "end": 181,
+          "page": 0,
+          "states": "PPPPPUUU"
+        },
+        {
+          "start": 181,
+          "end": 211,
+          "page": 0,
+          "states": "PPPPPCUU"
+        },
+        {
+          "start": 211,
+          "end": 217,
+          "page": 0,
+          "states": "PPPPPPUU"
+        },
+        {
+          "start": 217,
+          "end": 249,
+          "page": 0,
+          "states": "PPPPPPCU"
+        },
+        {
+          "start": 249,
+          "end": 254,
+          "page": 0,
+          "states": "PPPPPPPU"
+        },
+        {
+          "start": 254,
+          "end": 283,
+          "page": 0,
+          "states": "PPPPPPPC"
+        },
+        {
+          "start": 283,
+          "end": 298,
+          "page": 0,
+          "states": "PPPPPPPP"
+        },
+        {
+          "start": 298,
+          "end": 327,
+          "page": 1,
+          "states": "CUUUUUUUUUU"
+        },
+        {
+          "start": 327,
+          "end": 333,
+          "page": 1,
+          "states": "PUUUUUUUUUU"
+        },
+        {
+          "start": 333,
+          "end": 363,
+          "page": 1,
+          "states": "PCUUUUUUUUU"
+        },
+        {
+          "start": 363,
+          "end": 369,
+          "page": 1,
+          "states": "PPUUUUUUUUU"
+        },
+        {
+          "start": 369,
+          "end": 401,
+          "page": 1,
+          "states": "PPCUUUUUUUU"
+        },
+        {
+          "start": 401,
+          "end": 406,
+          "page": 1,
+          "states": "PPPUUUUUUUU"
+        },
+        {
+          "start": 406,
+          "end": 435,
+          "page": 1,
+          "states": "PPPCUUUUUUU"
+        },
+        {
+          "start": 435,
+          "end": 441,
+          "page": 1,
+          "states": "PPPPUUUUUUU"
+        },
+        {
+          "start": 441,
+          "end": 471,
+          "page": 1,
+          "states": "PPPPCUUUUUU"
+        },
+        {
+          "start": 471,
+          "end": 477,
+          "page": 1,
+          "states": "PPPPPUUUUUU"
+        },
+        {
+          "start": 477,
+          "end": 509,
+          "page": 1,
+          "states": "PPPPPCUUUUU"
+        },
+        {
+          "start": 509,
+          "end": 514,
+          "page": 1,
+          "states": "PPPPPPUUUUU"
+        },
+        {
+          "start": 514,
+          "end": 543,
+          "page": 1,
+          "states": "PPPPPPCUUUU"
+        },
+        {
+          "start": 543,
+          "end": 549,
+          "page": 1,
+          "states": "PPPPPPPUUUU"
+        },
+        {
+          "start": 549,
+          "end": 579,
+          "page": 1,
+          "states": "PPPPPPPCUUU"
+        },
+        {
+          "start": 579,
+          "end": 585,
+          "page": 1,
+          "states": "PPPPPPPPUUU"
+        },
+        {
+          "start": 585,
+          "end": 617,
+          "page": 1,
+          "states": "PPPPPPPPCUU"
+        },
+        {
+          "start": 617,
+          "end": 692,
+          "page": 1,
+          "states": "PPPPPPPPPUU"
+        },
+        {
+          "start": 692,
+          "end": 721,
+          "page": 1,
+          "states": "PPPPPPPPPCU"
+        },
+        {
+          "start": 721,
+          "end": 727,
+          "page": 1,
+          "states": "PPPPPPPPPPU"
+        },
+        {
+          "start": 727,
+          "end": 757,
+          "page": 1,
+          "states": "PPPPPPPPPPC"
+        },
+        {
+          "start": 757,
+          "end": 762,
+          "page": 1,
+          "states": "PPPPPPPPPPP"
+        },
+        {
+          "start": 762,
+          "end": 763,
+          "page": 2,
+          "states": "UUUUUUUUU"
+        },
+        {
+          "start": 763,
+          "end": 795,
+          "page": 2,
+          "states": "CUUUUUUUU"
+        },
+        {
+          "start": 795,
+          "end": 800,
+          "page": 2,
+          "states": "PUUUUUUUU"
+        },
+        {
+          "start": 800,
+          "end": 829,
+          "page": 2,
+          "states": "PCUUUUUUU"
+        },
+        {
+          "start": 829,
+          "end": 835,
+          "page": 2,
+          "states": "PPUUUUUUU"
+        },
+        {
+          "start": 835,
+          "end": 865,
+          "page": 2,
+          "states": "PPCUUUUUU"
+        },
+        {
+          "start": 865,
+          "end": 871,
+          "page": 2,
+          "states": "PPPUUUUUU"
+        },
+        {
+          "start": 871,
+          "end": 880,
+          "page": 2,
+          "states": "PPPCUUUUU"
+        },
+        {
+          "start": 880,
+          "end": 908,
+          "page": 2,
+          "states": "PPPPUUUUU"
+        },
+        {
+          "start": 908,
+          "end": 937,
+          "page": 2,
+          "states": "PPPPCUUUU"
+        },
+        {
+          "start": 937,
+          "end": 943,
+          "page": 2,
+          "states": "PPPPPUUUU"
+        },
+        {
+          "start": 943,
+          "end": 973,
+          "page": 2,
+          "states": "PPPPPCUUU"
+        },
+        {
+          "start": 973,
+          "end": 979,
+          "page": 2,
+          "states": "PPPPPPUUU"
+        },
+        {
+          "start": 979,
+          "end": 1011,
+          "page": 2,
+          "states": "PPPPPPCUU"
+        },
+        {
+          "start": 1011,
+          "end": 1016,
+          "page": 2,
+          "states": "PPPPPPPUU"
+        },
+        {
+          "start": 1016,
+          "end": 1045,
+          "page": 2,
+          "states": "PPPPPPPCU"
+        },
+        {
+          "start": 1045,
+          "end": 1051,
+          "page": 2,
+          "states": "PPPPPPPPU"
+        },
+        {
+          "start": 1051,
+          "end": 1081,
+          "page": 2,
+          "states": "PPPPPPPPC"
+        },
+        {
+          "start": 1081,
+          "end": 1131,
+          "page": 2,
+          "states": "PPPPPPPPP"
+        },
+        {
+          "start": 1247,
+          "end": 1279,
+          "page": 3,
+          "states": "CUU"
+        },
+        {
+          "start": 1279,
+          "end": 1284,
+          "page": 3,
+          "states": "PUU"
+        },
+        {
+          "start": 1284,
+          "end": 1313,
+          "page": 3,
+          "states": "PCU"
+        },
+        {
+          "start": 1313,
+          "end": 1319,
+          "page": 3,
+          "states": "PPU"
+        },
+        {
+          "start": 1319,
+          "end": 1349,
+          "page": 3,
+          "states": "PPC"
+        },
+        {
+          "start": 1349,
+          "end": 1355,
+          "page": 3,
+          "states": "PPP"
+        },
+        {
+          "start": 1355,
+          "end": 1387,
+          "page": 4,
+          "states": "CUUUUUUUU"
+        },
+        {
+          "start": 1387,
+          "end": 1392,
+          "page": 4,
+          "states": "PUUUUUUUU"
+        },
+        {
+          "start": 1392,
+          "end": 1421,
+          "page": 4,
+          "states": "PCUUUUUUU"
+        },
+        {
+          "start": 1421,
+          "end": 1427,
+          "page": 4,
+          "states": "PPUUUUUUU"
+        },
+        {
+          "start": 1427,
+          "end": 1457,
+          "page": 4,
+          "states": "PPCUUUUUU"
+        },
+        {
+          "start": 1457,
+          "end": 1486,
+          "page": 4,
+          "states": "PPPCUUUUU"
+        },
+        {
+          "start": 1486,
+          "end": 1492,
+          "page": 4,
+          "states": "PPPPUUUUU"
+        },
+        {
+          "start": 1492,
+          "end": 1522,
+          "page": 4,
+          "states": "PPPPCUUUU"
+        },
+        {
+          "start": 1522,
+          "end": 1528,
+          "page": 4,
+          "states": "PPPPPUUUU"
+        },
+        {
+          "start": 1528,
+          "end": 1560,
+          "page": 4,
+          "states": "PPPPPCUUU"
+        },
+        {
+          "start": 1560,
+          "end": 1600,
+          "page": 4,
+          "states": "PPPPPPPUU"
+        },
+        {
+          "start": 1600,
+          "end": 1630,
+          "page": 4,
+          "states": "PPPPPPPCU"
+        },
+        {
+          "start": 1630,
+          "end": 1636,
+          "page": 4,
+          "states": "PPPPPPPPU"
+        },
+        {
+          "start": 1636,
+          "end": 1668,
+          "page": 4,
+          "states": "PPPPPPPPC"
+        },
+        {
+          "start": 1668,
+          "end": 1673,
+          "page": 4,
+          "states": "PPPPPPPPP"
+        },
+        {
+          "start": 1673,
+          "end": 1702,
+          "page": 5,
+          "states": "CUU"
+        },
+        {
+          "start": 1702,
+          "end": 1708,
+          "page": 5,
+          "states": "PUU"
+        },
+        {
+          "start": 1708,
+          "end": 1738,
+          "page": 5,
+          "states": "PCU"
+        },
+        {
+          "start": 1738,
+          "end": 1743,
+          "page": 5,
+          "states": "PPU"
+        },
+        {
+          "start": 1743,
+          "end": 1776,
+          "page": 5,
+          "states": "PPC"
+        },
+        {
+          "start": 1776,
+          "end": 1826,
+          "page": 5,
+          "states": "PPP"
+        },
+        {
+          "start": 1931,
+          "end": 1960,
+          "page": 6,
+          "states": "CUUUUUUU"
+        },
+        {
+          "start": 1960,
+          "end": 1965,
+          "page": 6,
+          "states": "PUUUUUUU"
+        },
+        {
+          "start": 1965,
+          "end": 1996,
+          "page": 6,
+          "states": "PCUUUUUU"
+        },
+        {
+          "start": 1996,
+          "end": 2001,
+          "page": 6,
+          "states": "PPUUUUUU"
+        },
+        {
+          "start": 2001,
+          "end": 2033,
+          "page": 6,
+          "states": "PPCUUUUU"
+        },
+        {
+          "start": 2033,
+          "end": 2039,
+          "page": 6,
+          "states": "PPPUUUUU"
+        },
+        {
+          "start": 2039,
+          "end": 2068,
+          "page": 6,
+          "states": "PPPCUUUU"
+        },
+        {
+          "start": 2068,
+          "end": 2074,
+          "page": 6,
+          "states": "PPPPUUUU"
+        },
+        {
+          "start": 2074,
+          "end": 2104,
+          "page": 6,
+          "states": "PPPPCUUU"
+        },
+        {
+          "start": 2104,
+          "end": 2110,
+          "page": 6,
+          "states": "PPPPPUUU"
+        },
+        {
+          "start": 2110,
+          "end": 2142,
+          "page": 6,
+          "states": "PPPPPCUU"
+        },
+        {
+          "start": 2142,
+          "end": 2147,
+          "page": 6,
+          "states": "PPPPPPUU"
+        },
+        {
+          "start": 2147,
+          "end": 2176,
+          "page": 6,
+          "states": "PPPPPPCU"
+        },
+        {
+          "start": 2176,
+          "end": 2182,
+          "page": 6,
+          "states": "PPPPPPPU"
+        },
+        {
+          "start": 2182,
+          "end": 2212,
+          "page": 6,
+          "states": "PPPPPPPC"
+        },
+        {
+          "start": 2212,
+          "end": 2262,
+          "page": 6,
+          "states": "PPPPPPPP"
+        }
+      ]
+    },
+    {
+      "width": 1080,
+      "height": 1920,
+      "layout": [
+        1728.0,
+        58.0
+      ],
+      "budget": 24,
+      "pages": [
+        {
+          "on": 1,
+          "off": 108,
+          "words": [
+            {
+              "w": "and",
+              "start": 1,
+              "end": 33
+            },
+            {
+              "w": "peaceful",
+              "start": 38,
+              "end": 67
+            },
+            {
+              "w": "clouds",
+              "start": 73,
+              "end": 103
+            }
+          ]
+        },
+        {
+          "on": 108,
+          "off": 216,
+          "words": [
+            {
+              "w": "drifted",
+              "start": 109,
+              "end": 141
+            },
+            {
+              "w": "toward",
+              "start": 146,
+              "end": 175
+            },
+            {
+              "w": "the",
+              "start": 181,
+              "end": 211
+            }
+          ]
+        },
+        {
+          "on": 216,
+          "off": 298,
+          "words": [
+            {
+              "w": "distant",
+              "start": 217,
+              "end": 249
+            },
+            {
+              "w": "sea.",
+              "start": 254,
+              "end": 283
+            }
+          ]
+        },
+        {
+          "on": 298,
+          "off": 476,
+          "words": [
+            {
+              "w": "At",
+              "start": 298,
+              "end": 327
+            },
+            {
+              "w": "dawn",
+              "start": 333,
+              "end": 363
+            },
+            {
+              "w": "the",
+              "start": 369,
+              "end": 401
+            },
+            {
+              "w": "quiet",
+              "start": 406,
+              "end": 435
+            },
+            {
+              "w": "garden",
+              "start": 441,
+              "end": 471
+            }
+          ]
+        },
+        {
+          "on": 476,
+          "off": 726,
+          "words": [
+            {
+              "w": "opened",
+              "start": 477,
+              "end": 509
+            },
+            {
+              "w": "its",
+              "start": 514,
+              "end": 543
+            },
+            {
+              "w": "gate.",
+              "start": 549,
+              "end": 579
+            },
+            {
+              "w": "A",
+              "start": 585,
+              "end": 617
+            },
+            {
+              "w": "small",
+              "start": 692,
+              "end": 721
+            }
+          ]
+        },
+        {
+          "on": 726,
+          "off": 870,
+          "words": [
+            {
+              "w": "bird",
+              "start": 727,
+              "end": 757
+            },
+            {
+              "w": "carried",
+              "start": 763,
+              "end": 795
+            },
+            {
+              "w": "a",
+              "start": 800,
+              "end": 829
+            },
+            {
+              "w": "seed",
+              "start": 835,
+              "end": 865
+            }
+          ]
+        },
+        {
+          "on": 870,
+          "off": 1016,
+          "words": [
+            {
+              "w": "across",
+              "start": 871,
+              "end": 880
+            },
+            {
+              "w": "the",
+              "start": 908,
+              "end": 937
+            },
+            {
+              "w": "river.",
+              "start": 943,
+              "end": 973
+            },
+            {
+              "w": "Near",
+              "start": 979,
+              "end": 1011
+            }
+          ]
+        },
+        {
+          "on": 1016,
+          "off": 1131,
+          "words": [
+            {
+              "w": "noon",
+              "start": 1016,
+              "end": 1045
+            },
+            {
+              "w": "gentle",
+              "start": 1051,
+              "end": 1081
+            }
+          ]
+        },
+        {
+          "on": 1247,
+          "off": 1355,
+          "words": [
+            {
+              "w": "rain",
+              "start": 1247,
+              "end": 1279
+            },
+            {
+              "w": "filled",
+              "start": 1284,
+              "end": 1313
+            },
+            {
+              "w": "every",
+              "start": 1319,
+              "end": 1349
+            }
+          ]
+        },
+        {
+          "on": 1355,
+          "off": 1491,
+          "words": [
+            {
+              "w": "empty",
+              "start": 1355,
+              "end": 1387
+            },
+            {
+              "w": "cup.",
+              "start": 1392,
+              "end": 1421
+            },
+            {
+              "w": "By",
+              "start": 1427,
+              "end": 1457
+            },
+            {
+              "w": "bright",
+              "start": 1457,
+              "end": 1486
+            }
+          ]
+        },
+        {
+          "on": 1491,
+          "off": 1635,
+          "words": [
+            {
+              "w": "flowers",
+              "start": 1492,
+              "end": 1522
+            },
+            {
+              "w": "covered",
+              "start": 1528,
+              "end": 1560
+            },
+            {
+              "w": "the",
+              "start": 1560,
+              "end": 1560
+            },
+            {
+              "w": "hill",
+              "start": 1600,
+              "end": 1630
+            }
+          ]
+        },
+        {
+          "on": 1635,
+          "off": 1743,
+          "words": [
+            {
+              "w": "while",
+              "start": 1636,
+              "end": 1668
+            },
+            {
+              "w": "children",
+              "start": 1673,
+              "end": 1702
+            },
+            {
+              "w": "watched",
+              "start": 1708,
+              "end": 1738
+            }
+          ]
+        },
+        {
+          "on": 1743,
+          "off": 1826,
+          "words": [
+            {
+              "w": "from",
+              "start": 1743,
+              "end": 1776
+            }
+          ]
+        },
+        {
+          "on": 1931,
+          "off": 2073,
+          "words": [
+            {
+              "w": "a",
+              "start": 1931,
+              "end": 1960
+            },
+            {
+              "w": "stone",
+              "start": 1965,
+              "end": 1996
+            },
+            {
+              "w": "bridge.",
+              "start": 2001,
+              "end": 2033
+            },
+            {
+              "w": "Later",
+              "start": 2039,
+              "end": 2068
+            }
+          ]
+        },
+        {
+          "on": 2073,
+          "off": 2262,
+          "words": [
+            {
+              "w": "stars",
+              "start": 2074,
+              "end": 2104
+            },
+            {
+              "w": "shone",
+              "start": 2110,
+              "end": 2142
+            },
+            {
+              "w": "above",
+              "start": 2147,
+              "end": 2176
+            },
+            {
+              "w": "fields",
+              "start": 2182,
+              "end": 2212
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "start": 1,
+          "end": 33,
+          "page": 0,
+          "states": "CUU"
+        },
+        {
+          "start": 33,
+          "end": 38,
+          "page": 0,
+          "states": "PUU"
+        },
+        {
+          "start": 38,
+          "end": 67,
+          "page": 0,
+          "states": "PCU"
+        },
+        {
+          "start": 67,
+          "end": 73,
+          "page": 0,
+          "states": "PPU"
+        },
+        {
+          "start": 73,
+          "end": 103,
+          "page": 0,
+          "states": "PPC"
+        },
+        {
+          "start": 103,
+          "end": 108,
+          "page": 0,
+          "states": "PPP"
+        },
+        {
+          "start": 108,
+          "end": 109,
+          "page": 1,
+          "states": "UUU"
+        },
+        {
+          "start": 109,
+          "end": 141,
+          "page": 1,
+          "states": "CUU"
+        },
+        {
+          "start": 141,
+          "end": 146,
+          "page": 1,
+          "states": "PUU"
+        },
+        {
+          "start": 146,
+          "end": 175,
+          "page": 1,
+          "states": "PCU"
+        },
+        {
+          "start": 175,
+          "end": 181,
+          "page": 1,
+          "states": "PPU"
+        },
+        {
+          "start": 181,
+          "end": 211,
+          "page": 1,
+          "states": "PPC"
+        },
+        {
+          "start": 211,
+          "end": 216,
+          "page": 1,
+          "states": "PPP"
+        },
+        {
+          "start": 216,
+          "end": 217,
+          "page": 2,
+          "states": "UU"
+        },
+        {
+          "start": 217,
+          "end": 249,
+          "page": 2,
+          "states": "CU"
+        },
+        {
+          "start": 249,
+          "end": 254,
+          "page": 2,
+          "states": "PU"
+        },
+        {
+          "start": 254,
+          "end": 283,
+          "page": 2,
+          "states": "PC"
+        },
+        {
+          "start": 283,
+          "end": 298,
+          "page": 2,
+          "states": "PP"
+        },
+        {
+          "start": 298,
+          "end": 327,
+          "page": 3,
+          "states": "CUUUU"
+        },
+        {
+          "start": 327,
+          "end": 333,
+          "page": 3,
+          "states": "PUUUU"
+        },
+        {
+          "start": 333,
+          "end": 363,
+          "page": 3,
+          "states": "PCUUU"
+        },
+        {
+          "start": 363,
+          "end": 369,
+          "page": 3,
+          "states": "PPUUU"
+        },
+        {
+          "start": 369,
+          "end": 401,
+          "page": 3,
+          "states": "PPCUU"
+        },
+        {
+          "start": 401,
+          "end": 406,
+          "page": 3,
+          "states": "PPPUU"
+        },
+        {
+          "start": 406,
+          "end": 435,
+          "page": 3,
+          "states": "PPPCU"
+        },
+        {
+          "start": 435,
+          "end": 441,
+          "page": 3,
+          "states": "PPPPU"
+        },
+        {
+          "start": 441,
+          "end": 471,
+          "page": 3,
+          "states": "PPPPC"
+        },
+        {
+          "start": 471,
+          "end": 476,
+          "page": 3,
+          "states": "PPPPP"
+        },
+        {
+          "start": 476,
+          "end": 477,
+          "page": 4,
+          "states": "UUUUU"
+        },
+        {
+          "start": 477,
+          "end": 509,
+          "page": 4,
+          "states": "CUUUU"
+        },
+        {
+          "start": 509,
+          "end": 514,
+          "page": 4,
+          "states": "PUUUU"
+        },
+        {
+          "start": 514,
+          "end": 543,
+          "page": 4,
+          "states": "PCUUU"
+        },
+        {
+          "start": 543,
+          "end": 549,
+          "page": 4,
+          "states": "PPUUU"
+        },
+        {
+          "start": 549,
+          "end": 579,
+          "page": 4,
+          "states": "PPCUU"
+        },
+        {
+          "start": 579,
+          "end": 585,
+          "page": 4,
+          "states": "PPPUU"
+        },
+        {
+          "start": 585,
+          "end": 617,
+          "page": 4,
+          "states": "PPPCU"
+        },
+        {
+          "start": 617,
+          "end": 692,
+          "page": 4,
+          "states": "PPPPU"
+        },
+        {
+          "start": 692,
+          "end": 721,
+          "page": 4,
+          "states": "PPPPC"
+        },
+        {
+          "start": 721,
+          "end": 726,
+          "page": 4,
+          "states": "PPPPP"
+        },
+        {
+          "start": 726,
+          "end": 727,
+          "page": 5,
+          "states": "UUUU"
+        },
+        {
+          "start": 727,
+          "end": 757,
+          "page": 5,
+          "states": "CUUU"
+        },
+        {
+          "start": 757,
+          "end": 763,
+          "page": 5,
+          "states": "PUUU"
+        },
+        {
+          "start": 763,
+          "end": 795,
+          "page": 5,
+          "states": "PCUU"
+        },
+        {
+          "start": 795,
+          "end": 800,
+          "page": 5,
+          "states": "PPUU"
+        },
+        {
+          "start": 800,
+          "end": 829,
+          "page": 5,
+          "states": "PPCU"
+        },
+        {
+          "start": 829,
+          "end": 835,
+          "page": 5,
+          "states": "PPPU"
+        },
+        {
+          "start": 835,
+          "end": 865,
+          "page": 5,
+          "states": "PPPC"
+        },
+        {
+          "start": 865,
+          "end": 870,
+          "page": 5,
+          "states": "PPPP"
+        },
+        {
+          "start": 870,
+          "end": 871,
+          "page": 6,
+          "states": "UUUU"
+        },
+        {
+          "start": 871,
+          "end": 880,
+          "page": 6,
+          "states": "CUUU"
+        },
+        {
+          "start": 880,
+          "end": 908,
+          "page": 6,
+          "states": "PUUU"
+        },
+        {
+          "start": 908,
+          "end": 937,
+          "page": 6,
+          "states": "PCUU"
+        },
+        {
+          "start": 937,
+          "end": 943,
+          "page": 6,
+          "states": "PPUU"
+        },
+        {
+          "start": 943,
+          "end": 973,
+          "page": 6,
+          "states": "PPCU"
+        },
+        {
+          "start": 973,
+          "end": 979,
+          "page": 6,
+          "states": "PPPU"
+        },
+        {
+          "start": 979,
+          "end": 1011,
+          "page": 6,
+          "states": "PPPC"
+        },
+        {
+          "start": 1011,
+          "end": 1016,
+          "page": 6,
+          "states": "PPPP"
+        },
+        {
+          "start": 1016,
+          "end": 1045,
+          "page": 7,
+          "states": "CU"
+        },
+        {
+          "start": 1045,
+          "end": 1051,
+          "page": 7,
+          "states": "PU"
+        },
+        {
+          "start": 1051,
+          "end": 1081,
+          "page": 7,
+          "states": "PC"
+        },
+        {
+          "start": 1081,
+          "end": 1131,
+          "page": 7,
+          "states": "PP"
+        },
+        {
+          "start": 1247,
+          "end": 1279,
+          "page": 8,
+          "states": "CUU"
+        },
+        {
+          "start": 1279,
+          "end": 1284,
+          "page": 8,
+          "states": "PUU"
+        },
+        {
+          "start": 1284,
+          "end": 1313,
+          "page": 8,
+          "states": "PCU"
+        },
+        {
+          "start": 1313,
+          "end": 1319,
+          "page": 8,
+          "states": "PPU"
+        },
+        {
+          "start": 1319,
+          "end": 1349,
+          "page": 8,
+          "states": "PPC"
+        },
+        {
+          "start": 1349,
+          "end": 1355,
+          "page": 8,
+          "states": "PPP"
+        },
+        {
+          "start": 1355,
+          "end": 1387,
+          "page": 9,
+          "states": "CUUU"
+        },
+        {
+          "start": 1387,
+          "end": 1392,
+          "page": 9,
+          "states": "PUUU"
+        },
+        {
+          "start": 1392,
+          "end": 1421,
+          "page": 9,
+          "states": "PCUU"
+        },
+        {
+          "start": 1421,
+          "end": 1427,
+          "page": 9,
+          "states": "PPUU"
+        },
+        {
+          "start": 1427,
+          "end": 1457,
+          "page": 9,
+          "states": "PPCU"
+        },
+        {
+          "start": 1457,
+          "end": 1486,
+          "page": 9,
+          "states": "PPPC"
+        },
+        {
+          "start": 1486,
+          "end": 1491,
+          "page": 9,
+          "states": "PPPP"
+        },
+        {
+          "start": 1491,
+          "end": 1492,
+          "page": 10,
+          "states": "UUUU"
+        },
+        {
+          "start": 1492,
+          "end": 1522,
+          "page": 10,
+          "states": "CUUU"
+        },
+        {
+          "start": 1522,
+          "end": 1528,
+          "page": 10,
+          "states": "PUUU"
+        },
+        {
+          "start": 1528,
+          "end": 1560,
+          "page": 10,
+          "states": "PCUU"
+        },
+        {
+          "start": 1560,
+          "end": 1600,
+          "page": 10,
+          "states": "PPPU"
+        },
+        {
+          "start": 1600,
+          "end": 1630,
+          "page": 10,
+          "states": "PPPC"
+        },
+        {
+          "start": 1630,
+          "end": 1635,
+          "page": 10,
+          "states": "PPPP"
+        },
+        {
+          "start": 1635,
+          "end": 1636,
+          "page": 11,
+          "states": "UUU"
+        },
+        {
+          "start": 1636,
+          "end": 1668,
+          "page": 11,
+          "states": "CUU"
+        },
+        {
+          "start": 1668,
+          "end": 1673,
+          "page": 11,
+          "states": "PUU"
+        },
+        {
+          "start": 1673,
+          "end": 1702,
+          "page": 11,
+          "states": "PCU"
+        },
+        {
+          "start": 1702,
+          "end": 1708,
+          "page": 11,
+          "states": "PPU"
+        },
+        {
+          "start": 1708,
+          "end": 1738,
+          "page": 11,
+          "states": "PPC"
+        },
+        {
+          "start": 1738,
+          "end": 1743,
+          "page": 11,
+          "states": "PPP"
+        },
+        {
+          "start": 1743,
+          "end": 1776,
+          "page": 12,
+          "states": "C"
+        },
+        {
+          "start": 1776,
+          "end": 1826,
+          "page": 12,
+          "states": "P"
+        },
+        {
+          "start": 1931,
+          "end": 1960,
+          "page": 13,
+          "states": "CUUU"
+        },
+        {
+          "start": 1960,
+          "end": 1965,
+          "page": 13,
+          "states": "PUUU"
+        },
+        {
+          "start": 1965,
+          "end": 1996,
+          "page": 13,
+          "states": "PCUU"
+        },
+        {
+          "start": 1996,
+          "end": 2001,
+          "page": 13,
+          "states": "PPUU"
+        },
+        {
+          "start": 2001,
+          "end": 2033,
+          "page": 13,
+          "states": "PPCU"
+        },
+        {
+          "start": 2033,
+          "end": 2039,
+          "page": 13,
+          "states": "PPPU"
+        },
+        {
+          "start": 2039,
+          "end": 2068,
+          "page": 13,
+          "states": "PPPC"
+        },
+        {
+          "start": 2068,
+          "end": 2073,
+          "page": 13,
+          "states": "PPPP"
+        },
+        {
+          "start": 2073,
+          "end": 2074,
+          "page": 14,
+          "states": "UUUU"
+        },
+        {
+          "start": 2074,
+          "end": 2104,
+          "page": 14,
+          "states": "CUUU"
+        },
+        {
+          "start": 2104,
+          "end": 2110,
+          "page": 14,
+          "states": "PUUU"
+        },
+        {
+          "start": 2110,
+          "end": 2142,
+          "page": 14,
+          "states": "PCUU"
+        },
+        {
+          "start": 2142,
+          "end": 2147,
+          "page": 14,
+          "states": "PPUU"
+        },
+        {
+          "start": 2147,
+          "end": 2176,
+          "page": 14,
+          "states": "PPCU"
+        },
+        {
+          "start": 2176,
+          "end": 2182,
+          "page": 14,
+          "states": "PPPU"
+        },
+        {
+          "start": 2182,
+          "end": 2212,
+          "page": 14,
+          "states": "PPPC"
+        },
+        {
+          "start": 2212,
+          "end": 2262,
+          "page": 14,
+          "states": "PPPP"
+        }
+      ]
+    },
+    {
+      "width": 1080,
+      "height": 1080,
+      "layout": [
+        1009.8000000000001,
+        44.0
+      ],
+      "budget": 32,
+      "pages": [
+        {
+          "on": 1,
+          "off": 146,
+          "words": [
+            {
+              "w": "and",
+              "start": 1,
+              "end": 33
+            },
+            {
+              "w": "peaceful",
+              "start": 38,
+              "end": 67
+            },
+            {
+              "w": "clouds",
+              "start": 73,
+              "end": 103
+            },
+            {
+              "w": "drifted",
+              "start": 109,
+              "end": 141
+            }
+          ]
+        },
+        {
+          "on": 146,
+          "off": 298,
+          "words": [
+            {
+              "w": "toward",
+              "start": 146,
+              "end": 175
+            },
+            {
+              "w": "the",
+              "start": 181,
+              "end": 211
+            },
+            {
+              "w": "distant",
+              "start": 217,
+              "end": 249
+            },
+            {
+              "w": "sea.",
+              "start": 254,
+              "end": 283
+            }
+          ]
+        },
+        {
+          "on": 298,
+          "off": 514,
+          "words": [
+            {
+              "w": "At",
+              "start": 298,
+              "end": 327
+            },
+            {
+              "w": "dawn",
+              "start": 333,
+              "end": 363
+            },
+            {
+              "w": "the",
+              "start": 369,
+              "end": 401
+            },
+            {
+              "w": "quiet",
+              "start": 406,
+              "end": 435
+            },
+            {
+              "w": "garden",
+              "start": 441,
+              "end": 471
+            },
+            {
+              "w": "opened",
+              "start": 477,
+              "end": 509
+            }
+          ]
+        },
+        {
+          "on": 514,
+          "off": 834,
+          "words": [
+            {
+              "w": "its",
+              "start": 514,
+              "end": 543
+            },
+            {
+              "w": "gate.",
+              "start": 549,
+              "end": 579
+            },
+            {
+              "w": "A",
+              "start": 585,
+              "end": 617
+            },
+            {
+              "w": "small",
+              "start": 692,
+              "end": 721
+            },
+            {
+              "w": "bird",
+              "start": 727,
+              "end": 757
+            },
+            {
+              "w": "carried",
+              "start": 763,
+              "end": 795
+            },
+            {
+              "w": "a",
+              "start": 800,
+              "end": 829
+            }
+          ]
+        },
+        {
+          "on": 834,
+          "off": 1050,
+          "words": [
+            {
+              "w": "seed",
+              "start": 835,
+              "end": 865
+            },
+            {
+              "w": "across",
+              "start": 871,
+              "end": 880
+            },
+            {
+              "w": "the",
+              "start": 908,
+              "end": 937
+            },
+            {
+              "w": "river.",
+              "start": 943,
+              "end": 973
+            },
+            {
+              "w": "Near",
+              "start": 979,
+              "end": 1011
+            },
+            {
+              "w": "noon",
+              "start": 1016,
+              "end": 1045
+            }
+          ]
+        },
+        {
+          "on": 1050,
+          "off": 1131,
+          "words": [
+            {
+              "w": "gentle",
+              "start": 1051,
+              "end": 1081
+            }
+          ]
+        },
+        {
+          "on": 1247,
+          "off": 1355,
+          "words": [
+            {
+              "w": "rain",
+              "start": 1247,
+              "end": 1279
+            },
+            {
+              "w": "filled",
+              "start": 1284,
+              "end": 1313
+            },
+            {
+              "w": "every",
+              "start": 1319,
+              "end": 1349
+            }
+          ]
+        },
+        {
+          "on": 1355,
+          "off": 1527,
+          "words": [
+            {
+              "w": "empty",
+              "start": 1355,
+              "end": 1387
+            },
+            {
+              "w": "cup.",
+              "start": 1392,
+              "end": 1421
+            },
+            {
+              "w": "By",
+              "start": 1427,
+              "end": 1457
+            },
+            {
+              "w": "bright",
+              "start": 1457,
+              "end": 1486
+            },
+            {
+              "w": "flowers",
+              "start": 1492,
+              "end": 1522
+            }
+          ]
+        },
+        {
+          "on": 1527,
+          "off": 1707,
+          "words": [
+            {
+              "w": "covered",
+              "start": 1528,
+              "end": 1560
+            },
+            {
+              "w": "the",
+              "start": 1560,
+              "end": 1560
+            },
+            {
+              "w": "hill",
+              "start": 1600,
+              "end": 1630
+            },
+            {
+              "w": "while",
+              "start": 1636,
+              "end": 1668
+            },
+            {
+              "w": "children",
+              "start": 1673,
+              "end": 1702
+            }
+          ]
+        },
+        {
+          "on": 1707,
+          "off": 1826,
+          "words": [
+            {
+              "w": "watched",
+              "start": 1708,
+              "end": 1738
+            },
+            {
+              "w": "from",
+              "start": 1743,
+              "end": 1776
+            }
+          ]
+        },
+        {
+          "on": 1931,
+          "off": 2109,
+          "words": [
+            {
+              "w": "a",
+              "start": 1931,
+              "end": 1960
+            },
+            {
+              "w": "stone",
+              "start": 1965,
+              "end": 1996
+            },
+            {
+              "w": "bridge.",
+              "start": 2001,
+              "end": 2033
+            },
+            {
+              "w": "Later",
+              "start": 2039,
+              "end": 2068
+            },
+            {
+              "w": "stars",
+              "start": 2074,
+              "end": 2104
+            }
+          ]
+        },
+        {
+          "on": 2109,
+          "off": 2262,
+          "words": [
+            {
+              "w": "shone",
+              "start": 2110,
+              "end": 2142
+            },
+            {
+              "w": "above",
+              "start": 2147,
+              "end": 2176
+            },
+            {
+              "w": "fields",
+              "start": 2182,
+              "end": 2212
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "start": 1,
+          "end": 33,
+          "page": 0,
+          "states": "CUUU"
+        },
+        {
+          "start": 33,
+          "end": 38,
+          "page": 0,
+          "states": "PUUU"
+        },
+        {
+          "start": 38,
+          "end": 67,
+          "page": 0,
+          "states": "PCUU"
+        },
+        {
+          "start": 67,
+          "end": 73,
+          "page": 0,
+          "states": "PPUU"
+        },
+        {
+          "start": 73,
+          "end": 103,
+          "page": 0,
+          "states": "PPCU"
+        },
+        {
+          "start": 103,
+          "end": 109,
+          "page": 0,
+          "states": "PPPU"
+        },
+        {
+          "start": 109,
+          "end": 141,
+          "page": 0,
+          "states": "PPPC"
+        },
+        {
+          "start": 141,
+          "end": 146,
+          "page": 0,
+          "states": "PPPP"
+        },
+        {
+          "start": 146,
+          "end": 175,
+          "page": 1,
+          "states": "CUUU"
+        },
+        {
+          "start": 175,
+          "end": 181,
+          "page": 1,
+          "states": "PUUU"
+        },
+        {
+          "start": 181,
+          "end": 211,
+          "page": 1,
+          "states": "PCUU"
+        },
+        {
+          "start": 211,
+          "end": 217,
+          "page": 1,
+          "states": "PPUU"
+        },
+        {
+          "start": 217,
+          "end": 249,
+          "page": 1,
+          "states": "PPCU"
+        },
+        {
+          "start": 249,
+          "end": 254,
+          "page": 1,
+          "states": "PPPU"
+        },
+        {
+          "start": 254,
+          "end": 283,
+          "page": 1,
+          "states": "PPPC"
+        },
+        {
+          "start": 283,
+          "end": 298,
+          "page": 1,
+          "states": "PPPP"
+        },
+        {
+          "start": 298,
+          "end": 327,
+          "page": 2,
+          "states": "CUUUUU"
+        },
+        {
+          "start": 327,
+          "end": 333,
+          "page": 2,
+          "states": "PUUUUU"
+        },
+        {
+          "start": 333,
+          "end": 363,
+          "page": 2,
+          "states": "PCUUUU"
+        },
+        {
+          "start": 363,
+          "end": 369,
+          "page": 2,
+          "states": "PPUUUU"
+        },
+        {
+          "start": 369,
+          "end": 401,
+          "page": 2,
+          "states": "PPCUUU"
+        },
+        {
+          "start": 401,
+          "end": 406,
+          "page": 2,
+          "states": "PPPUUU"
+        },
+        {
+          "start": 406,
+          "end": 435,
+          "page": 2,
+          "states": "PPPCUU"
+        },
+        {
+          "start": 435,
+          "end": 441,
+          "page": 2,
+          "states": "PPPPUU"
+        },
+        {
+          "start": 441,
+          "end": 471,
+          "page": 2,
+          "states": "PPPPCU"
+        },
+        {
+          "start": 471,
+          "end": 477,
+          "page": 2,
+          "states": "PPPPPU"
+        },
+        {
+          "start": 477,
+          "end": 509,
+          "page": 2,
+          "states": "PPPPPC"
+        },
+        {
+          "start": 509,
+          "end": 514,
+          "page": 2,
+          "states": "PPPPPP"
+        },
+        {
+          "start": 514,
+          "end": 543,
+          "page": 3,
+          "states": "CUUUUUU"
+        },
+        {
+          "start": 543,
+          "end": 549,
+          "page": 3,
+          "states": "PUUUUUU"
+        },
+        {
+          "start": 549,
+          "end": 579,
+          "page": 3,
+          "states": "PCUUUUU"
+        },
+        {
+          "start": 579,
+          "end": 585,
+          "page": 3,
+          "states": "PPUUUUU"
+        },
+        {
+          "start": 585,
+          "end": 617,
+          "page": 3,
+          "states": "PPCUUUU"
+        },
+        {
+          "start": 617,
+          "end": 692,
+          "page": 3,
+          "states": "PPPUUUU"
+        },
+        {
+          "start": 692,
+          "end": 721,
+          "page": 3,
+          "states": "PPPCUUU"
+        },
+        {
+          "start": 721,
+          "end": 727,
+          "page": 3,
+          "states": "PPPPUUU"
+        },
+        {
+          "start": 727,
+          "end": 757,
+          "page": 3,
+          "states": "PPPPCUU"
+        },
+        {
+          "start": 757,
+          "end": 763,
+          "page": 3,
+          "states": "PPPPPUU"
+        },
+        {
+          "start": 763,
+          "end": 795,
+          "page": 3,
+          "states": "PPPPPCU"
+        },
+        {
+          "start": 795,
+          "end": 800,
+          "page": 3,
+          "states": "PPPPPPU"
+        },
+        {
+          "start": 800,
+          "end": 829,
+          "page": 3,
+          "states": "PPPPPPC"
+        },
+        {
+          "start": 829,
+          "end": 834,
+          "page": 3,
+          "states": "PPPPPPP"
+        },
+        {
+          "start": 834,
+          "end": 835,
+          "page": 4,
+          "states": "UUUUUU"
+        },
+        {
+          "start": 835,
+          "end": 865,
+          "page": 4,
+          "states": "CUUUUU"
+        },
+        {
+          "start": 865,
+          "end": 871,
+          "page": 4,
+          "states": "PUUUUU"
+        },
+        {
+          "start": 871,
+          "end": 880,
+          "page": 4,
+          "states": "PCUUUU"
+        },
+        {
+          "start": 880,
+          "end": 908,
+          "page": 4,
+          "states": "PPUUUU"
+        },
+        {
+          "start": 908,
+          "end": 937,
+          "page": 4,
+          "states": "PPCUUU"
+        },
+        {
+          "start": 937,
+          "end": 943,
+          "page": 4,
+          "states": "PPPUUU"
+        },
+        {
+          "start": 943,
+          "end": 973,
+          "page": 4,
+          "states": "PPPCUU"
+        },
+        {
+          "start": 973,
+          "end": 979,
+          "page": 4,
+          "states": "PPPPUU"
+        },
+        {
+          "start": 979,
+          "end": 1011,
+          "page": 4,
+          "states": "PPPPCU"
+        },
+        {
+          "start": 1011,
+          "end": 1016,
+          "page": 4,
+          "states": "PPPPPU"
+        },
+        {
+          "start": 1016,
+          "end": 1045,
+          "page": 4,
+          "states": "PPPPPC"
+        },
+        {
+          "start": 1045,
+          "end": 1050,
+          "page": 4,
+          "states": "PPPPPP"
+        },
+        {
+          "start": 1050,
+          "end": 1051,
+          "page": 5,
+          "states": "U"
+        },
+        {
+          "start": 1051,
+          "end": 1081,
+          "page": 5,
+          "states": "C"
+        },
+        {
+          "start": 1081,
+          "end": 1131,
+          "page": 5,
+          "states": "P"
+        },
+        {
+          "start": 1247,
+          "end": 1279,
+          "page": 6,
+          "states": "CUU"
+        },
+        {
+          "start": 1279,
+          "end": 1284,
+          "page": 6,
+          "states": "PUU"
+        },
+        {
+          "start": 1284,
+          "end": 1313,
+          "page": 6,
+          "states": "PCU"
+        },
+        {
+          "start": 1313,
+          "end": 1319,
+          "page": 6,
+          "states": "PPU"
+        },
+        {
+          "start": 1319,
+          "end": 1349,
+          "page": 6,
+          "states": "PPC"
+        },
+        {
+          "start": 1349,
+          "end": 1355,
+          "page": 6,
+          "states": "PPP"
+        },
+        {
+          "start": 1355,
+          "end": 1387,
+          "page": 7,
+          "states": "CUUUU"
+        },
+        {
+          "start": 1387,
+          "end": 1392,
+          "page": 7,
+          "states": "PUUUU"
+        },
+        {
+          "start": 1392,
+          "end": 1421,
+          "page": 7,
+          "states": "PCUUU"
+        },
+        {
+          "start": 1421,
+          "end": 1427,
+          "page": 7,
+          "states": "PPUUU"
+        },
+        {
+          "start": 1427,
+          "end": 1457,
+          "page": 7,
+          "states": "PPCUU"
+        },
+        {
+          "start": 1457,
+          "end": 1486,
+          "page": 7,
+          "states": "PPPCU"
+        },
+        {
+          "start": 1486,
+          "end": 1492,
+          "page": 7,
+          "states": "PPPPU"
+        },
+        {
+          "start": 1492,
+          "end": 1522,
+          "page": 7,
+          "states": "PPPPC"
+        },
+        {
+          "start": 1522,
+          "end": 1527,
+          "page": 7,
+          "states": "PPPPP"
+        },
+        {
+          "start": 1527,
+          "end": 1528,
+          "page": 8,
+          "states": "UUUUU"
+        },
+        {
+          "start": 1528,
+          "end": 1560,
+          "page": 8,
+          "states": "CUUUU"
+        },
+        {
+          "start": 1560,
+          "end": 1600,
+          "page": 8,
+          "states": "PPUUU"
+        },
+        {
+          "start": 1600,
+          "end": 1630,
+          "page": 8,
+          "states": "PPCUU"
+        },
+        {
+          "start": 1630,
+          "end": 1636,
+          "page": 8,
+          "states": "PPPUU"
+        },
+        {
+          "start": 1636,
+          "end": 1668,
+          "page": 8,
+          "states": "PPPCU"
+        },
+        {
+          "start": 1668,
+          "end": 1673,
+          "page": 8,
+          "states": "PPPPU"
+        },
+        {
+          "start": 1673,
+          "end": 1702,
+          "page": 8,
+          "states": "PPPPC"
+        },
+        {
+          "start": 1702,
+          "end": 1707,
+          "page": 8,
+          "states": "PPPPP"
+        },
+        {
+          "start": 1707,
+          "end": 1708,
+          "page": 9,
+          "states": "UU"
+        },
+        {
+          "start": 1708,
+          "end": 1738,
+          "page": 9,
+          "states": "CU"
+        },
+        {
+          "start": 1738,
+          "end": 1743,
+          "page": 9,
+          "states": "PU"
+        },
+        {
+          "start": 1743,
+          "end": 1776,
+          "page": 9,
+          "states": "PC"
+        },
+        {
+          "start": 1776,
+          "end": 1826,
+          "page": 9,
+          "states": "PP"
+        },
+        {
+          "start": 1931,
+          "end": 1960,
+          "page": 10,
+          "states": "CUUUU"
+        },
+        {
+          "start": 1960,
+          "end": 1965,
+          "page": 10,
+          "states": "PUUUU"
+        },
+        {
+          "start": 1965,
+          "end": 1996,
+          "page": 10,
+          "states": "PCUUU"
+        },
+        {
+          "start": 1996,
+          "end": 2001,
+          "page": 10,
+          "states": "PPUUU"
+        },
+        {
+          "start": 2001,
+          "end": 2033,
+          "page": 10,
+          "states": "PPCUU"
+        },
+        {
+          "start": 2033,
+          "end": 2039,
+          "page": 10,
+          "states": "PPPUU"
+        },
+        {
+          "start": 2039,
+          "end": 2068,
+          "page": 10,
+          "states": "PPPCU"
+        },
+        {
+          "start": 2068,
+          "end": 2074,
+          "page": 10,
+          "states": "PPPPU"
+        },
+        {
+          "start": 2074,
+          "end": 2104,
+          "page": 10,
+          "states": "PPPPC"
+        },
+        {
+          "start": 2104,
+          "end": 2109,
+          "page": 10,
+          "states": "PPPPP"
+        },
+        {
+          "start": 2109,
+          "end": 2110,
+          "page": 11,
+          "states": "UUU"
+        },
+        {
+          "start": 2110,
+          "end": 2142,
+          "page": 11,
+          "states": "CUU"
+        },
+        {
+          "start": 2142,
+          "end": 2147,
+          "page": 11,
+          "states": "PUU"
+        },
+        {
+          "start": 2147,
+          "end": 2176,
+          "page": 11,
+          "states": "PCU"
+        },
+        {
+          "start": 2176,
+          "end": 2182,
+          "page": 11,
+          "states": "PPU"
+        },
+        {
+          "start": 2182,
+          "end": 2212,
+          "page": 11,
+          "states": "PPC"
+        },
+        {
+          "start": 2212,
+          "end": 2262,
+          "page": 11,
+          "states": "PPP"
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "w": "At",
+      "start": 0.15,
+      "end": 0.44
+    },
+    {
+      "w": "dawn",
+      "start": 0.495,
+      "end": 0.8
+    },
+    {
+      "w": "the",
+      "start": 0.855,
+      "end": 1.175
+    },
+    {
+      "w": "quiet",
+      "start": 1.23,
+      "end": 1.52
+    },
+    {
+      "w": "garden",
+      "start": 1.575,
+      "end": 1.88
+    },
+    {
+      "w": "opened",
+      "start": 1.935,
+      "end": 2.255
+    },
+    {
+      "w": "its",
+      "start": 2.31,
+      "end": 2.6
+    },
+    {
+      "w": "gate.",
+      "start": 2.655,
+      "end": 2.96
+    },
+    {
+      "w": "A",
+      "start": 3.015,
+      "end": 3.335
+    },
+    {
+      "w": "small",
+      "start": 4.09,
+      "end": 4.38
+    },
+    {
+      "w": "bird",
+      "start": 4.435,
+      "end": 4.74
+    },
+    {
+      "w": "carried",
+      "start": 4.795,
+      "end": 5.115
+    },
+    {
+      "w": "a",
+      "start": 5.17,
+      "end": 5.46
+    },
+    {
+      "w": "seed",
+      "start": 5.515,
+      "end": 5.82
+    },
+    {
+      "w": "across",
+      "start": 5.875,
+      "end": 6.195
+    },
+    {
+      "w": "the",
+      "start": 6.25,
+      "end": 6.54
+    },
+    {
+      "w": "river.",
+      "start": 6.595,
+      "end": 6.9
+    },
+    {
+      "w": "Near",
+      "start": 6.955,
+      "end": 7.275
+    },
+    {
+      "w": "noon",
+      "start": 7.33,
+      "end": 7.62
+    },
+    {
+      "w": "gentle",
+      "start": 7.675,
+      "end": 7.98
+    },
+    {
+      "w": "rain",
+      "start": 9.635,
+      "end": 9.955
+    },
+    {
+      "w": "filled",
+      "start": 10.01,
+      "end": 10.3
+    },
+    {
+      "w": "every",
+      "start": 10.355,
+      "end": 10.66
+    },
+    {
+      "w": "empty",
+      "start": 10.715,
+      "end": 11.035
+    },
+    {
+      "w": "cup.",
+      "start": 11.09,
+      "end": 11.38
+    },
+    {
+      "w": "By",
+      "start": 11.435,
+      "end": 11.74
+    },
+    {
+      "w": "evening",
+      "start": 11.795,
+      "end": 12.115
+    },
+    {
+      "w": "bright",
+      "start": 12.17,
+      "end": 12.46
+    },
+    {
+      "w": "flowers",
+      "start": 12.515,
+      "end": 12.82
+    },
+    {
+      "w": "covered",
+      "start": 12.875,
+      "end": 13.195
+    },
+    {
+      "w": "the",
+      "start": null,
+      "end": null
+    },
+    {
+      "w": "hill",
+      "start": 13.595,
+      "end": 13.9
+    },
+    {
+      "w": "while",
+      "start": 13.955,
+      "end": 14.275
+    },
+    {
+      "w": "children",
+      "start": 14.33,
+      "end": 14.62
+    },
+    {
+      "w": "watched",
+      "start": 14.675,
+      "end": 14.98
+    },
+    {
+      "w": "from",
+      "start": 15.035,
+      "end": 15.355
+    },
+    {
+      "w": "a",
+      "start": 16.91,
+      "end": 17.2
+    },
+    {
+      "w": "stone",
+      "start": 17.255,
+      "end": 17.56
+    },
+    {
+      "w": "bridge.",
+      "start": 17.615,
+      "end": 17.935
+    },
+    {
+      "w": "Later",
+      "start": 17.99,
+      "end": 18.28
+    },
+    {
+      "w": "stars",
+      "start": 18.335,
+      "end": 18.64
+    },
+    {
+      "w": "shone",
+      "start": 18.695,
+      "end": 19.015
+    },
+    {
+      "w": "above",
+      "start": 19.07,
+      "end": 19.36
+    },
+    {
+      "w": "fields",
+      "start": 19.415,
+      "end": 19.72
+    },
+    {
+      "w": "and",
+      "start": 20.375,
+      "end": 20.695
+    },
+    {
+      "w": "peaceful",
+      "start": 20.75,
+      "end": 21.04
+    },
+    {
+      "w": "clouds",
+      "start": 21.095,
+      "end": 21.4
+    },
+    {
+      "w": "drifted",
+      "start": 21.455,
+      "end": 21.775
+    },
+    {
+      "w": "toward",
+      "start": 21.83,
+      "end": 22.12
+    },
+    {
+      "w": "the",
+      "start": 22.175,
+      "end": 22.48
+    },
+    {
+      "w": "distant",
+      "start": 22.535,
+      "end": 22.855
+    },
+    {
+      "w": "sea.",
+      "start": 22.91,
+      "end": 23.2
+    }
+  ]
+}

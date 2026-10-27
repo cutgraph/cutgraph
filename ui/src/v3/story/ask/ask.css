@@ -1,0 +1,67 @@
+/* Ask bar, suggestion chips and proposal cards. */
+.v3 .story .ask { display: grid; gap: 10px; min-width: 0; }
+.v3 .story .ask .spark { color: var(--yellow); font-size: 16px; line-height: 1; }
+
+.v3 .story .askform { display: flex; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--line2); border-radius: 14px; padding: 6px 8px 6px 14px; min-width: 0; }
+.v3 .story .askform:focus-within { border-color: #505a63; }
+.v3 .story .askform input { flex: 1; min-width: 120px; background: none; border: 0; outline: none; font-size: 15px; padding: 8px 0; }
+.v3 .story .askform input::placeholder { color: var(--dim); }
+.v3 .story .askform input:disabled { cursor: default; }
+.v3 .story .sugs { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.v3 .story .sugs button { font-size: 12.5px; padding: 6px 11px; border-radius: 999px; background: var(--raised); color: var(--muted); white-space: nowrap; }
+.v3 .story .sugs button:hover:not(:disabled) { color: var(--text); background: #252b31; }
+
+.v3 .story .ask-cards { display: grid; gap: 8px; max-height: 34vh; overflow: auto; }
+.v3 .story .ask .proposal { display: flex; align-items: center; gap: 12px; background: linear-gradient(90deg, rgba(245, 197, 24, .13), rgba(245, 197, 24, .04)); border: 1px solid rgba(245, 197, 24, .35); border-radius: 12px; padding: 9px 10px 9px 14px; min-width: 0; }
+.v3 .story .ask-card-body { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.v3 .story .ask-card-body p { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v3 .story .ask-card-title { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.v3 .story .ask-card-title b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+.v3 .story .ask-card-saves { font: 12px var(--mono); color: var(--green); white-space: nowrap; }
+.v3 .story .ask-card-stale { font-size: 12px; color: var(--coral); white-space: nowrap; }
+.v3 .story .ask-card-body .ask-card-why { color: #cfd6db; }
+.v3 .story .ask-card-body .ask-card-changes { font-size: 12.5px; color: var(--muted); }
+
+.v3 .story .ask-sheet { border: 1px solid var(--line2); border-radius: 12px; background: var(--panel); min-width: 0; }
+.v3 .story .ask-sheet-head { display: flex; align-items: center; gap: 9px; width: 100%; padding: 8px 12px; text-align: left; font-size: 13px; }
+.v3 .story .ask-sheet-status { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); flex: 1; }
+.v3 .story .ask-sheet-toggle { color: var(--dim); font-size: 12px; }
+.v3 .story .ask-sheet-head:hover .ask-sheet-toggle { color: var(--text); }
+.v3 .story .ask-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); animation: ask-pulse 1.2s ease-in-out infinite; }
+@keyframes ask-pulse { 50% { opacity: .3; } }
+.v3 .story .ask-sheet-log { max-height: 26vh; overflow: auto; padding: 0 14px 10px 34px; display: grid; gap: 6px; }
+.v3 .story .ask-msg { font-size: 14px; overflow-wrap: anywhere; }
+.v3 .story .ask-user { color: var(--muted); white-space: pre-wrap; }
+.v3 .story .ask-user::before { content: "You · "; color: var(--dim); }
+.v3 .story .ask-assistant p { margin: 0 0 8px; }
+.v3 .story .ask-assistant p:last-child { margin-bottom: 0; }
+.v3 .story .ask-assistant ul { margin: 0 0 8px; padding-left: 18px; }
+.v3 .story .ask-assistant ul:last-child { margin-bottom: 0; }
+.v3 .story .ask-assistant li { margin: 2px 0; }
+.v3 .story .ask-assistant code { font: 12.5px var(--mono); background: var(--raised); padding: 1px 5px; border-radius: 5px; }
+.v3 .story .ask-assistant strong { font-weight: 650; }
+.v3 .story .ask-tools { display: flex; flex-wrap: wrap; gap: 6px; }
+.v3 .story .ask-tools span { font-size: 11.5px; color: var(--muted); background: var(--raised); border-radius: 999px; padding: 2px 9px; }
+.v3 .story .ask-error { color: var(--coral); font-size: 13px; }
+
+.v3 .story .ask-offline { display: flex; align-items: center; gap: 12px; border: 1px dashed var(--line2); border-radius: 12px; padding: 9px 10px 9px 14px; }
+.v3 .story .ask-offline p { flex: 1; min-width: 0; font-size: 13.5px; color: var(--muted); }
+.v3 .story .ask-offline b { color: var(--text); font-weight: 600; }
+
+/* Words a pending proposal touches (cuts reuse the script's .w.sug suggestion strike). */
+.v3 .story .doc .w.prop { text-decoration: underline 2px rgba(245, 197, 24, .6); text-underline-offset: 6px; }
+
+@media (max-width: 1180px) {
+  .v3 .story .sugs button:nth-child(n+3) { display: none; }
+}
+@media (max-width: 860px) {
+  /* Above the Timeline's playhead (z-index 6): sticky chrome must win over scrolled content. */
+  .v3 .story .ask { z-index: 15; }
+  .v3 .story .sugs { display: none; }
+  .v3 .story .ask .proposal, .v3 .story .ask-offline { flex-wrap: wrap; }
+  .v3 .story .ask-card-body { flex-basis: calc(100% - 30px); }
+  .v3 .story .ask-card-body p { white-space: normal; }
+  .v3 .story .ask-offline p { flex-basis: 100%; }
+  .v3 .story .ask-sheet-log { max-height: 16vh; }
+  .v3 .story .ask-cards { max-height: 30vh; }
+}

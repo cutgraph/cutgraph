@@ -1,0 +1,33 @@
+/* Short-film staging in the Shot view: layout, camera, and each layout's own fields. */
+.v3 .story .staging .seg { flex-wrap: wrap; max-width: 100%; }
+.v3 .story .staging .seg button { white-space: nowrap; }
+.v3 .story .staging .rhead .costar-add:disabled { opacity: .5; cursor: default; }
+.v3 .story .screen-images .atile { cursor: pointer; }
+.v3 .story .screen-images .atile > span:last-child { max-width: 84px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v3 .story .screen-images img,
+.v3 .story .screen-images .app-screen { width: 50px; height: 91px; border-radius: 8px; object-fit: cover; display: block; background: #16191d; border: 2px solid #2a3037; }
+.v3 .story .screen-images .app-screen { display: grid; grid-template-rows: 16px repeat(3, 1fr); gap: 4px; padding: 0 0 5px; overflow: hidden; background: #f2f4f7; }
+.v3 .story .screen-images .app-screen i { display: block; margin: 0 5px; border-radius: 3px; background: #d6dce2; }
+.v3 .story .screen-images .app-screen i:first-child { margin: 0; border-radius: 0; background: var(--yellow); }
+.v3 .story .staging-error { color: var(--coral); }
+.v3 .story .phone-slots { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.v3 .story .phone-slot { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.v3 .story .phone-slot.on { border-color: var(--yellow); }
+.v3 .story .phone-slot > button:first-child { display: inline-flex; align-items: center; gap: 7px; padding: 4px 10px 4px 5px; font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+.v3 .story .phone-slot.on > button:first-child { color: var(--text); }
+.v3 .story .phone-slot > button:first-child:disabled { opacity: .45; cursor: default; }
+.v3 .story .phone-slot img,
+.v3 .story .phone-slot .app-screen,
+.v3 .story .phone-slot .empty { width: 16px; height: 29px; border-radius: 4px; display: block; object-fit: cover; background: #16191d; border: 1.5px solid #2a3037; }
+.v3 .story .phone-slot .app-screen { display: grid; grid-template-rows: 6px repeat(3, 1fr); gap: 2px; padding: 0 0 2px; overflow: hidden; background: #f2f4f7; }
+.v3 .story .phone-slot .app-screen i { display: block; margin: 0 2px; border-radius: 1px; background: #d6dce2; }
+.v3 .story .phone-slot .app-screen i:first-child { margin: 0; border-radius: 0; background: var(--yellow); }
+.v3 .story .phone-slot .empty { border-style: dashed; border-color: var(--line2); background: none; }
+.v3 .story .phone-slot .icon { width: 26px; height: 26px; margin-right: 3px; font-size: 16px; }
+.v3 .story .badge-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.v3 .story .rrow.badges .badge-row input { flex: 1 1 140px; min-width: 0; width: auto; font-weight: 800; letter-spacing: .04em; }
+.v3 .story .badge-row .tones button[data-tone="ink"].on { color: #c9d2d8; }
+.v3 .story .badge-row .tones button[data-tone="paper"].on { color: #eef2f4; }
+.v3 .story .badge-row .icon { flex: none; width: 30px; height: 30px; }
+.v3 .story .board-label-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; margin-top: 8px; }
+.v3 .story .board-label-grid input { min-width: 0; width: 100%; font-weight: 700; }

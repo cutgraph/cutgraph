@@ -1,0 +1,2016 @@
+{
+  "schemaVersion": 1,
+  "binarySha256": "e43cfba494c743a664ad06ee8e903cccd8d4f112d54f55de091b359002b0100e",
+  "ffmpegVersion": "n8.1.3-24-g92611900bb-20261025",
+  "recipeCommit": "937868360a21d711ec94a33f5591d345ad9b7754",
+  "recipeEvidence": "https://github.com/BtbN/FFmpeg-Builds/actions/runs/40192150700",
+  "configure": "--prefix=/ffbuild/prefix --pkg-config-flags=--static --pkg-config=pkg-config --cross-prefix=x86_64-w64-mingw32- --arch=x86_64 --target-os=mingw32 --enable-version3 --disable-debug --enable-shared --disable-static --disable-w32threads --enable-pthreads --enable-iconv --enable-zlib --enable-libxml2 --enable-libvmaf --enable-fontconfig --enable-libharfbuzz --enable-libfreetype --enable-libfribidi --enable-lcms2 --enable-vulkan --enable-libshaderc --enable-libdav1d --enable-libvorbis --enable-librav1e --enable-librsvg --disable-libxcb --disable-xlib --disable-libpulse --enable-gmp --enable-lzma --enable-liblcevc-dec --enable-opencl --enable-amf --enable-libaom --disable-avisynth --enable-chromaprint --disable-libdavs2 --disable-libdvdread --disable-libdvdnav --disable-libfdk-aac --enable-ffnvcodec --enable-cuda-llvm --disable-frei0r --enable-libgme --enable-libkvazaar --enable-libaribb24 --enable-libaribcaption --enable-libass --enable-libbluray --enable-libjxl --enable-libmp3lame --enable-libopus --enable-libplacebo --enable-librist --enable-libssh --enable-libtheora --enable-libvpx --enable-libwebp --enable-libzmq --enable-lv2 --enable-libvpl --enable-openal --enable-liboapv --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenh264 --enable-libopenjpeg --enable-libopenmpt --disable-librubberband --enable-schannel --enable-sdl2 --enable-libsnappy --enable-libsoxr --enable-libsrt --enable-libsvtav1 --enable-libtwolame --enable-libuavs3d --disable-libdrm --enable-vaapi --enable-vapoursynth --disable-libvidstab --enable-libvvenc --disable-whisper --disable-libx264 --disable-libx265 --disable-libxavs2 --disable-libxvid --enable-libzimg --enable-libzvbi --extra-cflags=-DLIBTWOLAME_STATIC --extra-cxxflags= --extra-libs=-lgomp --extra-ldflags=-pthread --extra-ldexeflags= --cc=x86_64-w64-mingw32-gcc --cxx=x86_64-w64-mingw32-g++ --ar=x86_64-w64-mingw32-gcc-ar --ranlib=x86_64-w64-mingw32-gcc-ranlib --nm=x86_64-w64-mingw32-gcc-nm --extra-version=20261025",
+  "canvasScan": {
+    "method": "ASCII strings in the Windows x64 native binary, cross-checked against the canvas build script, Cargo.lock, Skia submodule and its DEPS revisions.",
+    "nativeSha256": "4296ab1f770556c55077b44929f684ef180065ebeffdffca7eb3a29e8ff715a6",
+    "canvasCommit": "adce718ec8ff82f9e896875752fd621c46b1c04e",
+    "skiaCommit": "95ee33d7ec7791ab9c071675710a14fe6408ae4f"
+  },
+  "inputs": [
+    {
+      "name": "canvas-rust-aho-corasick",
+      "version": "1.1.4",
+      "license": "Unlicense OR MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/aho-corasick/aho-corasick-1.1.4.crate",
+      "sha256": "ddd31a130427c27518df266943a5308ed92d4b226cc639f5a8f1002816174301",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-anyhow",
+      "version": "1.0.104",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/anyhow/anyhow-1.0.104.crate",
+      "sha256": "330a5ed07fa54e4702c9d6c4174f74427fc0ef6e214bbd677ae50a5099946470",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-base64-simd",
+      "version": "0.8.0",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/base64-simd/base64-simd-0.8.0.crate",
+      "sha256": "339abbe78e73178762e23bea9dfd08e697eb3f3301cd4be981c0f78ba5859195",
+      "correspondingSource": false,
+      "noticeFrom": "canvas-simd-license"
+    },
+    {
+      "name": "canvas-rust-bitflags",
+      "version": "2.13.1",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/bitflags/bitflags-2.13.1.crate",
+      "sha256": "b588b76d00fde79687d7646a9b5bdf3cc0f655e0bbd080335a95d7e96f3587da",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-bumpalo",
+      "version": "3.20.3",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/bumpalo/bumpalo-3.20.3.crate",
+      "sha256": "72f5acc6cb2ba439de613abc23857ec3d78374d8ed5ac84e9d11336e87da8649",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-bytemuck",
+      "version": "1.25.2",
+      "license": "Zlib OR Apache-2.0 OR MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/bytemuck/bytemuck-1.25.2.crate",
+      "sha256": "95832e849adfb21180ccb6826a99da14e5d266ae5c2e668e1602cf234f153797",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-cc",
+      "version": "1.4.0",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/cc/cc-1.4.0.crate",
+      "sha256": "5add81bb678e6cb321aff7fa0dc7689ad82b112dbc032cea19f91d6b8e3582b9",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-cfb",
+      "version": "0.14.0",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/cfb/cfb-0.14.0.crate",
+      "sha256": "a347dcabdae9c31b0825fd6a8bed285ec9c2acb89c47827126d52fa4f59cece3",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-cfg-if",
+      "version": "1.0.4",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/cfg-if/cfg-if-1.0.4.crate",
+      "sha256": "9330f8b2ff13f34540b44e946ef35111825727b38d33286ef986142615121801",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-cmake",
+      "version": "0.1.58",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/cmake/cmake-0.1.58.crate",
+      "sha256": "c0f78a02292a74a88ac736019ab962ece0bc380e3f977bf72e376c5d78ff0678",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-color_quant",
+      "version": "1.1.0",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/color_quant/color_quant-1.1.0.crate",
+      "sha256": "3d7b894f5411737b7867f4827955924d7c254fc9f4d91a6aad6b097804b1018b",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-convert_case",
+      "version": "0.11.0",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/convert_case/convert_case-0.11.0.crate",
+      "sha256": "affbf0190ed2caf063e3def54ff444b449371d55c58e513a95ab98eca50adb49",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-cssparser",
+      "version": "0.38.0",
+      "license": "MPL-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/cssparser/cssparser-0.38.0.crate",
+      "sha256": "11119743ad110e8c1bdccd930d7f5c30c99e5fc76a7b63ec9807e84eef0c5f59",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-cssparser-color",
+      "version": "0.6.0",
+      "license": "MPL-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/cssparser-color/cssparser-color-0.6.0.crate",
+      "sha256": "cc0e59e8bcc238f0f9b9f29f4d649e5c192dbf277999d0c23d1a312af3fb7a3e",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-cssparser-macros",
+      "version": "0.7.0",
+      "license": "MPL-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/cssparser-macros/cssparser-macros-0.7.0.crate",
+      "sha256": "10a2a99df6e410a8ff4245aa2006499ea662245f967cc7c0a38c83ef8eb44dbf",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-ctor",
+      "version": "1.0.11",
+      "license": "Apache-2.0 OR MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/ctor/ctor-1.0.11.crate",
+      "sha256": "e9bb72bb94fdc1bd619f4c18cc91ecf6302aeb333d31b3c6ec0bb841cd920209",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-dtoa",
+      "version": "1.0.11",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/dtoa/dtoa-1.0.11.crate",
+      "sha256": "4c3cf4824e2d5f025c7b531afcb2325364084a16806f6d47fbc1f5fbd9960590",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-dtoa-short",
+      "version": "0.3.5",
+      "license": "MPL-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/dtoa-short/dtoa-short-0.3.5.crate",
+      "sha256": "cd1511a7b6a56299bd043a9c167a6d2bfb37bf84a6dfceaba651168adfb43c87",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-fastrand",
+      "version": "2.5.0",
+      "license": "Apache-2.0 OR MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/fastrand/fastrand-2.5.0.crate",
+      "sha256": "da7c62ceae207dd37ea5b845da6a0696c799f85e97da1ab5b7910be3c1c80223",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-find-msvc-tools",
+      "version": "0.1.9",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/find-msvc-tools/find-msvc-tools-0.1.9.crate",
+      "sha256": "5baebc0774151f905a1a2cc41989300b1e6fbb29aff0ceffa1064fdd3088d582",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-fnv",
+      "version": "1.0.7",
+      "license": "Apache-2.0 / MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/fnv/fnv-1.0.7.crate",
+      "sha256": "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-futures",
+      "version": "0.3.33",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/futures/futures-0.3.33.crate",
+      "sha256": "a88cf1f829d945f548cf8fec32c61b1f202b6d93b45848602fc02af4b12ad218",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-futures-channel",
+      "version": "0.3.33",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/futures-channel/futures-channel-0.3.33.crate",
+      "sha256": "262590f4fe6afeb0bc83be1daa64e52657fe185690a958af7f3ad0e92085c5ae",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-futures-core",
+      "version": "0.3.33",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/futures-core/futures-core-0.3.33.crate",
+      "sha256": "2cd50c473c80f6d7c3670a752354b8e569b1a7cbfdc0419ec88e5edad85e0dc7",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-futures-executor",
+      "version": "0.3.33",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/futures-executor/futures-executor-0.3.33.crate",
+      "sha256": "6754879cc9f2c66f88c6e5c35344bb0bdb0708b0352b1201815667c7eabc7458",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-futures-io",
+      "version": "0.3.33",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/futures-io/futures-io-0.3.33.crate",
+      "sha256": "4577ecaa3c4f96589d473f679a71b596316f6641bc350038b962a5daf0085d7a",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-futures-macro",
+      "version": "0.3.33",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/futures-macro/futures-macro-0.3.33.crate",
+      "sha256": "2d6d3cde68c518367be28956066ddfef33813991b77a55005a69dae04bf3b10b",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-futures-sink",
+      "version": "0.3.33",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/futures-sink/futures-sink-0.3.33.crate",
+      "sha256": "e34418ac499d6305c2fb5ad0ed2f6ac998c5f8ca209b4510f7f94242c647e307",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-futures-task",
+      "version": "0.3.33",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/futures-task/futures-task-0.3.33.crate",
+      "sha256": "b231ed28831efb4a61a08580c4bc233ec56bc009f4cd8f52da2c3cb97df0c109",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-futures-util",
+      "version": "0.3.33",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/futures-util/futures-util-0.3.33.crate",
+      "sha256": "a77a90a256fce34da66415271e30f94ee91c57b04b8a2c042d9cf3220179deaa",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-gif",
+      "version": "0.14.2",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/gif/gif-0.14.2.crate",
+      "sha256": "ee8cfcc411d9adbbaba82fb72661cc1bcca13e8bba98b364e62b2dba8f960159",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-hermit-abi",
+      "version": "0.5.2",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/hermit-abi/hermit-abi-0.5.2.crate",
+      "sha256": "fc0fef456e4baa96da950455cd02c081ca953b141298e41db3fc7e36b1da849c",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-imagesize",
+      "version": "0.15.0",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/imagesize/imagesize-0.15.0.crate",
+      "sha256": "65b27460c2c92b037f3f94c538ed9a3342f3fdf923606781629ccb35f82d042a",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-infer",
+      "version": "0.22.0",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/infer/infer-0.22.0.crate",
+      "sha256": "f4200d433cbd5178df7797c9c2e75b348b728e39631cf14520d1e2fc424201f4",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-itoa",
+      "version": "1.0.18",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/itoa/itoa-1.0.18.crate",
+      "sha256": "8f42a60cbdf9a97f5d2305f08a87dc4e09308d1276d28c869c684d7777685682",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-js-sys",
+      "version": "0.3.103",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/js-sys/js-sys-0.3.103.crate",
+      "sha256": "53b44bfcdb3f8d5837a46dae1ca9660a837176eee74a28b229bc626816589102",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-libaom-sys",
+      "version": "0.17.2+libaom.3.11.0",
+      "license": "BSD-2-Clause",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/libaom-sys/libaom-sys-0.17.2+libaom.3.11.0.crate",
+      "sha256": "7c4fce8aaf0c2d8534529b0698ed98ec1da8d35319588d20b0d79ce6446e4194",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-libavif",
+      "version": "0.14.0",
+      "license": "BSD-2-Clause",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/libavif/libavif-0.14.0.crate",
+      "sha256": "0b710faf0de92da0e32a9a9c89bbf849e37277fd447b4f17b0f0f798796ae1f2",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-libavif-sys",
+      "version": "0.17.0+libavif.1.0.4",
+      "license": "BSD-2-Clause",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/libavif-sys/libavif-sys-0.17.0+libavif.1.0.4.crate",
+      "sha256": "490ca74b61e773140bebb086c81facb23273a99364a9ab0c92ab1532b90ade35",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-libc",
+      "version": "0.2.189",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/libc/libc-0.2.189.crate",
+      "sha256": "3eaf3ede3fee6db1a4c2ee091bf8a8b4dccdc6d17f656fb07896ee72867612f2",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-libloading",
+      "version": "0.9.0",
+      "license": "ISC",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/libloading/libloading-0.9.0.crate",
+      "sha256": "754ca22de805bb5744484a5b151a9e1a8e837d5dc232c2d7d8c2e3492edc8b60",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-libmimalloc-sys2",
+      "version": "0.1.60",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/libmimalloc-sys2/libmimalloc-sys2-0.1.60.crate",
+      "sha256": "921641155d9dc4f434332abd912518e33c70e37c557434818b6cfd1fbbb6138d",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-memchr",
+      "version": "2.8.3",
+      "license": "Unlicense OR MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/memchr/memchr-2.8.3.crate",
+      "sha256": "cf8baf1c55e62ffcace7a9f06f4bd9cd3f0c4beb022d3b367256b91b87513d98",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-mimalloc-safe",
+      "version": "0.1.64",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/mimalloc-safe/mimalloc-safe-0.1.64.crate",
+      "sha256": "afd082b59cfceeb3bf31dbff65e7b96e1f94fa9b918e131d02353e6867a12824",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-napi",
+      "version": "3.12.1",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/napi/napi-3.12.1.crate",
+      "sha256": "459197f1592f4c3dbbf9c1b13f5a4599a343e4ef66b96bc340e2a518b36a6662",
+      "correspondingSource": false,
+      "noticeFrom": "canvas-napi-license"
+    },
+    {
+      "name": "canvas-rust-napi-build",
+      "version": "2.4.1",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/napi-build/napi-build-2.4.1.crate",
+      "sha256": "60fdf9b392c50e7c4170fa633bd909490ed7835cea4c046776d1a4dd8d2ae0ab",
+      "correspondingSource": false,
+      "noticeFrom": "canvas-napi-license"
+    },
+    {
+      "name": "canvas-rust-napi-derive",
+      "version": "3.6.3",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/napi-derive/napi-derive-3.6.3.crate",
+      "sha256": "0fa55ea69990c90b888e9e77044410e304ce7f35de599dc6d0b5c1923d2e59af",
+      "correspondingSource": false,
+      "noticeFrom": "canvas-napi-license"
+    },
+    {
+      "name": "canvas-rust-napi-derive-backend",
+      "version": "6.1.2",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/napi-derive-backend/napi-derive-backend-6.1.2.crate",
+      "sha256": "df4056ac7c18e4438ccf0edaed4340ca0d269278c8ec19284f7b23cb039fd0ae",
+      "correspondingSource": false,
+      "noticeFrom": "canvas-napi-license"
+    },
+    {
+      "name": "canvas-rust-napi-sys",
+      "version": "3.3.0",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/napi-sys/napi-sys-3.3.0.crate",
+      "sha256": "85fbf1fa9f1babfe396d74bbbf52b3643770243e8f5b0b46715d4caf7f0dfc9a",
+      "correspondingSource": false,
+      "noticeFrom": "canvas-napi-sys-license"
+    },
+    {
+      "name": "canvas-rust-nohash-hasher",
+      "version": "0.2.0",
+      "license": "Apache-2.0 OR MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/nohash-hasher/nohash-hasher-0.2.0.crate",
+      "sha256": "2bf50223579dc7cdcfb3bfcacf7069ff68243f8c363f62ffa99cf000a6b9c451",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-nom",
+      "version": "8.0.0",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/nom/nom-8.0.0.crate",
+      "sha256": "df9761775871bdef83bee530e60050f7e54b1105350d6884eb0fb4f46c2f9405",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-num_cpus",
+      "version": "1.17.0",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/num_cpus/num_cpus-1.17.0.crate",
+      "sha256": "91df4bbde75afed763b708b7eee1e8e7651e02d97f6d5dd763e89367e957b23b",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-once_cell",
+      "version": "1.21.4",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/once_cell/once_cell-1.21.4.crate",
+      "sha256": "9f7c3e4beb33f85d45ae3e3a1792185706c8e16d043238c593331cc7cd313b50",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-outref",
+      "version": "0.5.2",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/outref/outref-0.5.2.crate",
+      "sha256": "1a80800c0488c3a21695ea981a54918fbb37abf04f4d0720c453632255e2ff0e",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-phf",
+      "version": "0.14.0",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/phf/phf-0.14.0.crate",
+      "sha256": "010378780309880b08997fae13be7834dba947d36393bd372f2b1556deb2a2f6",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-phf_generator",
+      "version": "0.14.0",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/phf_generator/phf_generator-0.14.0.crate",
+      "sha256": "aeb62e0959d5a1bebc965f4d15d9e2b7cea002b6b0f5ba8cde6cc26738467100",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-phf_macros",
+      "version": "0.14.0",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/phf_macros/phf_macros-0.14.0.crate",
+      "sha256": "5fa8d0ca26d424d27630da600c6624696e7dec8bf7b3b492b383c5dc49e5e085",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-phf_shared",
+      "version": "0.14.0",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/phf_shared/phf_shared-0.14.0.crate",
+      "sha256": "c6fd9027e2d9319be6349febd1db4e8d02aa544921200c9b777720ac34a3aa89",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-pin-project-lite",
+      "version": "0.2.17",
+      "license": "Apache-2.0 OR MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/pin-project-lite/pin-project-lite-0.2.17.crate",
+      "sha256": "a89322df9ebe1c1578d689c92318e070967d1042b512afbe49518723f4e6d5cd",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-proc-macro2",
+      "version": "1.0.107",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/proc-macro2/proc-macro2-1.0.107.crate",
+      "sha256": "985e7ec9bb745e6ce6535b544d84d6cd6f7ad8bd711c398938ae983b91a766d9",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-quote",
+      "version": "1.0.47",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/quote/quote-1.0.47.crate",
+      "sha256": "1fbf4db142a473a8d80c26bbf18454ed458bf8d26c8219c331daecfdbd079001",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-regex",
+      "version": "1.13.1",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/regex/regex-1.13.1.crate",
+      "sha256": "f020237b6c8eed93db2e2cb53c00c60a8e1bc73da7d073199a1180401450218d",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-regex-automata",
+      "version": "0.4.16",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/regex-automata/regex-automata-0.4.16.crate",
+      "sha256": "8fcfdb36bda0c880c5931cdc7a2bcdc8ba4556847b9d912bca70bc94708711ad",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-regex-syntax",
+      "version": "0.8.11",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/regex-syntax/regex-syntax-0.8.11.crate",
+      "sha256": "d6f6ff9a378485b298a5286656da665ba74413d36db0979633275d2e708145d4",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-rgb",
+      "version": "0.8.53",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/rgb/rgb-0.8.53.crate",
+      "sha256": "47b34b781b31e5d73e9fbc8689c70551fd1ade9a19e3e28cfec8580a79290cc4",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-rustc-hash",
+      "version": "2.1.3",
+      "license": "Apache-2.0 OR MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/rustc-hash/rustc-hash-2.1.3.crate",
+      "sha256": "6b1e7f9a428571be2dc5bc0505c13fb6bf936822b894ec87abf8a08a4e51742d",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-rustversion",
+      "version": "1.0.23",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/rustversion/rustversion-1.0.23.crate",
+      "sha256": "cf54715a573b99ac80df0bc206da022bcd442c974952c7b9720069370852e21f",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-serde",
+      "version": "1.0.229",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/serde/serde-1.0.229.crate",
+      "sha256": "4148590afebada386688f18773da617792bf2ef03ffc1e4cbd2b1d45b023e0ba",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-serde_core",
+      "version": "1.0.229",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/serde_core/serde_core-1.0.229.crate",
+      "sha256": "67dca2c9c51e58a4791a4b1ed58308b39c64224d349a935ab5039aa360942a48",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-serde_derive",
+      "version": "1.0.229",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/serde_derive/serde_derive-1.0.229.crate",
+      "sha256": "e7a5d71263a5a7d47b41f6b3f06ba276f10cc18b0931f1799f710578e2309348",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-serde_json",
+      "version": "1.0.151",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/serde_json/serde_json-1.0.151.crate",
+      "sha256": "c841b55ecdae098c80dcae9cf767f6f8a0c2cdb3416bbef72181df4d0fe73f14",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-shlex",
+      "version": "2.0.1",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/shlex/shlex-2.0.1.crate",
+      "sha256": "f8fadd59c855ef2080decdef8ff161eb6661b86933c9d82e5ba29dc602a55aba",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-siphasher",
+      "version": "1.0.3",
+      "license": "MIT/Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/siphasher/siphasher-1.0.3.crate",
+      "sha256": "8ee5873ec9cce0195efcb7a4e9507a04cd49aec9c83d0389df45b1ef7ba2e649",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-slab",
+      "version": "0.4.12",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/slab/slab-0.4.12.crate",
+      "sha256": "0c790de23124f9ab44544d7ac05d60440adc586479ce501c1d6d7da3cd8c9cf5",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-smallvec",
+      "version": "1.15.2",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/smallvec/smallvec-1.15.2.crate",
+      "sha256": "8ed6a63f02c8539c91a8685a86f4099661ba3da017932f6ebbea6de3f0fa7c90",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-syn-2",
+      "version": "2.0.119",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/syn/syn-2.0.119.crate",
+      "sha256": "872831b642d1a07999a962a351ed35b955ea2cfc8f3862091e2a240a84f17297",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-syn",
+      "version": "3.0.3",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/syn/syn-3.0.3.crate",
+      "sha256": "53e9bae58849f64dfa4f5d5ae372c8341f7305f82a3868709269343628b659a3",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-thiserror",
+      "version": "2.0.19",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/thiserror/thiserror-2.0.19.crate",
+      "sha256": "09a43598840e33d5b0331f38c5e30d13bb11c11210a4b58f0d9b18a5a5eefcd9",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-thiserror-impl",
+      "version": "2.0.19",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/thiserror-impl/thiserror-impl-2.0.19.crate",
+      "sha256": "43cbfe0cf76104d42a574802844187e84a305e531ed54455f11fbde0f10541cd",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-tokio",
+      "version": "1.53.1",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/tokio/tokio-1.53.1.crate",
+      "sha256": "202caea871b69668250d242070849eb495be178ed697a3e98aebce5bc81a0bed",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-tokio-stream",
+      "version": "0.1.19",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/tokio-stream/tokio-stream-0.1.19.crate",
+      "sha256": "a3d06f0b082ba57c26b79407372e57cf2a1e28124f78e9479fe80322cf53420b",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-unicode-ident",
+      "version": "1.0.24",
+      "license": "(MIT OR Apache-2.0) AND Unicode-3.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/unicode-ident/unicode-ident-1.0.24.crate",
+      "sha256": "e6e4313cd5fcd3dad5cafa179702e2b244f760991f45397d14d4ebf38247da75",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-unicode-segmentation",
+      "version": "1.13.3",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/unicode-segmentation/unicode-segmentation-1.13.3.crate",
+      "sha256": "c6f5d3c3b1bf09027a88a6bc961fc00497d651009560b5463668dc81b0fa87a8",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-uuid",
+      "version": "1.24.0",
+      "license": "Apache-2.0 OR MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/uuid/uuid-1.24.0.crate",
+      "sha256": "bf3923a6f5c4c6382e0b653c4117f48d631ea17f38ed86e2a828e6f7412f5239",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-vsimd",
+      "version": "0.8.0",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/vsimd/vsimd-0.8.0.crate",
+      "sha256": "5c3082ca00d5a5ef149bb8b555a72ae84c9c59f7250f013ac822ac2e49b19c64",
+      "correspondingSource": false,
+      "noticeFrom": "canvas-simd-license"
+    },
+    {
+      "name": "canvas-rust-wasm-bindgen",
+      "version": "0.2.126",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/wasm-bindgen/wasm-bindgen-0.2.126.crate",
+      "sha256": "4b067c0c11094aef6b7a801c1e34a26affafdf3d051dba08456b868789aaf9a4",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-wasm-bindgen-macro",
+      "version": "0.2.126",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/wasm-bindgen-macro/wasm-bindgen-macro-0.2.126.crate",
+      "sha256": "167ce5e579f6bcf889c4f7175a8a5a585de84e8ff93976ce393efa5f2837aab1",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-wasm-bindgen-macro-support",
+      "version": "0.2.126",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/wasm-bindgen-macro-support/wasm-bindgen-macro-support-0.2.126.crate",
+      "sha256": "f3997c7839262f4ef12cf90b818d6340c18e80f263f1a94bf157d0ec4420380e",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-wasm-bindgen-shared",
+      "version": "0.2.126",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/wasm-bindgen-shared/wasm-bindgen-shared-0.2.126.crate",
+      "sha256": "dc1b4cb0cc549fcf58d7dfc081778139b3d283a081644e833e84682ad71cea24",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-web-time",
+      "version": "1.1.0",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/web-time/web-time-1.1.0.crate",
+      "sha256": "5a6580f308b1fad9207618087a65c04e7a10bc77e02c8e84e9b00dd4b12fa0bb",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-weezl",
+      "version": "0.1.12",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/weezl/weezl-0.1.12.crate",
+      "sha256": "a28ac98ddc8b9274cb41bb4d9d4d5c425b6020c50c46f25559911905610b4a88",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-windows-link",
+      "version": "0.2.1",
+      "license": "MIT OR Apache-2.0",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/windows-link/windows-link-0.2.1.crate",
+      "sha256": "f0805222e57f7521d6a62e36fa9163bc891acd422f971defe97d64e70d0a4fe5",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-rust-zmij",
+      "version": "1.0.23",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://static.crates.io/crates/zmij/zmij-1.0.23.crate",
+      "sha256": "29666d0abbfad1e3dc4dcf6144730dd3a3ab225bbbdac83319345b1b44ccfc1b",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-skia-brotli-LICENSE",
+      "version": "6d03dfbedda1615c4cba1211f8d81735575209c8",
+      "license": "MIT",
+      "group": "canvas",
+      "correspondingSource": false,
+      "encoding": "base64",
+      "url": "https://skia.googlesource.com/external/github.com/google/brotli.git/+/6d03dfbedda1615c4cba1211f8d81735575209c8/LICENSE?format=TEXT",
+      "sha256": "65095f05bb6abd91355df7ddbf5e773811476fc45635f5707aebe7a207edcb85"
+    },
+    {
+      "name": "canvas-skia-expat-expat-COPYING",
+      "version": "6154446fccefbf3ca644894f598969113b0c7bcd",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://chromium.googlesource.com/external/github.com/libexpat/libexpat.git/+/6154446fccefbf3ca644894f598969113b0c7bcd/expat/COPYING?format=TEXT",
+      "sha256": "7004952702402557a3d1613542ecd5ecbe458063e5bebea1b6383e9149fab0a1",
+      "encoding": "base64",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-skia-freetype-docs-FTL.TXT",
+      "version": "264b5fbf5b912b39f98d038bf75d39be0a73f21b",
+      "license": "FTL",
+      "group": "canvas",
+      "url": "https://chromium.googlesource.com/chromium/src/third_party/freetype2.git/+/264b5fbf5b912b39f98d038bf75d39be0a73f21b/docs/FTL.TXT?format=TEXT",
+      "sha256": "25583f0ff56971f957fc1db6e0e877c766ced1f29de8285525316599eb8f0866",
+      "encoding": "base64",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-skia-harfbuzz-COPYING",
+      "version": "9cb1fee51069b206effb4736e443b038d230789d",
+      "license": "MIT",
+      "group": "canvas",
+      "url": "https://chromium.googlesource.com/external/github.com/harfbuzz/harfbuzz.git/+/9cb1fee51069b206effb4736e443b038d230789d/COPYING?format=TEXT",
+      "sha256": "84db39e4c28b8f5012cc4bc0903ca95121f229d4f0054c11fe06111c33248109",
+      "encoding": "base64",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-skia-highway-LICENSE",
+      "version": "457c891775a7397bdb0376bb1031e6e027af1c48",
+      "license": "Apache-2.0",
+      "group": "canvas",
+      "url": "https://chromium.googlesource.com/external/github.com/google/highway.git/+/457c891775a7397bdb0376bb1031e6e027af1c48/LICENSE?format=TEXT",
+      "sha256": "9dc2fadaffdf65688330873bbd05feaef3da11908e5cc86b94714df9f658c489",
+      "encoding": "base64",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-skia-highway-LICENSE-BSD3",
+      "version": "457c891775a7397bdb0376bb1031e6e027af1c48",
+      "license": "Apache-2.0",
+      "group": "canvas",
+      "url": "https://chromium.googlesource.com/external/github.com/google/highway.git/+/457c891775a7397bdb0376bb1031e6e027af1c48/LICENSE-BSD3?format=TEXT",
+      "sha256": "c4b70d835c266d73a4f169fa04ef56d3dc423e9e17d3ae671182effe0bbcab0e",
+      "encoding": "base64",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-skia-icu-LICENSE",
+      "version": "d578f2e8b7bd5938e21cfb6bf15c079e0aa5b738",
+      "license": "Unicode-3.0",
+      "group": "canvas",
+      "url": "https://chromium.googlesource.com/chromium/deps/icu.git/+/d578f2e8b7bd5938e21cfb6bf15c079e0aa5b738/LICENSE?format=TEXT",
+      "sha256": "5454b44b5ca65cbfdf73f11dd63ca33e2ec90fec2a6c187d64ff8368999127be",
+      "encoding": "base64",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-skia-libjpeg-turbo-LICENSE.md",
+      "version": "e14cbfaa85529d47f9f55b0f104a579c1061f9ad",
+      "license": "BSD-3-Clause",
+      "group": "canvas",
+      "url": "https://chromium.googlesource.com/chromium/deps/libjpeg_turbo.git/+/e14cbfaa85529d47f9f55b0f104a579c1061f9ad/LICENSE.md?format=TEXT",
+      "sha256": "4409224b390dbcddeec14fab15cc9fd4f43954700995db63c419ec67312c792b",
+      "encoding": "base64",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-skia-libjpeg-turbo-README.ijg",
+      "version": "e14cbfaa85529d47f9f55b0f104a579c1061f9ad",
+      "license": "BSD-3-Clause",
+      "group": "canvas",
+      "url": "https://chromium.googlesource.com/chromium/deps/libjpeg_turbo.git/+/e14cbfaa85529d47f9f55b0f104a579c1061f9ad/README.ijg?format=TEXT",
+      "sha256": "1ef1cea1d49a188bc4c3d791c3ad86e515b17b57e8883fd77901bf53c1c8c827",
+      "encoding": "base64",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-skia-libjxl-LICENSE",
+      "version": "332feb17d17311c748445f7ee75c4fb55cc38530",
+      "license": "BSD-3-Clause",
+      "group": "canvas",
+      "url": "https://chromium.googlesource.com/external/gitlab.com/wg1/jpeg-xl.git/+/332feb17d17311c748445f7ee75c4fb55cc38530/LICENSE?format=TEXT",
+      "sha256": "8e5171be398fc8d4670f4dcb31ff76f3ac8c1f363fa75d9568e407c298f06a57",
+      "encoding": "base64",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-skia-libpng-LICENSE",
+      "version": "d5515b5b8be3901aac04e5bd8bd5c89f287bcd33",
+      "license": "Libpng",
+      "group": "canvas",
+      "correspondingSource": false,
+      "encoding": "base64",
+      "url": "https://skia.googlesource.com/third_party/libpng.git/+/d5515b5b8be3901aac04e5bd8bd5c89f287bcd33/LICENSE?format=TEXT",
+      "sha256": "52e9b8d1082de7e54fd06a60fe61f80bbded3c027b6ae269b87ab0edc298e166"
+    },
+    {
+      "name": "canvas-skia-libwebp-COPYING",
+      "version": "845d5476a866141ba35ac133f856fa62f0b7445f",
+      "license": "BSD-3-Clause",
+      "group": "canvas",
+      "correspondingSource": false,
+      "encoding": "base64",
+      "url": "https://chromium.googlesource.com/webm/libwebp.git/+/845d5476a866141ba35ac133f856fa62f0b7445f/COPYING?format=TEXT",
+      "sha256": "cd38893a47087d081767960fb7269a1207296c8248da567ed0060a06c4a40c18"
+    },
+    {
+      "name": "canvas-skia-wuffs-LICENSE",
+      "version": "e3f919ccfe3ef542cfc983a82146070258fb57f8",
+      "license": "Apache-2.0 OR MIT",
+      "group": "canvas",
+      "correspondingSource": false,
+      "encoding": "base64",
+      "url": "https://skia.googlesource.com/external/github.com/google/wuffs-mirror-release-c.git/+/e3f919ccfe3ef542cfc983a82146070258fb57f8/LICENSE?format=TEXT",
+      "sha256": "01cd5191f2c0ccdb7085cc8ec6db495c955eaed85546081304c1f9317699a368"
+    },
+    {
+      "name": "canvas-skia-zlib-LICENSE",
+      "version": "646b7f569718921d7d4b5b8e22572ff6c76f2596",
+      "license": "Zlib",
+      "group": "canvas",
+      "url": "https://chromium.googlesource.com/chromium/src/third_party/zlib/+/646b7f569718921d7d4b5b8e22572ff6c76f2596/LICENSE?format=TEXT",
+      "sha256": "a933cce44298f130692ed93dd7820bb26de792251c4b4c4677bf746f4dd9492d",
+      "encoding": "base64",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-source",
+      "url": "https://codeload.github.com/Brooooooklyn/canvas/zip/adce718ec8ff82f9e896875752fd621c46b1c04e",
+      "sha256": "7a80985df82db6cfb2013162d028d451d395c26312ecae9eec2dbe9bc4895baa",
+      "license": "MIT",
+      "group": "canvas",
+      "version": "1.0.11",
+      "correspondingSource": false
+    },
+    {
+      "name": "ffmpeg-amf",
+      "url": "https://codeload.github.com/GPUOpen-LibrariesAndSDKs/AMF/zip/6277e353fd625121a8f627b1d0540323ef372a49",
+      "sha256": "04cbcfcaaa56639bac825019ff927078d9d82695d4d8d773e9c034c45d4f2e78",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "6277e353fd625121a8f627b1d0540323ef372a49",
+      "recipe": "50-amf.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-aom",
+      "license": "BSD-2-Clause",
+      "recipe": "50-aom.sh",
+      "url": "https://aomedia.googlesource.com/aom/+archive/b4ce2cd097b00921b0327bfb5f07b5f8361ade99.tar.gz",
+      "sha256": "1abe7f637fcc3a46263b05b8fb247edd9caa8459c424de7c0a11a4a29a2a82c1",
+      "group": "ffmpeg",
+      "version": "b4ce2cd097b00921b0327bfb5f07b5f8361ade99",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-brotli",
+      "url": "https://codeload.github.com/google/brotli/zip/a3abcbee0d945e51dddeec81e647ffe0cde182c2",
+      "sha256": "db42a3ebd11fc8df068e49879d3675580116564510bceb12c584fc2fd3554226",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "a3abcbee0d945e51dddeec81e647ffe0cde182c2",
+      "recipe": "45-brotli.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-cairo",
+      "license": "LGPL-2.1-only OR MPL-1.1",
+      "recipe": "50-librsvg/20-cairo.sh",
+      "url": "https://gitlab.freedesktop.org/cairo/cairo/-/archive/74755964edef651691d5cd36ff140108298e4e6e/cairo-74755964edef651691d5cd36ff140108298e4e6e.tar.gz",
+      "sha256": "b9fdbe04623d904d821e521d5aabb0f0445e1307ac1b0d478de3e23f0ae95043",
+      "group": "ffmpeg",
+      "version": "74755964edef651691d5cd36ff140108298e4e6e",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-chromaprint",
+      "url": "https://codeload.github.com/acoustid/chromaprint/zip/aed8eba2202dd9d7b3b0a56c77904cc805490d72",
+      "sha256": "4bfc53ca1eb7820b02ca85f9f5e25515741041d9c2611e41cbf65645d091aa0e",
+      "license": "LGPL-2.1-or-later",
+      "group": "ffmpeg",
+      "version": "aed8eba2202dd9d7b3b0a56c77904cc805490d72",
+      "recipe": "50-chromaprint.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-dav1d",
+      "url": "https://codeload.github.com/videolan/dav1d/zip/9711965b60bb692ae24004659acf61f5c7d9ed61",
+      "sha256": "095b17b7029947fcd0a1ad5a0dee427565088990f8f5843bef630638591c3541",
+      "license": "BSD-2-Clause",
+      "group": "ffmpeg",
+      "version": "9711965b60bb692ae24004659acf61f5c7d9ed61",
+      "recipe": "50-dav1d.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-ffnvcodec",
+      "url": "https://codeload.github.com/FFmpeg/nv-codec-headers/zip/eddcea9e27f6b772057c9b3f87de2cc1737faffc",
+      "sha256": "365351aae5bdc7339412977f6829c8952845c9c933b596c8bd9eb8baa6aa756d",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "eddcea9e27f6b772057c9b3f87de2cc1737faffc",
+      "recipe": "50-ffnvcodec.sh",
+      "correspondingSource": true,
+      "noticeFrom": "ffmpeg-nvcodec-license"
+    },
+    {
+      "name": "ffmpeg-fontconfig",
+      "url": "https://codeload.github.com/fontconfig/fontconfig/zip/bd8f7b597de96761750d0365abb49b19d2f8d5c3",
+      "sha256": "58ec86dbc82473666f96a90e8105492ed869d573b23374761818366a10c7ac56",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "bd8f7b597de96761750d0365abb49b19d2f8d5c3",
+      "recipe": "45-fonts/35-fontconfig.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-freetype",
+      "url": "https://codeload.github.com/freetype/freetype/zip/d333439633039de426f943f28a2926c7f97b5ae5",
+      "sha256": "f45caab0ed7dfecdd5b0187b64106d66859f5cc5d6684a8dc666863bac96f72c",
+      "license": "FTL OR GPL-2.0-only",
+      "group": "ffmpeg",
+      "version": "d333439633039de426f943f28a2926c7f97b5ae5",
+      "recipe": "45-fonts/50-freetype.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-fribidi",
+      "url": "https://codeload.github.com/fribidi/fribidi/zip/4c914a92e94a9fe4f30ae83a1130099841566448",
+      "sha256": "90d44f084b9bc5b0a4cfe68127f023126299ebe2daf77cd7b543290a55beca19",
+      "license": "LGPL-2.1-or-later",
+      "group": "ffmpeg",
+      "version": "4c914a92e94a9fe4f30ae83a1130099841566448",
+      "recipe": "25-fribidi.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-glib",
+      "url": "https://codeload.github.com/GNOME/glib/zip/5a124d1e66a6c2dc56989303b4d6d4781c2952ed",
+      "sha256": "cb7efb30685681fbbb1d945e7af54a4c9fa1a4577c2a47f2b39eb7e4e6ee6b1d",
+      "license": "LGPL-2.1-or-later",
+      "group": "ffmpeg",
+      "version": "5a124d1e66a6c2dc56989303b4d6d4781c2952ed",
+      "recipe": "50-librsvg/10-glib.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-gme",
+      "url": "https://codeload.github.com/libgme/game-music-emu/zip/f68963b1de0633149b05732113d3c3113c6f63a1",
+      "sha256": "0954124b1935210f74e0632f64899bccc6db9c471cdce07438a8092035e49f90",
+      "license": "LGPL-2.1-or-later",
+      "group": "ffmpeg",
+      "version": "f68963b1de0633149b05732113d3c3113c6f63a1",
+      "recipe": "50-gme.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-gmp",
+      "url": "https://codeload.github.com/BtbN/gmplib/zip/763b40df71c0f4d5f5d7b33dc55038c8c9377ecf",
+      "sha256": "1994a87514331337529fe9b91c8ca1ce14698ab19a41a21d212856b4f1bd40c6",
+      "license": "LGPL-3.0-or-later OR GPL-2.0-or-later",
+      "group": "ffmpeg",
+      "version": "763b40df71c0f4d5f5d7b33dc55038c8c9377ecf",
+      "recipe": "25-gmp.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-harfbuzz",
+      "url": "https://codeload.github.com/harfbuzz/harfbuzz/zip/b3bab62307017934dd7f532c52a696fefb12b3ad",
+      "sha256": "ef553b0f28908705c4aa828747015e3e9d0512c2f61288931743b7a2fef2998e",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "b3bab62307017934dd7f532c52a696fefb12b3ad",
+      "recipe": "45-fonts/45-harfbuzz.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-kvazaar",
+      "url": "https://codeload.github.com/ultravideo/kvazaar/zip/2b06691bb5844404c0e703f12a5d7b0fee914ec7",
+      "sha256": "8d29a6e3ce99a765f98e56239f92c94f21afce5b7c160cea26098bcb4dff0076",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "2b06691bb5844404c0e703f12a5d7b0fee914ec7",
+      "recipe": "50-kvazaar.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-lcevcdec",
+      "url": "https://codeload.github.com/v-novaltd/LCEVCdec/zip/17804ac54db8fbb42717f3275b1e73f3c0b067d3",
+      "sha256": "c3ef2879d677c129194d6bd36c85c06dc79667177c3b2c72495fefc557e8ea8b",
+      "license": "BSD-3-Clause-Clear",
+      "group": "ffmpeg",
+      "version": "17804ac54db8fbb42717f3275b1e73f3c0b067d3",
+      "recipe": "50-lcevcdec.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-lcms2",
+      "url": "https://codeload.github.com/mm2/Little-CMS/zip/35cef8775e0ab46f0dda0b46aae1e69d27524432",
+      "sha256": "60e00e96f5457412328c1088c3cc3c5c86f0a02882bf7a0dd48eb81e80c0b378",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "35cef8775e0ab46f0dda0b46aae1e69d27524432",
+      "recipe": "45-lcms2.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libaribb24",
+      "url": "https://codeload.github.com/nkoriyama/aribb24/zip/5e9be272f96e00f15a2f3c5f8ba7e124862aec38",
+      "sha256": "4c78db4044d9dc6344846c22d2aa70849ebfa46966906ecf9f43bffc6abc15e0",
+      "license": "LGPL-3.0-or-later",
+      "group": "ffmpeg",
+      "version": "5e9be272f96e00f15a2f3c5f8ba7e124862aec38",
+      "recipe": "50-libaribb24.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libaribcaption",
+      "url": "https://codeload.github.com/xqq/libaribcaption/zip/c64c23b8905ba514b87c9789269e9f66f949ffe0",
+      "sha256": "48179d37197b6975d5496b8e5e15098f8e94cb36e56d935cecd88e5fc1b725c4",
+      "license": "ISC",
+      "group": "ffmpeg",
+      "version": "c64c23b8905ba514b87c9789269e9f66f949ffe0",
+      "recipe": "50-libaribcaption.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libass",
+      "url": "https://codeload.github.com/libass/libass/zip/f61db567e6593df3470e91594bcd4ad2d0473aff",
+      "sha256": "9789631bd37831bdab4f781e7aa76c27646132d85d0d87098528a8eb51202de9",
+      "license": "ISC",
+      "group": "ffmpeg",
+      "version": "f61db567e6593df3470e91594bcd4ad2d0473aff",
+      "recipe": "50-libass.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libbluray",
+      "license": "LGPL-2.1-or-later",
+      "recipe": "50-libbluray.sh",
+      "url": "https://code.videolan.org/videolan/libbluray/-/archive/a24f4fad4d62893de647abc8671397747b2359dd/libbluray-a24f4fad4d62893de647abc8671397747b2359dd.tar.gz",
+      "sha256": "f596c2ede4131fa4471bb292c28c327ea2115b1a3ea010d6ddfb75f0935600b7",
+      "group": "ffmpeg",
+      "version": "a24f4fad4d62893de647abc8671397747b2359dd",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libcurl",
+      "url": "https://codeload.github.com/curl/curl/zip/4c67658f953751de9e66bb5f9729af821a641341",
+      "sha256": "b64a09e6309c9cee0b2ceb65e28c7d921a8c2de38b795e53cc5d73ea1de7f81a",
+      "license": "curl",
+      "group": "ffmpeg",
+      "version": "4c67658f953751de9e66bb5f9729af821a641341",
+      "recipe": "50-libcurl/50-libcurl.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libffi",
+      "url": "https://codeload.github.com/libffi/libffi/zip/bc553867367246d140cd156f060bd0409f57f157",
+      "sha256": "5dda25077a379cb6adfab04f3632d005dd0c2e0455e2beb201daa644338db894",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "bc553867367246d140cd156f060bd0409f57f157",
+      "recipe": "45-libffi.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libiconv",
+      "url": "https://codeload.github.com/arthenica/libiconv/zip/1df3087ba8110c7f3ed3eb5f8869b814dbbe00b0",
+      "sha256": "41dcd434c1477017ac7df390248bdef46cf907fd24594cbf2ae02748522806ec",
+      "license": "LGPL-2.1-or-later",
+      "group": "ffmpeg",
+      "version": "1df3087ba8110c7f3ed3eb5f8869b814dbbe00b0",
+      "recipe": "20-libiconv.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libjxl",
+      "url": "https://codeload.github.com/libjxl/libjxl/zip/b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "sha256": "1029523923898854ab9adaf86e8191d096ef1357bf2d5879f5319c7115d684de",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "recipe": "50-libjxl/50-libjxl.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libmp3lame",
+      "license": "LGPL-2.0-or-later",
+      "recipe": "50-libmp3lame.sh",
+      "url": "https://sourceforge.net/code-snapshots/svn/l/la/lame/svn/lame-svn-r6835-trunk-lame.zip?download=1",
+      "sha256": "e9ef9f1fb14b4463927eb7620134c2c233b64c9ed3b72098032bcf681d77ac81",
+      "version": "svn-r6835",
+      "group": "ffmpeg",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libogg",
+      "url": "https://codeload.github.com/xiph/ogg/zip/06a5e0262cdc28aa4ae6797627a783b5010440f0",
+      "sha256": "985b8ec736d249efa1a3afb80c0bb62dc3777d516b29d1c061d10a791450c771",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "06a5e0262cdc28aa4ae6797627a783b5010440f0",
+      "recipe": "25-libogg.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libopus",
+      "url": "https://codeload.github.com/xiph/opus/zip/503d81b138d76621aae4b12786e90de48aa8db3a",
+      "sha256": "c76d878cab5e90db5594fa68b08fbdd2bd357177aafa896679c12b416e12dc7c",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "503d81b138d76621aae4b12786e90de48aa8db3a",
+      "recipe": "50-libopus.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libplacebo",
+      "url": "https://codeload.github.com/haasn/libplacebo/zip/1937beef3a2f508266c68efea1491e3fc4600e04",
+      "sha256": "640665e0c2108f8c550556ed10caa2bdace01e07ebdf37e38c694cb2fc8c9dfc",
+      "license": "LGPL-2.1-or-later",
+      "group": "ffmpeg",
+      "version": "1937beef3a2f508266c68efea1491e3fc4600e04",
+      "recipe": "50-libplacebo.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libpng",
+      "url": "https://codeload.github.com/glennrp/libpng/zip/964b4135949703b705fc760fc3fb546b86e5ab47",
+      "sha256": "26200c21a47e5dec3b04021092a07f442e54a118c155c10c931dbaad4051edbd",
+      "license": "Libpng",
+      "group": "ffmpeg",
+      "version": "964b4135949703b705fc760fc3fb546b86e5ab47",
+      "recipe": "25-libpng.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libpsl",
+      "url": "https://codeload.github.com/rockdaboot/libpsl/zip/a629c831d09011f76974d931be7f6167be90673e",
+      "sha256": "f42aff102d7aa143adb2f8bdf97e993325d52d0cffa0d87bac8e9c25b94ade27",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "a629c831d09011f76974d931be7f6167be90673e",
+      "recipe": "50-libcurl/40-libpsl.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-librist",
+      "license": "BSD-2-Clause",
+      "recipe": "50-librist/50-librist.sh",
+      "url": "https://code.videolan.org/rist/librist/-/archive/4f45ef8f78983892d52ccd52d9f675435b23738f/librist-4f45ef8f78983892d52ccd52d9f675435b23738f.tar.gz",
+      "sha256": "391c2fbb081445a3260cccf97a083bd95a4ece6d7241d219ec5aec80582f5b0a",
+      "group": "ffmpeg",
+      "version": "4f45ef8f78983892d52ccd52d9f675435b23738f",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-librsvg",
+      "url": "https://codeload.github.com/GNOME/librsvg/zip/7612431eb02dc009319094f8513d63c1faaecfb4",
+      "sha256": "28fd4262390b8f30309dde3646ec2c4de95ad2ccb325e545a666927a9cd6662d",
+      "license": "LGPL-2.1-or-later",
+      "group": "ffmpeg",
+      "version": "7612431eb02dc009319094f8513d63c1faaecfb4",
+      "recipe": "50-librsvg/99-librsvg.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libssh",
+      "url": "https://codeload.github.com/libssh/libssh-mirror/zip/76e0a8639e61436c28d877586f65a7707edc6ee5",
+      "sha256": "2c6800bdb39950231ef9e96008952723ecd416b3642fb50234e317b286396e20",
+      "license": "LGPL-2.1-or-later",
+      "group": "ffmpeg",
+      "version": "76e0a8639e61436c28d877586f65a7707edc6ee5",
+      "recipe": "50-libssh.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libtheora",
+      "url": "https://codeload.github.com/xiph/theora/zip/28fd5ec77f0ad0e07a371cef1047828116f6bd8a",
+      "sha256": "02791717c167ecaac428c8f74d2e2b8e147ffa9369afb2bd00ad98b05b8a0d80",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "28fd5ec77f0ad0e07a371cef1047828116f6bd8a",
+      "recipe": "50-libtheora.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libudfread",
+      "license": "LGPL-2.1-or-later",
+      "recipe": "45-libudfread.sh",
+      "url": "https://code.videolan.org/videolan/libudfread/-/archive/b0bc6957e7e07d5f35391f210596d9eb71cffdd9/libudfread-b0bc6957e7e07d5f35391f210596d9eb71cffdd9.tar.gz",
+      "sha256": "c04bb96b72dd0760030d880ad6c9ea2ae80abbdd648de127adb1b2e8555186aa",
+      "group": "ffmpeg",
+      "version": "b0bc6957e7e07d5f35391f210596d9eb71cffdd9",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libunibreak",
+      "url": "https://codeload.github.com/adah1972/libunibreak/zip/28a2756b864c343f438cd22537d49d394d4666a5",
+      "sha256": "376d7ccd3b686c1b88c05ccd609b1ba40a410ff9fe44492e318c3331448b0005",
+      "license": "Zlib",
+      "group": "ffmpeg",
+      "version": "28a2756b864c343f438cd22537d49d394d4666a5",
+      "recipe": "45-libunibreak.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libvorbis",
+      "url": "https://codeload.github.com/xiph/vorbis/zip/1b75110b5a2754ba1931d82dd83cb822b266a21d",
+      "sha256": "cc2b170eff8bc1a389930292f5869b97c53314fdd6c80d9b95827fc26ef17eee",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "1b75110b5a2754ba1931d82dd83cb822b266a21d",
+      "recipe": "45-libvorbis.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libvpx",
+      "url": "https://codeload.github.com/webmproject/libvpx/zip/5e680f30801d03c21078f8c4b772464752516211",
+      "sha256": "825b4a2168636e171d19ffd6030fc23de8291242985c25a14940a943411689a2",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "5e680f30801d03c21078f8c4b772464752516211",
+      "recipe": "50-libvpx.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libwebp",
+      "url": "https://codeload.github.com/webmproject/libwebp/zip/5c168cd23b1872969c38e34b01b04dcf29849288",
+      "sha256": "1970e913054625395ee34f2e24984a4743231ee35cfb41a77708fc9d1238f4cb",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "5c168cd23b1872969c38e34b01b04dcf29849288",
+      "recipe": "50-libwebp.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libxml2",
+      "url": "https://codeload.github.com/GNOME/libxml2/zip/91586dc6742ab335682235120363f6e126eea5e2",
+      "sha256": "1d38e775172f50c3f1c873af38a9a8dfa7b727db97010f72589e3f12fd1d678b",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "91586dc6742ab335682235120363f6e126eea5e2",
+      "recipe": "25-libxml2.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-libzmq",
+      "url": "https://codeload.github.com/zeromq/libzmq/zip/46493370217ac135246617fa2f6ac819d8b61bfc",
+      "sha256": "6028371f1c3033dcb5d46f8b06915cb3e05b1196e90cadccc45d5eb5055242c6",
+      "license": "MPL-2.0",
+      "group": "ffmpeg",
+      "version": "46493370217ac135246617fa2f6ac819d8b61bfc",
+      "recipe": "50-libzmq.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-lilv",
+      "url": "https://codeload.github.com/lv2/lilv/zip/4b8f30055fa5cb4134a2eb45fc1555bc04289314",
+      "sha256": "912a9b9e22021ff2b0b03b72fdd435fea665233002a4424e2e65efd545fdecdd",
+      "license": "ISC",
+      "group": "ffmpeg",
+      "version": "4b8f30055fa5cb4134a2eb45fc1555bc04289314",
+      "recipe": "50-lilv/99-lilv.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-lv2",
+      "url": "https://codeload.github.com/lv2/lv2/zip/3c57dae600a5ad8d05acd53ee3490f7d91cb7be6",
+      "sha256": "342416d36c743a1fe5c469550a6fa71cc28cebd161b16415fc3273fc57e42261",
+      "license": "ISC",
+      "group": "ffmpeg",
+      "version": "3c57dae600a5ad8d05acd53ee3490f7d91cb7be6",
+      "recipe": "50-lilv/96-lv2.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-mbedtls",
+      "url": "https://codeload.github.com/ARMmbed/mbedtls/zip/v4.2.0",
+      "sha256": "5dcdf4ce12a00ba6e278378708d7d35f9166a77b10257881b754468e13fa44c5",
+      "license": "Apache-2.0",
+      "group": "ffmpeg",
+      "version": "v4.2.0",
+      "recipe": "50-librist/40-mbedtls.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-mingw",
+      "url": "https://codeload.github.com/mingw-w64/mingw-w64/zip/57b595039040eaa15bece85b7cc71d952281b269",
+      "sha256": "a951cf5fab050aee27333a77777c65bb2eb61a94e9733e09af04da34cafbdd9d",
+      "license": "ZPL-2.1",
+      "group": "ffmpeg",
+      "version": "57b595039040eaa15bece85b7cc71d952281b269",
+      "recipe": "10-mingw.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-mingw-std-threads",
+      "url": "https://codeload.github.com/meganz/mingw-std-threads/zip/c931bac289dd431f1dd30fc4a5d1a7be36668073",
+      "sha256": "2297e98c5ea445650490a636397594bc8781eb92fecf344df2b0400e9beac815",
+      "license": "BSD-2-Clause",
+      "group": "ffmpeg",
+      "version": "c931bac289dd431f1dd30fc4a5d1a7be36668073",
+      "recipe": "10-mingw-std-threads.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-nghttp2",
+      "url": "https://codeload.github.com/nghttp2/nghttp2/zip/19d06e62185d93d2398d85241cdbb460349bfe44",
+      "sha256": "7b16f03fca134e4853891cb07005c1a2200037ee0f9ac08c3620197fd30f85d5",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "19d06e62185d93d2398d85241cdbb460349bfe44",
+      "recipe": "50-libcurl/40-nghttp2.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-nghttp3",
+      "url": "https://codeload.github.com/ngtcp2/nghttp3/zip/2304973e5a0c8b1fa4bb380b47945a000357f87f",
+      "sha256": "ed4605308042ec66e9b7650c42244aa359c70e3c4d93dde1e35798718472f081",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "2304973e5a0c8b1fa4bb380b47945a000357f87f",
+      "recipe": "50-libcurl/40-nghttp3.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-ngtcp2",
+      "url": "https://codeload.github.com/ngtcp2/ngtcp2/zip/a4925d70647b75286b28c37be260de3729c2de3d",
+      "sha256": "5872ce3d331113cafcf39f72b1baa7dd7805b379710996d54ec1124ca435af9f",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "a4925d70647b75286b28c37be260de3729c2de3d",
+      "recipe": "50-libcurl/40-ngtcp2.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-onevpl",
+      "url": "https://codeload.github.com/intel/libvpl/zip/674d015bcb294bc39fa276e99a652ea045423e82",
+      "sha256": "874daaef5cb7d8b18b6a48fe7b2b8022419aacd198a14d254ede8f3b34491d5c",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "674d015bcb294bc39fa276e99a652ea045423e82",
+      "recipe": "50-onevpl.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-openal",
+      "url": "https://codeload.github.com/kcat/openal-soft/zip/c89b8cf7bba4822f230c69f0a6696a52e5322dca",
+      "sha256": "3ddba407825f932d6953359d036dce3c36928072e6f02b09e3f166f249ff9bea",
+      "license": "LGPL-2.0-or-later",
+      "group": "ffmpeg",
+      "version": "c89b8cf7bba4822f230c69f0a6696a52e5322dca",
+      "recipe": "50-openal.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-openapv",
+      "url": "https://codeload.github.com/AcademySoftwareFoundation/openapv/zip/a58ce739be0dfb083643d929aee8f0e0ba9bdf63",
+      "sha256": "933eccd9fa503872b574188abdc4cafd7743e86e84a8db84a8ecded2823e5f87",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "a58ce739be0dfb083643d929aee8f0e0ba9bdf63",
+      "recipe": "50-openapv.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-opencl",
+      "url": "https://codeload.github.com/KhronosGroup/OpenCL-Headers/zip/e6060189f4ebe8b52d885c37af71b9a50c272154",
+      "sha256": "51b8ec2ed1a105e2eb77cfc322a69934704a60d1783224a52b31d29d0839469e",
+      "license": "Apache-2.0",
+      "group": "ffmpeg",
+      "version": "e6060189f4ebe8b52d885c37af71b9a50c272154",
+      "recipe": "45-opencl.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-opencore-amr",
+      "license": "Apache-2.0",
+      "recipe": "50-opencore-amr.sh",
+      "url": "https://sourceforge.net/code-snapshots/git/o/op/opencore-amr/code.git/opencore-amr-code-7dba8c32238418ce0b316a852b2224df586ca896.zip?download=1",
+      "sha256": "8e05f58f7a8de59661223dec6fb00552ba17e184f03d6850ba199a06b1e476a6",
+      "version": "7dba8c32238418ce0b316a852b2224df586ca896",
+      "group": "ffmpeg",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-openh264",
+      "url": "https://codeload.github.com/cisco/openh264/zip/8b2d28faade10d74d99ac80e199aef664c9c5a3b",
+      "sha256": "b04b01ccb4c7c7fe3b8bfe358366c83e1d7f56c97eb637686ca5c84504f9c1d6",
+      "license": "BSD-2-Clause",
+      "group": "ffmpeg",
+      "version": "8b2d28faade10d74d99ac80e199aef664c9c5a3b",
+      "recipe": "50-openh264.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-openjpeg",
+      "url": "https://codeload.github.com/uclouvain/openjpeg/zip/8314119b067c0fc77834731168daaebd379fdb12",
+      "sha256": "3d83091b3e410b2c55d11c1a92533aaaee701818723f7fffa2d966d081fbb425",
+      "license": "BSD-2-Clause",
+      "group": "ffmpeg",
+      "version": "8314119b067c0fc77834731168daaebd379fdb12",
+      "recipe": "50-openjpeg.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-openmpt",
+      "url": "https://codeload.github.com/OpenMPT/openmpt/zip/f83cedb0cd5446e4dfaa83ac97e3087107e26767",
+      "sha256": "281ad635e2fb3ba1568df862122d371e9069c58d73e0b10d0c9591c5b44c04c7",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "f83cedb0cd5446e4dfaa83ac97e3087107e26767",
+      "recipe": "50-openmpt.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-pango",
+      "url": "https://codeload.github.com/GNOME/pango/zip/8e74c27c113c98664b77272d16b14bbce542c184",
+      "sha256": "5ca7c4e9d3751804a87370df31e4382988938e2e8c0aa9a32a309040ba3f28d9",
+      "license": "LGPL-2.1-or-later",
+      "group": "ffmpeg",
+      "version": "8e74c27c113c98664b77272d16b14bbce542c184",
+      "recipe": "50-librsvg/30-pango.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-pcre2",
+      "url": "https://codeload.github.com/PCRE2Project/pcre2/zip/09eb19dc1102b34e7557408f33318364cb97d2b0",
+      "sha256": "1ce919dcf9ea67d4010bb81498c2dc025248c4bcf50429f6793334ff8c9329b7",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "09eb19dc1102b34e7557408f33318364cb97d2b0",
+      "recipe": "45-pcre2.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-pixman",
+      "license": "MIT",
+      "recipe": "45-pixman.sh",
+      "url": "https://gitlab.freedesktop.org/pixman/pixman/-/archive/96c04d1b87934dc4b9396197a2dff737698ab310/pixman-96c04d1b87934dc4b9396197a2dff737698ab310.tar.gz",
+      "sha256": "1ce8b9e9a51eab8b57dfe12549e6439f7a8f2b49b01185dbebd762be5271db79",
+      "group": "ffmpeg",
+      "version": "96c04d1b87934dc4b9396197a2dff737698ab310",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-rav1e",
+      "url": "https://codeload.github.com/xiph/rav1e/zip/31435de9d76fddd38f6dcc31d4014574cebb2092",
+      "sha256": "d0b7ec4559527492a8513bb663d2301b4cbaa371f0c0047fa66e0525c0a16ea8",
+      "license": "BSD-2-Clause",
+      "group": "ffmpeg",
+      "version": "31435de9d76fddd38f6dcc31d4014574cebb2092",
+      "recipe": "50-rav1e.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-recipe",
+      "url": "https://codeload.github.com/BtbN/FFmpeg-Builds/zip/937868360a21d711ec94a33f5591d345ad9b7754",
+      "sha256": "3d782f1b71b4f6cef89c9e0014176542d071b1dfbf5de41b9f96aac6a442b1af",
+      "license": "MIT",
+      "group": "recipe",
+      "version": "937868360a21d711ec94a33f5591d345ad9b7754",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-sdl",
+      "url": "https://codeload.github.com/libsdl-org/SDL/zip/b90ac95029d801c5abc59472ba8e2200dff31e1e",
+      "sha256": "f47fb60f1a7e3132e7d20930900b158488d1f1debca97fa6e03309e238c6acd6",
+      "license": "Zlib",
+      "group": "ffmpeg",
+      "version": "b90ac95029d801c5abc59472ba8e2200dff31e1e",
+      "recipe": "50-sdl.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-serd",
+      "url": "https://codeload.github.com/drobilla/serd/zip/b6053bb2a4533e6a8e3821c1061f140d5e666938",
+      "sha256": "76a65963f8f0a2f2042fc74c30bbac9ba4de609032236cd7bec4b4dbeb31f262",
+      "license": "ISC",
+      "group": "ffmpeg",
+      "version": "b6053bb2a4533e6a8e3821c1061f140d5e666938",
+      "recipe": "50-lilv/96-serd.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-shaderc",
+      "url": "https://codeload.github.com/google/shaderc/zip/a8abeb0b8a9d4b11e3d59ca9f4550b8213e733ab",
+      "sha256": "4baf200246f6692ca25ee5119c1445d8d2bb2b42d0aab6f3ded11338c15a6d49",
+      "license": "Apache-2.0",
+      "group": "ffmpeg",
+      "version": "a8abeb0b8a9d4b11e3d59ca9f4550b8213e733ab",
+      "recipe": "47-vulkan/50-shaderc.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-snappy",
+      "url": "https://codeload.github.com/google/snappy/zip/9c28114a38866f6deeaa826db918293bc28ae410",
+      "sha256": "7419f9dccfb737c8865f26bd45a1b2f032574fb83b9a05ed2d20cca3e23be8a8",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "9c28114a38866f6deeaa826db918293bc28ae410",
+      "recipe": "50-snappy.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-sord",
+      "url": "https://codeload.github.com/drobilla/sord/zip/4b5232bb91e7f2f1b84df384494d073fabbcd312",
+      "sha256": "8693f67ac2bc040a7792ba300d4e0412aee7fb85d7933d5e7be571d4b10f6b16",
+      "license": "ISC",
+      "group": "ffmpeg",
+      "version": "4b5232bb91e7f2f1b84df384494d073fabbcd312",
+      "recipe": "50-lilv/97-sord.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-source",
+      "url": "https://codeload.github.com/FFmpeg/FFmpeg/zip/92611900bb112123e9bf997fdcc2d78e4c4922fc",
+      "sha256": "e5c6103f465827a934612d4ac5c823c98411c62f1c2b9a37edeb49e39f405ab3",
+      "license": "LGPL-3.0-or-later",
+      "group": "ffmpeg",
+      "version": "92611900bb112123e9bf997fdcc2d78e4c4922fc",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-soxr",
+      "url": "https://codeload.github.com/chirlu/soxr/zip/945b592b70470e29f917f4de89b4281fbbd540c0",
+      "sha256": "c3a73976077cdb7cd87325b449bb31296b377358ef00b41b91cc3623374356e2",
+      "license": "LGPL-2.1-or-later",
+      "group": "ffmpeg",
+      "version": "945b592b70470e29f917f4de89b4281fbbd540c0",
+      "recipe": "50-soxr.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-spirv-cross",
+      "url": "https://codeload.github.com/KhronosGroup/SPIRV-Cross/zip/aa217aeb6c9f0ace7a0ab233b28807edf45eb165",
+      "sha256": "3ba07cb2514d0837c1fc3545a777c362e5b17b13dee450f1e2a357bc0de88334",
+      "license": "Apache-2.0",
+      "group": "ffmpeg",
+      "version": "aa217aeb6c9f0ace7a0ab233b28807edf45eb165",
+      "recipe": "47-vulkan/55-spirv-cross.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-spirv-headers",
+      "url": "https://codeload.github.com/KhronosGroup/SPIRV-Headers/zip/2b7475f6d664efbad4d4315c94ecec9640831e5b",
+      "sha256": "b89d5ce7cc6791de0b359b351e6fd7e6d1135bc3e0c5a5ee465248b7a2270a10",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "version": "2b7475f6d664efbad4d4315c94ecec9640831e5b",
+      "recipe": "47-vulkan/60-spirv-headers.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-sratom",
+      "url": "https://codeload.github.com/lv2/sratom/zip/9e8ee84eed502e6030ce8bb49694fd28542b08fc",
+      "sha256": "6720b78750047fa98abf3da82c44684d84a80a8e002a1ebe0079abc01c6695d7",
+      "license": "ISC",
+      "group": "ffmpeg",
+      "version": "9e8ee84eed502e6030ce8bb49694fd28542b08fc",
+      "recipe": "50-lilv/98-sratom.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-srt",
+      "url": "https://codeload.github.com/Haivision/srt/zip/ff8ab25c57aece5b7351defe36dacc94fc28527f",
+      "sha256": "f8b2b573c2604ff947181a7a7943271e59ea0ff5201b1b431787970e9c764dad",
+      "license": "MPL-2.0",
+      "group": "ffmpeg",
+      "version": "ff8ab25c57aece5b7351defe36dacc94fc28527f",
+      "recipe": "50-srt.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-svtav1",
+      "url": "https://codeload.github.com/AOMediaCodec/SVT-AV1/zip/5ed9ffbcb5086da23f30fe9bc5b00145358462da",
+      "sha256": "6733667cab2b89006abbbab16186a7a219abedb68d94510bf818563347e3f736",
+      "license": "BSD-3-Clause-Clear",
+      "group": "ffmpeg",
+      "version": "5ed9ffbcb5086da23f30fe9bc5b00145358462da",
+      "recipe": "50-svtav1.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-twolame",
+      "url": "https://codeload.github.com/njh/twolame/zip/6fced852d4d5cfad58cf9dbe3ea619b08e87d398",
+      "sha256": "d8a8e1576711e79f2527230b81844c4b9cc990d4b4b788c6dbfca2c4f557d0ac",
+      "license": "LGPL-2.1-or-later",
+      "group": "ffmpeg",
+      "version": "6fced852d4d5cfad58cf9dbe3ea619b08e87d398",
+      "recipe": "50-twolame.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-uavs3d",
+      "url": "https://codeload.github.com/uavs3/uavs3d/zip/0e20d2c291853f196c68922a264bcd8471d75b68",
+      "sha256": "ffb1b483c3bc8cfd74b1020f42727ee6692cae0659b1397ec9062b6054d24184",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "0e20d2c291853f196c68922a264bcd8471d75b68",
+      "recipe": "50-uavs3d.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-vapoursynth",
+      "url": "https://codeload.github.com/vapoursynth/vapoursynth/zip/R80",
+      "sha256": "272518124c1967ccb7dac2437a61fc13f10c1aa2593dd8223cad8e50fd5dca9a",
+      "license": "LGPL-2.1-or-later",
+      "group": "ffmpeg",
+      "version": "R80",
+      "recipe": "50-vapoursynth.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-vmaf",
+      "url": "https://codeload.github.com/Netflix/vmaf/zip/86da14d0306a138fd3f01319860b905169746516",
+      "sha256": "db4d65e144fa3d3da6317457dd639ad6a91dccd3d33216d80ae1a78dd90ec847",
+      "license": "BSD-2-Clause-Patent",
+      "group": "ffmpeg",
+      "version": "86da14d0306a138fd3f01319860b905169746516",
+      "recipe": "45-vmaf.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-vulkan-headers",
+      "url": "https://codeload.github.com/KhronosGroup/Vulkan-Headers/zip/v1.4.363",
+      "sha256": "112c94f35e6ff2f85d4b92b50d0611883a6467dab202a2547312defb87351c16",
+      "license": "Apache-2.0",
+      "group": "ffmpeg",
+      "version": "v1.4.363",
+      "recipe": "47-vulkan/40-vulkan-headers.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-vulkan-loader",
+      "url": "https://codeload.github.com/BtbN/Vulkan-Shim-Loader/zip/65b3936528cd92eb4ea3de485d03f858a3850484",
+      "sha256": "9d18a772fe9e2c8e209f9414b80c9138a262dbe7e13c2f880b1556c5cb45385d",
+      "license": "Apache-2.0",
+      "group": "ffmpeg",
+      "version": "65b3936528cd92eb4ea3de485d03f858a3850484",
+      "recipe": "47-vulkan/45-vulkan-loader.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-vvenc",
+      "url": "https://codeload.github.com/fraunhoferhhi/vvenc/zip/b1cfb2ad495af6ae4cc214b7a060e8b4166c4629",
+      "sha256": "5c2b175d623feb3b8a4925913b2c8442e52ab7140c270f754adcfaac1ca8cf07",
+      "license": "BSD-3-Clause-Clear",
+      "group": "ffmpeg",
+      "version": "b1cfb2ad495af6ae4cc214b7a060e8b4166c4629",
+      "recipe": "50-vvenc.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-xxhash",
+      "url": "https://codeload.github.com/Cyan4973/xxHash/zip/680bf463fa1ca0461b9a7c2dab7556e1f54cf4cf",
+      "sha256": "2c495ce972cb11510186fcd0f15740be26f8c75b476f82dee2c26e473c220b09",
+      "license": "BSD-2-Clause",
+      "group": "ffmpeg",
+      "version": "680bf463fa1ca0461b9a7c2dab7556e1f54cf4cf",
+      "recipe": "45-xxhash.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-xz",
+      "url": "https://codeload.github.com/tukaani-project/xz/zip/3b1efb04d17c3a9ef7f473d73af13f1531428ffe",
+      "sha256": "65a4c7b107c287c19afcb9b54b2187f4ecf992bff33609eef3896479162fbb0b",
+      "license": "0BSD",
+      "group": "ffmpeg",
+      "version": "3b1efb04d17c3a9ef7f473d73af13f1531428ffe",
+      "recipe": "25-xz.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-zimg",
+      "url": "https://codeload.github.com/sekrit-twc/zimg/zip/67e0603271c080e22c8429856dd4a8a56587e61e",
+      "sha256": "10762074a1ce6ed97873c93ca507b81784243d1157b4407be83218b781bac017",
+      "license": "WTFPL",
+      "group": "ffmpeg",
+      "version": "67e0603271c080e22c8429856dd4a8a56587e61e",
+      "recipe": "50-zimg.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-zix",
+      "url": "https://codeload.github.com/drobilla/zix/zip/17d632393f5addb6fa24dda2927b96515407cca7",
+      "sha256": "04cb9ef4c954b0a1d6f5026741fe1d237a7740147c5a51c4a12867971c137cd1",
+      "license": "ISC",
+      "group": "ffmpeg",
+      "version": "17d632393f5addb6fa24dda2927b96515407cca7",
+      "recipe": "50-lilv/96-zix.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-zlib",
+      "url": "https://codeload.github.com/madler/zlib/zip/767c4c947852e143f582c85f14cf573411df1b35",
+      "sha256": "7416fc424ed245c961e998e149ffca387c572db63db25a86bf17f81306ed4201",
+      "license": "Zlib",
+      "group": "ffmpeg",
+      "version": "767c4c947852e143f582c85f14cf573411df1b35",
+      "recipe": "20-zlib.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-zstd",
+      "url": "https://codeload.github.com/facebook/zstd/zip/01b7154f1172432f8abe9b3bb9909e14a1176b7d",
+      "sha256": "2aaf456b163c3f61f6f45138cfb7561c8219a1667985762c82f956829ffa3fe8",
+      "license": "BSD-3-Clause",
+      "group": "ffmpeg",
+      "version": "01b7154f1172432f8abe9b3bb9909e14a1176b7d",
+      "recipe": "45-zstd.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "ffmpeg-zvbi",
+      "url": "https://codeload.github.com/zapping-vbi/zvbi/zip/d3a5ee9f2b047bf16cd1ee5ccf6ec05ee75409d0",
+      "sha256": "e011e3323a4d0ab4e7a650a93231beb8adc816f6eb2203708823e12222dae657",
+      "license": "LGPL-2.0-or-later",
+      "group": "ffmpeg",
+      "version": "d3a5ee9f2b047bf16cd1ee5ccf6ec05ee75409d0",
+      "recipe": "50-zvbi.sh",
+      "correspondingSource": true
+    },
+    {
+      "name": "inno-license",
+      "url": "https://raw.githubusercontent.com/jrsoftware/issrc/is-6_7_3/license.txt",
+      "sha256": "2e5346868c2a18434489824e11d65c3031620f792fefc415d05f19cd441abf5c",
+      "license": "LicenseRef-Inno-Setup",
+      "group": "inno",
+      "version": "6.7.3",
+      "correspondingSource": false
+    },
+    {
+      "name": "skia-source",
+      "url": "https://codeload.github.com/google/skia/zip/95ee33d7ec7791ab9c071675710a14fe6408ae4f",
+      "sha256": "87e49bcbf91c894dde7ee52d650b59831eee4c0defb06cf8f63697b4b517cfbd",
+      "license": "BSD-3-Clause",
+      "group": "canvas",
+      "version": "95ee33d7ec7791ab9c071675710a14fe6408ae4f",
+      "correspondingSource": false
+    },
+    {
+      "name": "canvas-simd-license",
+      "url": "https://raw.githubusercontent.com/Nugine/simd/d74c030d9dc4f3cae02146d1f497ff62726ef09a/LICENSE",
+      "sha256": "71674605ec4c087fe9eb534e3e4f9e26eb2e4aabcd76a29fd156c6a844d44b3d",
+      "version": "d74c030d9dc4f3cae02146d1f497ff62726ef09a",
+      "license": "MIT",
+      "group": "canvas",
+      "correspondingSource": false,
+      "headerNotice": false
+    },
+    {
+      "name": "canvas-napi-license",
+      "url": "https://raw.githubusercontent.com/napi-rs/napi-rs/956e4525fea6a676ea3680b711382f167b899af9/LICENSE",
+      "sha256": "3f1ce66533302df3a32edbfdfc0b78f0dd34659e4c1f5817162e5ea3c2297215",
+      "version": "956e4525fea6a676ea3680b711382f167b899af9",
+      "license": "MIT",
+      "group": "canvas",
+      "correspondingSource": false,
+      "headerNotice": false
+    },
+    {
+      "name": "canvas-napi-sys-license",
+      "url": "https://raw.githubusercontent.com/napi-rs/napi-rs/679eb79f5cf3c7c6b2850f4ab46092126f23dc5c/LICENSE",
+      "sha256": "3f1ce66533302df3a32edbfdfc0b78f0dd34659e4c1f5817162e5ea3c2297215",
+      "version": "679eb79f5cf3c7c6b2850f4ab46092126f23dc5c",
+      "license": "MIT",
+      "group": "canvas",
+      "correspondingSource": false,
+      "headerNotice": false
+    },
+    {
+      "name": "ffmpeg-nvcodec-license",
+      "url": "https://raw.githubusercontent.com/FFmpeg/nv-codec-headers/eddcea9e27f6b772057c9b3f87de2cc1737faffc/include/ffnvcodec/nvEncodeAPI.h",
+      "sha256": "8776fddcb8febc6aec4d73989b1f21831eb30306bc583da55b4bf0c14a1dc228",
+      "version": "eddcea9e27f6b772057c9b3f87de2cc1737faffc",
+      "license": "MIT",
+      "group": "ffmpeg",
+      "correspondingSource": false,
+      "headerNotice": true,
+      "noticeOnly": true
+    },
+    {
+      "name": "ffmpeg-gcc-copying3",
+      "version": "16.2.0",
+      "license": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-16.2.0/COPYING3",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "group": "ffmpeg",
+      "correspondingSource": false,
+      "noticeOnly": true
+    },
+    {
+      "name": "ffmpeg-gcc-copying-runtime",
+      "version": "16.2.0",
+      "license": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "url": "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-16.2.0/COPYING.RUNTIME",
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "group": "ffmpeg",
+      "correspondingSource": false,
+      "noticeOnly": true
+    },
+    {
+      "name": "python-notices",
+      "url": "https://codeload.github.com/python/cpython/zip/v3.12.10",
+      "sha256": "156640ce1c4a58de57dc84f5cd1f6d50020edbc26f1e42de95fe8a1b765a3105",
+      "version": "3.12.10",
+      "license": "PSF-2.0",
+      "group": "python",
+      "correspondingSource": false
+    },
+    {
+      "name": "python-sqlite-3.49.1.0",
+      "url": "https://raw.githubusercontent.com/python/cpython-source-deps/cb7a3997059739fe9c63b2819aeda7c6907510ef/sqlite3.h",
+      "sha256": "88da6f1963bc192dfa18a3a48b423cf1fbbb04f903202efe9a78e3a597473e18",
+      "version": "sqlite-3.49.1.0",
+      "license": "LicenseRef-Public-Domain",
+      "group": "python",
+      "correspondingSource": false,
+      "headerNotice": true
+    },
+    {
+      "name": "python-xz-5.2.5",
+      "url": "https://raw.githubusercontent.com/python/cpython-source-deps/c6bc0c612605622aaef101a33a751f9de2ecc193/COPYING",
+      "sha256": "bcb02973ef6e87ea73d331b3a80df7748407f17efdb784b61b47e0e610d3bb5c",
+      "version": "xz-5.2.5",
+      "license": "LicenseRef-Public-Domain",
+      "group": "python",
+      "correspondingSource": false,
+      "headerNotice": false
+    },
+    {
+      "name": "ffmpeg-gnulib",
+      "url": "https://codeload.github.com/coreutils/gnulib/zip/eb72eb6f75f5621c5d648acd11467fd124584617",
+      "sha256": "5aa9a47050c6a5f02874614f3b60cf1ec0a17fd1433052c7b54ad40cd689cf75",
+      "version": "eb72eb6f75f5621c5d648acd11467fd124584617",
+      "license": "LGPL-2.1-or-later AND GPL-3.0-or-later",
+      "group": "ffmpeg",
+      "recipe": "20-libiconv.sh",
+      "correspondingSource": true
+    }
+  ]
+}

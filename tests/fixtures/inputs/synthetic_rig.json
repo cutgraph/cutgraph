@@ -1,0 +1,8 @@
+{
+  "owner": "client",
+  "palettes": ["fog", "fern", "clay"],
+  "parts": {"brows": ["level", "raised"], "eyes": ["open", "closed"], "mouth": ["closed", "open"]},
+  "expressions": ["neutral", "happy", "curious"],
+  "poses": ["rest", "wave", "point"],
+  "moves": ["idle", "nod", "wave"]
+}

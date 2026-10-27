@@ -1,0 +1,1197 @@
+{
+  "$defs": {
+    "Anchor": {
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "enum": [
+            "word",
+            "time"
+          ],
+          "type": "string"
+        },
+        "offsetF": {
+          "type": "integer"
+        },
+        "ref": {
+          "additionalProperties": false,
+          "properties": {
+            "media": {
+              "type": "string"
+            },
+            "wordIdx": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "media",
+            "wordIdx"
+          ],
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "type": "object"
+    },
+    "Badge": {
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "maxLength": 24,
+          "minLength": 1,
+          "pattern": "\\S",
+          "type": "string"
+        },
+        "tone": {
+          "enum": [
+            "ink",
+            "paper",
+            "accent"
+          ]
+        }
+      },
+      "required": [
+        "text",
+        "tone"
+      ],
+      "type": "object"
+    },
+    "Bubble": {
+      "enum": [
+        "think",
+        "say",
+        "exclaim",
+        "question",
+        "exclaims"
+      ]
+    },
+    "CalloutProps": {
+      "additionalProperties": false,
+      "properties": {
+        "accent": {
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "body",
+        "accent"
+      ],
+      "type": "object"
+    },
+    "ChaptercardProps": {
+      "additionalProperties": false,
+      "properties": {
+        "chapter": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "chapter",
+        "title",
+        "subtitle"
+      ],
+      "type": "object"
+    },
+    "Clip": {
+      "additionalProperties": false,
+      "description": "Cross-field rules are enforced by pipeline.project.validate(), NOT expressible here: srcOutF > srcInF; speech-track clips carry no anchor; within-track clips never overlap.",
+      "properties": {
+        "anchor": {
+          "$ref": "#/$defs/Anchor"
+        },
+        "duckDb": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "gainDb": {
+          "type": "number"
+        },
+        "id": {
+          "type": "string"
+        },
+        "media": {
+          "$ref": "#/$defs/Media"
+        },
+        "seams": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "atF": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "fadeMs": {
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "atF",
+              "fadeMs"
+            ],
+            "type": "object"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "srcInF": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "srcOutF": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "tlStartF": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "transform": {
+          "$ref": "#/$defs/Transform"
+        }
+      },
+      "required": [
+        "id",
+        "media",
+        "srcInF",
+        "srcOutF",
+        "tlStartF"
+      ],
+      "type": "object"
+    },
+    "Costar": {
+      "additionalProperties": false,
+      "description": "A duo shot's second character, or an ensemble member: a cast profile id and its own look (ids as for the lead) and bubble.",
+      "properties": {
+        "bubble": {
+          "$ref": "#/$defs/Bubble"
+        },
+        "character": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "expression": {
+          "type": "string"
+        },
+        "move": {
+          "type": "string"
+        },
+        "pose": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "character"
+      ],
+      "type": "object"
+    },
+    "EvidencecardProps": {
+      "additionalProperties": false,
+      "properties": {
+        "claim": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "claim",
+        "detail"
+      ],
+      "type": "object"
+    },
+    "GraphicItem": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "description": "A trusted first-party graphic. Project data carries values only; renderers are selected from the built-in registry.",
+          "properties": {
+            "anchor": {
+              "$ref": "#/$defs/Anchor"
+            },
+            "componentId": {
+              "const": "lower-third"
+            },
+            "componentVersion": {
+              "const": 1,
+              "type": "integer"
+            },
+            "durF": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "id": {
+              "type": "string"
+            },
+            "pos": {
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "y": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "type": "object"
+            },
+            "props": {
+              "$ref": "#/$defs/LowerthirdProps"
+            },
+            "scale": {
+              "maximum": 4,
+              "minimum": 0.1,
+              "type": "number"
+            },
+            "tlStartF": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": {
+              "const": "graphic"
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "componentId",
+            "componentVersion",
+            "props",
+            "pos",
+            "scale",
+            "tlStartF",
+            "durF"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "A trusted first-party graphic. Project data carries values only; renderers are selected from the built-in registry.",
+          "properties": {
+            "anchor": {
+              "$ref": "#/$defs/Anchor"
+            },
+            "componentId": {
+              "const": "callout"
+            },
+            "componentVersion": {
+              "const": 1,
+              "type": "integer"
+            },
+            "durF": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "id": {
+              "type": "string"
+            },
+            "pos": {
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "y": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "type": "object"
+            },
+            "props": {
+              "$ref": "#/$defs/CalloutProps"
+            },
+            "scale": {
+              "maximum": 4,
+              "minimum": 0.1,
+              "type": "number"
+            },
+            "tlStartF": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": {
+              "const": "graphic"
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "componentId",
+            "componentVersion",
+            "props",
+            "pos",
+            "scale",
+            "tlStartF",
+            "durF"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "A trusted first-party graphic. Project data carries values only; renderers are selected from the built-in registry.",
+          "properties": {
+            "anchor": {
+              "$ref": "#/$defs/Anchor"
+            },
+            "componentId": {
+              "const": "evidence-card"
+            },
+            "componentVersion": {
+              "const": 1,
+              "type": "integer"
+            },
+            "durF": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "id": {
+              "type": "string"
+            },
+            "pos": {
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "y": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "type": "object"
+            },
+            "props": {
+              "$ref": "#/$defs/EvidencecardProps"
+            },
+            "scale": {
+              "maximum": 4,
+              "minimum": 0.1,
+              "type": "number"
+            },
+            "tlStartF": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": {
+              "const": "graphic"
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "componentId",
+            "componentVersion",
+            "props",
+            "pos",
+            "scale",
+            "tlStartF",
+            "durF"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "A trusted first-party graphic. Project data carries values only; renderers are selected from the built-in registry.",
+          "properties": {
+            "anchor": {
+              "$ref": "#/$defs/Anchor"
+            },
+            "componentId": {
+              "const": "chapter-card"
+            },
+            "componentVersion": {
+              "const": 1,
+              "type": "integer"
+            },
+            "durF": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "id": {
+              "type": "string"
+            },
+            "pos": {
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "y": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "type": "object"
+            },
+            "props": {
+              "$ref": "#/$defs/ChaptercardProps"
+            },
+            "scale": {
+              "maximum": 4,
+              "minimum": 0.1,
+              "type": "number"
+            },
+            "tlStartF": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": {
+              "const": "graphic"
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "componentId",
+            "componentVersion",
+            "props",
+            "pos",
+            "scale",
+            "tlStartF",
+            "durF"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "description": "A trusted first-party graphic. Project data carries values only; renderers are selected from the built-in registry.",
+          "properties": {
+            "anchor": {
+              "$ref": "#/$defs/Anchor"
+            },
+            "componentId": {
+              "const": "simple-chart"
+            },
+            "componentVersion": {
+              "const": 1,
+              "type": "integer"
+            },
+            "durF": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "id": {
+              "type": "string"
+            },
+            "pos": {
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "y": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "type": "object"
+            },
+            "props": {
+              "$ref": "#/$defs/SimplechartProps"
+            },
+            "scale": {
+              "maximum": 4,
+              "minimum": 0.1,
+              "type": "number"
+            },
+            "tlStartF": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "type": {
+              "const": "graphic"
+            }
+          },
+          "required": [
+            "type",
+            "id",
+            "componentId",
+            "componentVersion",
+            "props",
+            "pos",
+            "scale",
+            "tlStartF",
+            "durF"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "LowerthirdProps": {
+      "additionalProperties": false,
+      "properties": {
+        "detail": {
+          "type": "string"
+        },
+        "eyebrow": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "eyebrow",
+        "title",
+        "detail"
+      ],
+      "type": "object"
+    },
+    "Media": {
+      "additionalProperties": false,
+      "properties": {
+        "proxy": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "source"
+      ],
+      "type": "object"
+    },
+    "PhoneScreen": {
+      "additionalProperties": false,
+      "description": "A screen shot's phones: asset is phone 1's library image (absent screen = a generated placeholder app screen), more is phones 2 and 3, drawn beside it.",
+      "properties": {
+        "asset": {
+          "pattern": "^[a-f0-9]{16}$",
+          "type": "string"
+        },
+        "more": {
+          "items": {
+            "pattern": "^[a-f0-9]{16}$",
+            "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "asset"
+      ],
+      "type": "object"
+    },
+    "Scene": {
+      "additionalProperties": false,
+      "description": "A topical group of transcript words. List order is story order; a scene covers the flat wordIdx range [startWord, next-larger startWord). Cross-field rules are enforced by pipeline.project.validate(), NOT expressible here: scene ids and startWords are unique and the earliest scene starts at word 0.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "Hook",
+            "Problem",
+            "Approach",
+            "Build",
+            "Example",
+            "Check",
+            "Payoff",
+            "Wrap",
+            "Beat"
+          ],
+          "type": "string"
+        },
+        "shot": {
+          "$ref": "#/$defs/Shot"
+        },
+        "startWord": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "title": {
+          "maxLength": 120,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "role",
+        "startWord"
+      ],
+      "type": "object"
+    },
+    "Shot": {
+      "additionalProperties": false,
+      "description": "Optional direction for an animated scene; cueWord is a flat transcript wordIdx. mode says how the scene is pictured (absent = footage): its footage, a full-frame animation, or a character cameo over the footage. character is a cast profile id (pipeline.cast); absent, or one the video's workspace can't see, means the workspace's default character. costar puts a second character beside it in an animation (a duo), and interaction is how the two play off each other on the cue word (absent = none). eyebrow is the line over an animation's headline: absent means the video's workspace brand, an empty string hides it. bubble puts a thought, speech, a '!', a '?' or two simultaneous neutral '!!' marks (exclaims) over the character (the co-star and each ensemble member carry their own), popping in on the cue word; ensemble lines up to three more characters after the lead and the co-star in an animation, where a duo's interaction is not played. hideHeadline turns off the headline and eyebrow on the stage, a duo or an ensemble; a screen, title or sign-off layout ignores it. diagram selects a classic drawing or an independent grid, chain, radial, tree or list preset (motion-core/STAGING.md); each scene has its own geometry, labels and reveal timing.",
+      "properties": {
+        "backdrop": {
+          "description": "A scene backdrop id; vision is a generic bright radial backdrop.",
+          "type": "string"
+        },
+        "badges": {
+          "description": "A title card's badges, dropping in above its headline; on a stage with an ensemble, one under each member.",
+          "items": {
+            "$ref": "#/$defs/Badge"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "type": "array"
+        },
+        "boardLabels": {
+          "contains": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "description": "An independent diagram's labels in node order: grid by row, chain along its path, radial centre then clockwise from the top, tree by level, list top to bottom. One to six entries size the board; blanks draw empty boxes. Omitted labels draw three blank nodes.",
+          "items": {
+            "maxLength": 12,
+            "type": "string"
+          },
+          "maxItems": 6,
+          "minItems": 1,
+          "type": "array"
+        },
+        "bubble": {
+          "$ref": "#/$defs/Bubble"
+        },
+        "camera": {
+          "description": "An animation's camera move: a bounded centre-framed push at the scene's end, an independently framed pull at its start, or a pan that carries the stage in from the left as it opens.",
+          "enum": [
+            "push-in",
+            "pull-out",
+            "pan"
+          ]
+        },
+        "character": {
+          "type": "string"
+        },
+        "costar": {
+          "$ref": "#/$defs/Costar"
+        },
+        "cueWord": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "diagram": {
+          "examples": [
+            "scatter",
+            "blank",
+            "brief",
+            "route",
+            "checks",
+            "glow",
+            "none",
+            "grid",
+            "chain",
+            "radial",
+            "tree",
+            "list"
+          ],
+          "type": "string"
+        },
+        "ensemble": {
+          "items": {
+            "$ref": "#/$defs/Costar"
+          },
+          "maxItems": 3,
+          "type": "array"
+        },
+        "expression": {
+          "type": "string"
+        },
+        "eyebrow": {
+          "maxLength": 40,
+          "type": "string"
+        },
+        "headline": {
+          "type": "string"
+        },
+        "headlineAt": {
+          "description": "A duo's or an ensemble's headline over the co-star instead of its own place, fading in a quarter of the way through the scene.",
+          "enum": [
+            "costar"
+          ]
+        },
+        "hideHeadline": {
+          "description": "Animation only: true draws no headline or eyebrow on the stage, a duo or an ensemble (a screen, title or sign-off layout ignores it).",
+          "type": "boolean"
+        },
+        "interaction": {
+          "enum": [
+            "none",
+            "face",
+            "fistbump",
+            "highfive",
+            "point"
+          ]
+        },
+        "layout": {
+          "description": "How an animation's frame is composed (absent = stage, the character shot).",
+          "enum": [
+            "stage",
+            "screen",
+            "title",
+            "signoff"
+          ]
+        },
+        "mark": {
+          "description": "A sign-off's optional pixel text (absent = no mark).",
+          "pattern": "^[A-Za-z0-9&]{1,4}$",
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "footage",
+            "animation",
+            "cameo"
+          ]
+        },
+        "move": {
+          "type": "string"
+        },
+        "pose": {
+          "type": "string"
+        },
+        "screen": {
+          "$ref": "#/$defs/PhoneScreen"
+        }
+      },
+      "type": "object"
+    },
+    "SimplechartProps": {
+      "additionalProperties": false,
+      "properties": {
+        "labels": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 12,
+          "minItems": 1,
+          "type": "array"
+        },
+        "title": {
+          "type": "string"
+        },
+        "values": {
+          "items": {
+            "type": "number"
+          },
+          "maxItems": 12,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "title",
+        "labels",
+        "values"
+      ],
+      "type": "object"
+    },
+    "TextItem": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor": {
+          "$ref": "#/$defs/Anchor"
+        },
+        "durF": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "pos": {
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "y": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "type": "object"
+        },
+        "preset": {
+          "type": "string"
+        },
+        "scale": {
+          "maximum": 4,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "text": {
+          "type": "string"
+        },
+        "tlStartF": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "preset",
+        "pos",
+        "tlStartF",
+        "durF"
+      ],
+      "type": "object"
+    },
+    "Thumbnail": {
+      "additionalProperties": false,
+      "description": "A video's thumbnail: a still drawn by motion-core (motion-core/POSTER.md) at 1280x720 and 1080x1920. headline is the title (absent = the video's title); eyebrow a pill over it (absent or empty = none); character, pose and expression the lead in the foreground (absent character = the video's first animated scene's lead); ensemble the characters standing behind it (absent = the cast's others, up to three; empty = none); backdrop a scene backdrop id (absent = work).",
+      "properties": {
+        "backdrop": {
+          "type": "string"
+        },
+        "badges": {
+          "items": {
+            "$ref": "#/$defs/Badge"
+          },
+          "maxItems": 4,
+          "minItems": 1,
+          "type": "array"
+        },
+        "character": {
+          "type": "string"
+        },
+        "ensemble": {
+          "items": {
+            "$ref": "#/$defs/ThumbnailMember"
+          },
+          "maxItems": 3,
+          "type": "array"
+        },
+        "expression": {
+          "type": "string"
+        },
+        "eyebrow": {
+          "maxLength": 40,
+          "type": "string"
+        },
+        "headline": {
+          "maxLength": 60,
+          "type": "string"
+        },
+        "pose": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ThumbnailMember": {
+      "additionalProperties": false,
+      "description": "A character standing behind a thumbnail's lead: a cast profile id and its look.",
+      "properties": {
+        "badge": {
+          "$ref": "#/$defs/Badge"
+        },
+        "character": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "expression": {
+          "type": "string"
+        },
+        "pose": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "character"
+      ],
+      "type": "object"
+    },
+    "Track": {
+      "additionalProperties": false,
+      "properties": {
+        "clips": {
+          "items": {
+            "$ref": "#/$defs/Clip"
+          },
+          "type": "array"
+        },
+        "id": {
+          "type": "string"
+        },
+        "items": {
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/TextItem"
+              },
+              {
+                "$ref": "#/$defs/GraphicItem"
+              }
+            ]
+          },
+          "type": "array"
+        },
+        "kind": {
+          "enum": [
+            "speech",
+            "video",
+            "text",
+            "audio"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind"
+      ],
+      "type": "object"
+    },
+    "Transform": {
+      "additionalProperties": false,
+      "description": "Normalized project-space placement for a visual clip. Omit to use its legacy default.",
+      "properties": {
+        "fit": {
+          "enum": [
+            "fill",
+            "contain",
+            "cover"
+          ],
+          "type": "string"
+        },
+        "scale": {
+          "maximum": 4,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        "x": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "y": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "scale",
+        "fit"
+      ],
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "captions": {
+      "additionalProperties": false,
+      "properties": {
+        "emphasis": {
+          "items": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "style": {
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "enabled"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "channel": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "crop": {
+      "additionalProperties": false,
+      "properties": {
+        "metaPath": {
+          "type": "string"
+        },
+        "mode": {
+          "enum": [
+            "center",
+            "reframe"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "fps": {
+      "const": 30,
+      "type": "integer"
+    },
+    "height": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "narration": {
+      "enum": [
+        "estimated",
+        "recorded",
+        null
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "revision": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "scenes": {
+      "items": {
+        "$ref": "#/$defs/Scene"
+      },
+      "type": "array"
+    },
+    "schemaVersion": {
+      "type": "integer"
+    },
+    "thumbnail": {
+      "$ref": "#/$defs/Thumbnail"
+    },
+    "title": {
+      "maxLength": 120,
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tracks": {
+      "items": {
+        "$ref": "#/$defs/Track"
+      },
+      "type": "array"
+    },
+    "transcript": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "width": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "workspaceId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "name",
+    "fps",
+    "width",
+    "height",
+    "revision",
+    "tracks"
+  ],
+  "title": "Project",
+  "type": "object"
+}

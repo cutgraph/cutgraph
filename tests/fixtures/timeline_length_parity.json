@@ -1,0 +1,804 @@
+{
+  "cases": [
+    {
+      "name": "music-on-word-0",
+      "note": "Music inserted on word 0 fills the speech: the video is the speech.",
+      "project": {
+        "schemaVersion": 3,
+        "name": "timeline-length",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 1,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "c",
+                "media": {
+                  "source": "data/source/talk.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 210,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          },
+          {
+            "id": "music",
+            "kind": "audio",
+            "clips": [
+              {
+                "id": "bed",
+                "media": {
+                  "source": "workspaces/ws/library/bed.mp3",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 207,
+                "tlStartF": 3,
+                "gainDb": 0.0,
+                "anchor": {
+                  "mode": "word",
+                  "ref": {
+                    "media": "data/source/talk.mp4",
+                    "wordIdx": 0
+                  },
+                  "offsetF": 0
+                },
+                "duckDb": -12
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "s1",
+            "title": "Open",
+            "role": "Hook",
+            "startWord": 0
+          },
+          {
+            "id": "s2",
+            "title": "Middle",
+            "role": "Beat",
+            "startWord": 2
+          },
+          {
+            "id": "s3",
+            "title": "Close",
+            "role": "Wrap",
+            "startWord": 4
+          }
+        ]
+      },
+      "endF": 210,
+      "rawEndF": 210
+    },
+    {
+      "name": "reorder-moves-the-music-word",
+      "note": "The overlapping scene case: word 0's scene moves last, the bed follows word 0 with its length and runs past the speech end.",
+      "project": {
+        "schemaVersion": 5,
+        "name": "timeline-length",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 1,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "c-s63",
+                "media": {
+                  "source": "data/source/talk.mp4",
+                  "proxy": null
+                },
+                "srcInF": 63,
+                "srcOutF": 123,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              },
+              {
+                "id": "c-s123",
+                "media": {
+                  "source": "data/source/talk.mp4",
+                  "proxy": null
+                },
+                "srcInF": 123,
+                "srcOutF": 210,
+                "tlStartF": 60,
+                "gainDb": 0.0,
+                "seams": [
+                  {
+                    "atF": 87,
+                    "fadeMs": 30
+                  }
+                ]
+              },
+              {
+                "id": "c",
+                "media": {
+                  "source": "data/source/talk.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 63,
+                "tlStartF": 147,
+                "gainDb": 0.0,
+                "seams": [
+                  {
+                    "atF": 0,
+                    "fadeMs": 30
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "music",
+            "kind": "audio",
+            "clips": [
+              {
+                "id": "bed",
+                "media": {
+                  "source": "workspaces/ws/library/bed.mp3",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 207,
+                "tlStartF": 150,
+                "gainDb": 0.0,
+                "anchor": {
+                  "mode": "word",
+                  "ref": {
+                    "media": "data/source/talk.mp4",
+                    "wordIdx": 0
+                  },
+                  "offsetF": 0
+                },
+                "duckDb": -12
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "s2",
+            "title": "Middle",
+            "role": "Beat",
+            "startWord": 2
+          },
+          {
+            "id": "s3",
+            "title": "Close",
+            "role": "Wrap",
+            "startWord": 4
+          },
+          {
+            "id": "s1",
+            "title": "Open",
+            "role": "Hook",
+            "startWord": 0
+          }
+        ]
+      },
+      "endF": 210,
+      "rawEndF": 357
+    },
+    {
+      "name": "cut-shortens-the-speech",
+      "note": "A cut shortens the speech under a bed that keeps its length.",
+      "project": {
+        "schemaVersion": 5,
+        "name": "timeline-length",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 1,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "c",
+                "media": {
+                  "source": "data/source/talk.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 63,
+                "tlStartF": 0,
+                "gainDb": 0.0,
+                "seams": [
+                  {
+                    "atF": 63,
+                    "fadeMs": 30
+                  }
+                ]
+              },
+              {
+                "id": "c-r63",
+                "media": {
+                  "source": "data/source/talk.mp4",
+                  "proxy": null
+                },
+                "srcInF": 123,
+                "srcOutF": 210,
+                "tlStartF": 63,
+                "gainDb": 0.0,
+                "seams": [
+                  {
+                    "atF": 0,
+                    "fadeMs": 30
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "music",
+            "kind": "audio",
+            "clips": [
+              {
+                "id": "bed",
+                "media": {
+                  "source": "workspaces/ws/library/bed.mp3",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 207,
+                "tlStartF": 3,
+                "gainDb": 0.0,
+                "anchor": {
+                  "mode": "word",
+                  "ref": {
+                    "media": "data/source/talk.mp4",
+                    "wordIdx": 0
+                  },
+                  "offsetF": 0
+                },
+                "duckDb": -12
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "s1",
+            "title": "Open",
+            "role": "Hook",
+            "startWord": 0
+          },
+          {
+            "id": "s2",
+            "title": "Middle",
+            "role": "Beat",
+            "startWord": 2
+          },
+          {
+            "id": "s3",
+            "title": "Close",
+            "role": "Wrap",
+            "startWord": 4
+          }
+        ]
+      },
+      "endF": 150,
+      "rawEndF": 210
+    },
+    {
+      "name": "restore-plays-the-bed-whole",
+      "note": "Restoring the cut plays the bed whole again.",
+      "project": {
+        "schemaVersion": 5,
+        "name": "timeline-length",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 1,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "c",
+                "media": {
+                  "source": "data/source/talk.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 210,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          },
+          {
+            "id": "music",
+            "kind": "audio",
+            "clips": [
+              {
+                "id": "bed",
+                "media": {
+                  "source": "workspaces/ws/library/bed.mp3",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 207,
+                "tlStartF": 3,
+                "gainDb": 0.0,
+                "anchor": {
+                  "mode": "word",
+                  "ref": {
+                    "media": "data/source/talk.mp4",
+                    "wordIdx": 0
+                  },
+                  "offsetF": 0
+                },
+                "duckDb": -12
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "s1",
+            "title": "Open",
+            "role": "Hook",
+            "startWord": 0
+          },
+          {
+            "id": "s2",
+            "title": "Middle",
+            "role": "Beat",
+            "startWord": 2
+          },
+          {
+            "id": "s3",
+            "title": "Close",
+            "role": "Wrap",
+            "startWord": 4
+          }
+        ]
+      },
+      "endF": 210,
+      "rawEndF": 210
+    },
+    {
+      "name": "time-pinned-bed-extends",
+      "note": "A time-pinned element placed past the speech lengthens the video.",
+      "project": {
+        "schemaVersion": 3,
+        "name": "timeline-length",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 1,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "c",
+                "media": {
+                  "source": "data/source/talk.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 210,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          },
+          {
+            "id": "music",
+            "kind": "audio",
+            "clips": [
+              {
+                "id": "bed",
+                "media": {
+                  "source": "workspaces/ws/library/bed.mp3",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 300,
+                "tlStartF": 3,
+                "gainDb": 0.0,
+                "anchor": {
+                  "mode": "time",
+                  "offsetF": 0
+                },
+                "duckDb": -12
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "s1",
+            "title": "Open",
+            "role": "Hook",
+            "startWord": 0
+          },
+          {
+            "id": "s2",
+            "title": "Middle",
+            "role": "Beat",
+            "startWord": 2
+          },
+          {
+            "id": "s3",
+            "title": "Close",
+            "role": "Wrap",
+            "startWord": 4
+          }
+        ]
+      },
+      "endF": 303,
+      "rawEndF": 303
+    },
+    {
+      "name": "unanchored-bed-extends",
+      "note": "No anchor is a time pin.",
+      "project": {
+        "schemaVersion": 3,
+        "name": "timeline-length",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 1,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "c",
+                "media": {
+                  "source": "data/source/talk.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 210,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          },
+          {
+            "id": "music",
+            "kind": "audio",
+            "clips": [
+              {
+                "id": "bed",
+                "media": {
+                  "source": "workspaces/ws/library/bed.mp3",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 300,
+                "tlStartF": 3,
+                "gainDb": 0.0,
+                "duckDb": -12
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "s1",
+            "title": "Open",
+            "role": "Hook",
+            "startWord": 0
+          },
+          {
+            "id": "s2",
+            "title": "Middle",
+            "role": "Beat",
+            "startWord": 2
+          },
+          {
+            "id": "s3",
+            "title": "Close",
+            "role": "Wrap",
+            "startWord": 4
+          }
+        ]
+      },
+      "endF": 303,
+      "rawEndF": 303
+    },
+    {
+      "name": "word-anchored-graphic-past-the-end",
+      "note": "A word-anchored graphic never lengthens the video either.",
+      "project": {
+        "schemaVersion": 3,
+        "name": "timeline-length",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 1,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "c",
+                "media": {
+                  "source": "data/source/talk.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 210,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          },
+          {
+            "id": "music",
+            "kind": "audio",
+            "clips": [
+              {
+                "id": "bed",
+                "media": {
+                  "source": "workspaces/ws/library/bed.mp3",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 207,
+                "tlStartF": 3,
+                "gainDb": 0.0,
+                "anchor": {
+                  "mode": "word",
+                  "ref": {
+                    "media": "data/source/talk.mp4",
+                    "wordIdx": 0
+                  },
+                  "offsetF": 0
+                },
+                "duckDb": -12
+              }
+            ]
+          },
+          {
+            "id": "text",
+            "kind": "text",
+            "items": [
+              {
+                "type": "graphic",
+                "id": "lt",
+                "componentId": "lower-third",
+                "componentVersion": 1,
+                "props": {
+                  "eyebrow": "",
+                  "title": "T",
+                  "detail": ""
+                },
+                "pos": {
+                  "x": 0.27,
+                  "y": 0.8
+                },
+                "scale": 1,
+                "tlStartF": 180,
+                "durF": 120,
+                "anchor": {
+                  "mode": "word",
+                  "ref": {
+                    "media": "data/source/talk.mp4",
+                    "wordIdx": 5
+                  },
+                  "offsetF": 0
+                }
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "s1",
+            "title": "Open",
+            "role": "Hook",
+            "startWord": 0
+          },
+          {
+            "id": "s2",
+            "title": "Middle",
+            "role": "Beat",
+            "startWord": 2
+          },
+          {
+            "id": "s3",
+            "title": "Close",
+            "role": "Wrap",
+            "startWord": 4
+          }
+        ]
+      },
+      "endF": 210,
+      "rawEndF": 300
+    },
+    {
+      "name": "orphaned-cue-after-the-end",
+      "note": "A cue whose word was cut stays in the document but plays nothing past the end.",
+      "project": {
+        "schemaVersion": 3,
+        "name": "timeline-length",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 1,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "c",
+                "media": {
+                  "source": "data/source/talk.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 210,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          },
+          {
+            "id": "music",
+            "kind": "audio",
+            "clips": [
+              {
+                "id": "bed",
+                "media": {
+                  "source": "workspaces/ws/library/bed.mp3",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 207,
+                "tlStartF": 3,
+                "gainDb": 0.0,
+                "anchor": {
+                  "mode": "word",
+                  "ref": {
+                    "media": "data/source/talk.mp4",
+                    "wordIdx": 0
+                  },
+                  "offsetF": 0
+                },
+                "duckDb": -12
+              }
+            ]
+          },
+          {
+            "id": "broll",
+            "kind": "video",
+            "clips": [
+              {
+                "id": "b",
+                "media": {
+                  "source": "workspaces/ws/library/city.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 90,
+                "tlStartF": 240,
+                "gainDb": 0.0,
+                "anchor": {
+                  "mode": "word",
+                  "ref": {
+                    "media": "data/source/talk.mp4",
+                    "wordIdx": 5
+                  },
+                  "offsetF": 0
+                }
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "s1",
+            "title": "Open",
+            "role": "Hook",
+            "startWord": 0
+          },
+          {
+            "id": "s2",
+            "title": "Middle",
+            "role": "Beat",
+            "startWord": 2
+          },
+          {
+            "id": "s3",
+            "title": "Close",
+            "role": "Wrap",
+            "startWord": 4
+          }
+        ]
+      },
+      "endF": 210,
+      "rawEndF": 330
+    },
+    {
+      "name": "no-speech-no-pin",
+      "note": "With no speech and no time pin the longest element sets the length.",
+      "project": {
+        "schemaVersion": 3,
+        "name": "timeline-length",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 1,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "music",
+            "kind": "audio",
+            "clips": [
+              {
+                "id": "bed",
+                "media": {
+                  "source": "workspaces/ws/library/bed.mp3",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 120,
+                "tlStartF": 30,
+                "gainDb": 0.0,
+                "anchor": {
+                  "mode": "word",
+                  "ref": {
+                    "media": "data/source/talk.mp4",
+                    "wordIdx": 0
+                  },
+                  "offsetF": 0
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "endF": 150,
+      "rawEndF": 150
+    },
+    {
+      "name": "empty",
+      "note": "An empty project has no length.",
+      "project": {
+        "schemaVersion": 3,
+        "name": "timeline-length",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 1,
+        "transcript": null,
+        "tracks": []
+      },
+      "endF": 0,
+      "rawEndF": 0
+    }
+  ]
+}

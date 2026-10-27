@@ -1,0 +1,98 @@
+{
+  "characters": [
+    {
+      "id": "default-character",
+      "name": "Lens",
+      "rig": "lens",
+      "art": [],
+      "palette": "periwinkle",
+      "approved": true,
+      "expressions": [
+        {
+          "id": "smug",
+          "name": "Smug",
+          "spec": {
+            "eyes": "side",
+            "mouth": "smile"
+          },
+          "createdAt": "2026-09-23T00:00:00.000000Z"
+        }
+      ],
+      "createdAt": "",
+      "workspaceId": "brand"
+    },
+    {
+      "id": "visitor-guide",
+      "name": "Visitor guide",
+      "rig": "lens",
+      "art": [],
+      "palette": "periwinkle",
+      "approved": true,
+      "expressions": [
+        {
+          "id": "focus",
+          "name": "Quiet focus",
+          "spec": {
+            "eyes": "narrow",
+            "mouth": "round"
+          },
+          "createdAt": "2026-09-23T00:00:00.000000Z"
+        }
+      ],
+      "createdAt": "2026-09-23T00:00:00.000000Z",
+      "workspaceId": "garden-space"
+    },
+    {
+      "id": "visitor-reader",
+      "name": "Visitor reader",
+      "rig": "lens",
+      "art": [],
+      "palette": "periwinkle",
+      "approved": true,
+      "expressions": [],
+      "createdAt": "2026-09-23T00:00:00.000000Z",
+      "workspaceId": "garden-space"
+    },
+    {
+      "id": "visitor-helper",
+      "name": "Visitor helper",
+      "rig": "lens",
+      "art": [],
+      "palette": "periwinkle",
+      "approved": true,
+      "expressions": [],
+      "createdAt": "2026-09-23T00:00:00.000000Z",
+      "workspaceId": "garden-space"
+    },
+    {
+      "id": "stored-character",
+      "name": "Stored character",
+      "rig": "retired-rig",
+      "available": false,
+      "art": [],
+      "palette": "stored-palette",
+      "approved": true,
+      "workspaceId": "brand",
+      "createdAt": "",
+      "expressions": [
+        {
+          "id": "stored-look",
+          "name": "Stored look",
+          "spec": {
+            "old-part": "old-option"
+          },
+          "createdAt": ""
+        }
+      ]
+    }
+  ],
+  "default": "default-character",
+  "workspace": {
+    "id": "garden-space",
+    "name": "Garden"
+  },
+  "brand": {
+    "name": "MUSEUM VISIT",
+    "accent": "#2bb3a3"
+  }
+}

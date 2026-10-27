@@ -1,0 +1,2 @@
+# REUSE license linter, installed only by CI for the report-only lint step.
+reuse==6.2.0

@@ -1,0 +1,92 @@
+# Accepted advisories from the audit exceptions in docs/dependency-audit.md. Each entry expires so it is reviewed
+# again; a new advisory, or one for a changed version, still fails the scan.
+
+[[IgnoredVulns]]
+id = "GHSA-29pf-2h5f-8g72"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: transformers 4.57.6 (PYSEC-2026-2289). Studio loads only pinned models; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "PYSEC-2026-2289"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: transformers 4.57.6. Studio loads only pinned models; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "GHSA-69w3-r845-3855"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: transformers 4.57.6 (PYSEC-2026-2288). Studio never runs the Trainer; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "PYSEC-2026-2288"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: transformers 4.57.6. Studio never runs the Trainer; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "GHSA-fgcw-684q-jj6r"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: transformers 4.57.6 (PYSEC-2026-2290). Studio loads only pinned models; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "PYSEC-2026-2290"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: transformers 4.57.6. Studio loads only pinned models; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "GHSA-xrqw-3rrv-vx5w"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: transformers 4.57.6 (PYSEC-2026-3929). Studio never saves models; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "PYSEC-2026-3929"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: transformers 4.57.6. Studio never saves models; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "GHSA-x9r9-c232-4q39"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: transformers 4.57.6 (CVE-2026-80047). Studio loads no custom generation code; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "PYSEC-2025-217"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: transformers 4.57.6. Studio never converts checkpoints; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "GHSA-vgrw-7cvw-pwgx"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: torch 2.8.0+cu128 (PYSEC-2025-193). WhisperX constrains torch; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "GHSA-rrmf-rvhw-rf47"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: torch 2.8.0+cu128 (PYSEC-2025-194). WhisperX constrains torch; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "GHSA-qfhq-4f3w-5fph"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: torch 2.8.0+cu128 (PYSEC-2025-195). WhisperX constrains torch; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "PYSEC-2025-203"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: torch 2.8.0+cu128. WhisperX constrains torch; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "PYSEC-2025-204"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: torch 2.8.0+cu128. WhisperX constrains torch; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "PYSEC-2025-206"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: torch 2.8.0+cu128. WhisperX constrains torch; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "PYSEC-2026-139"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: torch 2.8.0+cu128. WhisperX constrains torch; see docs/dependency-audit.md."
+
+[[IgnoredVulns]]
+id = "PYSEC-2026-2286"
+ignoreUntil = 2027-01-01
+reason = "Optional transcription: torch 2.8.0+cu128. WhisperX constrains torch; see docs/dependency-audit.md."

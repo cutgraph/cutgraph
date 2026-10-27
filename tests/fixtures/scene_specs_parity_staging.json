@@ -1,0 +1,889 @@
+{
+  "library": [
+    {
+      "workspaceId": "garden-space",
+      "asset": {
+        "id": "a1b2c3d4e5f60718",
+        "name": "Sample image",
+        "kind": "image",
+        "file": "a1b2c3d4e5f60718.png"
+      }
+    },
+    {
+      "workspaceId": "garden-space",
+      "asset": {
+        "id": "9999aaaa0000bbbb",
+        "name": "Sample video",
+        "kind": "video",
+        "file": "9999aaaa0000bbbb.mp4"
+      }
+    },
+    {
+      "workspaceId": "brand",
+      "asset": {
+        "id": "a1b2c3d4e5f60718",
+        "name": "Sample image",
+        "kind": "image",
+        "file": "a1b2c3d4e5f60718.jpeg"
+      }
+    },
+    {
+      "workspaceId": "brand",
+      "asset": {
+        "id": "0f1e2d3c4b5a6978",
+        "name": "Sample image",
+        "kind": "image",
+        "file": "0f1e2d3c4b5a6978.jpg"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "name": "three-screens",
+      "project": {
+        "schemaVersion": 3,
+        "name": "three-screens",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "three-screens",
+            "title": "three-screens",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "layout": "screen",
+              "screen": {
+                "asset": "0f1e2d3c4b5a6978",
+                "more": [
+                  "a1b2c3d4e5f60718",
+                  "ffffffffffffffff"
+                ]
+              },
+              "backdrop": "work",
+              "headline": "Seedlings"
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      },
+      "expected": [
+        {
+          "sceneId": "three-screens",
+          "mode": "animation",
+          "shot": {
+            "mode": "animation",
+            "layout": "screen",
+            "screen": {
+              "asset": "0f1e2d3c4b5a6978",
+              "more": [
+                "a1b2c3d4e5f60718",
+                "ffffffffffffffff"
+              ]
+            },
+            "backdrop": "work",
+            "headline": "Seedlings"
+          },
+          "role": "Beat",
+          "title": "three-screens",
+          "startF": 0,
+          "durF": 900,
+          "firstWordF": 5,
+          "cueWordF": null
+        }
+      ],
+      "images": {
+        "three-screens": "brand/0f1e2d3c4b5a6978.jpg"
+      },
+      "moreImages": {
+        "three-screens": [
+          "garden-space/a1b2c3d4e5f60718.png",
+          null
+        ]
+      }
+    },
+    {
+      "name": "unmarked-card",
+      "project": {
+        "schemaVersion": 3,
+        "name": "unmarked-card",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "unmarked-card",
+            "title": "unmarked-card",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "layout": "signoff",
+              "headline": "End of sample",
+              "backdrop": "black",
+              "eyebrow": ""
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      },
+      "expected": [
+        {
+          "sceneId": "unmarked-card",
+          "mode": "animation",
+          "shot": {
+            "mode": "animation",
+            "layout": "signoff",
+            "headline": "End of sample",
+            "backdrop": "black",
+            "eyebrow": ""
+          },
+          "role": "Beat",
+          "title": "unmarked-card",
+          "startF": 0,
+          "durF": 900,
+          "firstWordF": 5,
+          "cueWordF": null
+        }
+      ],
+      "images": {},
+      "moreImages": {}
+    },
+    {
+      "name": "camera-push",
+      "project": {
+        "schemaVersion": 3,
+        "name": "camera-push",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "camera-push",
+            "title": "camera-push",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "diagram": "none",
+              "camera": "push-in",
+              "pose": "rest"
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      },
+      "expected": [
+        {
+          "sceneId": "camera-push",
+          "mode": "animation",
+          "shot": {
+            "mode": "animation",
+            "diagram": "none",
+            "camera": "push-in",
+            "pose": "rest"
+          },
+          "role": "Beat",
+          "title": "camera-push",
+          "startF": 0,
+          "durF": 900,
+          "firstWordF": 5,
+          "cueWordF": null
+        }
+      ],
+      "images": {},
+      "moreImages": {}
+    },
+    {
+      "name": "missing-image",
+      "project": {
+        "schemaVersion": 3,
+        "name": "missing-image",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "missing-image",
+            "title": "missing-image",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "layout": "screen",
+              "screen": {
+                "asset": "9999aaaa0000bbbb",
+                "more": [
+                  "0f1e2d3c4b5a6978"
+                ]
+              },
+              "backdrop": "work",
+              "headline": "Rainfall",
+              "cueWord": 18
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      },
+      "expected": [
+        {
+          "sceneId": "missing-image",
+          "mode": "animation",
+          "shot": {
+            "mode": "animation",
+            "layout": "screen",
+            "screen": {
+              "asset": "9999aaaa0000bbbb",
+              "more": [
+                "0f1e2d3c4b5a6978"
+              ]
+            },
+            "backdrop": "work",
+            "headline": "Rainfall",
+            "cueWord": 18
+          },
+          "role": "Beat",
+          "title": "missing-image",
+          "startF": 0,
+          "durF": 900,
+          "firstWordF": 5,
+          "cueWordF": 220
+        }
+      ],
+      "images": {
+        "missing-image": null
+      },
+      "moreImages": {
+        "missing-image": [
+          "brand/0f1e2d3c4b5a6978.jpg"
+        ]
+      }
+    },
+    {
+      "name": "badge-contrast",
+      "project": {
+        "schemaVersion": 3,
+        "name": "badge-contrast",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "badge-contrast",
+            "title": "badge-contrast",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "layout": "title",
+              "backdrop": "black",
+              "headline": "Tone reference",
+              "badges": [
+                {
+                  "text": "NOTES",
+                  "tone": "ink"
+                },
+                {
+                  "text": "INDEX",
+                  "tone": "paper"
+                }
+              ]
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      },
+      "expected": [
+        {
+          "sceneId": "badge-contrast",
+          "mode": "animation",
+          "shot": {
+            "mode": "animation",
+            "layout": "title",
+            "backdrop": "black",
+            "headline": "Tone reference",
+            "badges": [
+              {
+                "text": "NOTES",
+                "tone": "ink"
+              },
+              {
+                "text": "INDEX",
+                "tone": "paper"
+              }
+            ]
+          },
+          "role": "Beat",
+          "title": "badge-contrast",
+          "startF": 0,
+          "durF": 900,
+          "firstWordF": 5,
+          "cueWordF": null
+        }
+      ],
+      "images": {},
+      "moreImages": {}
+    },
+    {
+      "name": "single-screen",
+      "project": {
+        "schemaVersion": 3,
+        "name": "single-screen",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "single-screen",
+            "title": "single-screen",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "layout": "screen",
+              "screen": {
+                "asset": "a1b2c3d4e5f60718"
+              },
+              "backdrop": "work",
+              "headline": "Flowers"
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      },
+      "expected": [
+        {
+          "sceneId": "single-screen",
+          "mode": "animation",
+          "shot": {
+            "mode": "animation",
+            "layout": "screen",
+            "screen": {
+              "asset": "a1b2c3d4e5f60718"
+            },
+            "backdrop": "work",
+            "headline": "Flowers"
+          },
+          "role": "Beat",
+          "title": "single-screen",
+          "startF": 0,
+          "durF": 900,
+          "firstWordF": 5,
+          "cueWordF": null
+        }
+      ],
+      "images": {
+        "single-screen": "garden-space/a1b2c3d4e5f60718.png"
+      },
+      "moreImages": {}
+    },
+    {
+      "name": "staged-footage",
+      "project": {
+        "schemaVersion": 3,
+        "name": "staged-footage",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "staged-footage",
+            "title": "staged-footage",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "layout": "title",
+              "badges": [
+                {
+                  "text": "HIDDEN",
+                  "tone": "accent"
+                }
+              ]
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      },
+      "expected": [],
+      "images": {},
+      "moreImages": {}
+    },
+    {
+      "name": "camera-pull",
+      "project": {
+        "schemaVersion": 3,
+        "name": "camera-pull",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "camera-pull",
+            "title": "camera-pull",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "diagram": "none",
+              "camera": "pull-out",
+              "pose": "point"
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      },
+      "expected": [
+        {
+          "sceneId": "camera-pull",
+          "mode": "animation",
+          "shot": {
+            "mode": "animation",
+            "diagram": "none",
+            "camera": "pull-out",
+            "pose": "point"
+          },
+          "role": "Beat",
+          "title": "camera-pull",
+          "startF": 0,
+          "durF": 900,
+          "firstWordF": 5,
+          "cueWordF": null
+        }
+      ],
+      "images": {},
+      "moreImages": {}
+    }
+  ],
+  "words": [
+    {
+      "w": "At",
+      "start": 0.15,
+      "end": 0.44
+    },
+    {
+      "w": "dawn",
+      "start": 0.495,
+      "end": 0.8
+    },
+    {
+      "w": "the",
+      "start": 0.855,
+      "end": 1.175
+    },
+    {
+      "w": "quiet",
+      "start": 1.23,
+      "end": 1.52
+    },
+    {
+      "w": "garden",
+      "start": 1.575,
+      "end": 1.88
+    },
+    {
+      "w": "opened",
+      "start": 1.935,
+      "end": 2.255
+    },
+    {
+      "w": "its",
+      "start": 2.31,
+      "end": 2.6
+    },
+    {
+      "w": "gate.",
+      "start": 2.655,
+      "end": 2.96
+    },
+    {
+      "w": "A",
+      "start": 3.015,
+      "end": 3.335
+    },
+    {
+      "w": "small",
+      "start": 4.09,
+      "end": 4.38
+    },
+    {
+      "w": "bird",
+      "start": 4.435,
+      "end": 4.74
+    },
+    {
+      "w": "carried",
+      "start": 4.795,
+      "end": 5.115
+    },
+    {
+      "w": "a",
+      "start": 5.17,
+      "end": 5.46
+    },
+    {
+      "w": "seed",
+      "start": 5.515,
+      "end": 5.82
+    },
+    {
+      "w": "across",
+      "start": 5.875,
+      "end": 6.195
+    },
+    {
+      "w": "the",
+      "start": 6.25,
+      "end": 6.54
+    },
+    {
+      "w": "river.",
+      "start": 6.595,
+      "end": 6.9
+    },
+    {
+      "w": "Near",
+      "start": 6.955,
+      "end": 7.275
+    },
+    {
+      "w": "noon",
+      "start": 7.33,
+      "end": 7.62
+    },
+    {
+      "w": "gentle",
+      "start": 7.675,
+      "end": 7.98
+    },
+    {
+      "w": "rain",
+      "start": 9.635,
+      "end": 9.955
+    },
+    {
+      "w": "filled",
+      "start": 10.01,
+      "end": 10.3
+    },
+    {
+      "w": "every",
+      "start": 10.355,
+      "end": 10.66
+    },
+    {
+      "w": "empty",
+      "start": 10.715,
+      "end": 11.035
+    },
+    {
+      "w": "cup.",
+      "start": 11.09,
+      "end": 11.38
+    },
+    {
+      "w": "By",
+      "start": 11.435,
+      "end": 11.74
+    },
+    {
+      "w": "evening",
+      "start": 11.795,
+      "end": 12.115
+    },
+    {
+      "w": "bright",
+      "start": 12.17,
+      "end": 12.46
+    },
+    {
+      "w": "flowers",
+      "start": 12.515,
+      "end": 12.82
+    },
+    {
+      "w": "covered",
+      "start": 12.875,
+      "end": 13.195
+    },
+    {
+      "w": "the",
+      "start": null,
+      "end": null
+    },
+    {
+      "w": "hill",
+      "start": 13.595,
+      "end": 13.9
+    },
+    {
+      "w": "while",
+      "start": 13.955,
+      "end": 14.275
+    },
+    {
+      "w": "children",
+      "start": 14.33,
+      "end": 14.62
+    },
+    {
+      "w": "watched",
+      "start": 14.675,
+      "end": 14.98
+    },
+    {
+      "w": "from",
+      "start": 15.035,
+      "end": 15.355
+    },
+    {
+      "w": "a",
+      "start": 16.91,
+      "end": 17.2
+    },
+    {
+      "w": "stone",
+      "start": 17.255,
+      "end": 17.56
+    },
+    {
+      "w": "bridge.",
+      "start": 17.615,
+      "end": 17.935
+    },
+    {
+      "w": "Later",
+      "start": 17.99,
+      "end": 18.28
+    },
+    {
+      "w": "stars",
+      "start": 18.335,
+      "end": 18.64
+    },
+    {
+      "w": "shone",
+      "start": 18.695,
+      "end": 19.015
+    },
+    {
+      "w": "above",
+      "start": 19.07,
+      "end": 19.36
+    },
+    {
+      "w": "fields",
+      "start": 19.415,
+      "end": 19.72
+    },
+    {
+      "w": "and",
+      "start": 20.375,
+      "end": 20.695
+    },
+    {
+      "w": "peaceful",
+      "start": 20.75,
+      "end": 21.04
+    },
+    {
+      "w": "clouds",
+      "start": 21.095,
+      "end": 21.4
+    },
+    {
+      "w": "drifted",
+      "start": 21.455,
+      "end": 21.775
+    },
+    {
+      "w": "toward",
+      "start": 21.83,
+      "end": 22.12
+    },
+    {
+      "w": "the",
+      "start": 22.175,
+      "end": 22.48
+    },
+    {
+      "w": "distant",
+      "start": 22.535,
+      "end": 22.855
+    },
+    {
+      "w": "sea.",
+      "start": 22.91,
+      "end": 23.2
+    }
+  ]
+}

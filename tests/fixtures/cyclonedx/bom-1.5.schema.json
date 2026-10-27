@@ -1,0 +1,2928 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://cyclonedx.org/schema/bom-1.5.schema.json",
+  "type": "object",
+  "required": [
+    "bomFormat",
+    "specVersion",
+    "version"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "enum": [
+        "http://cyclonedx.org/schema/bom-1.5.schema.json"
+      ]
+    },
+    "bomFormat": {
+      "type": "string",
+      "enum": [
+        "CycloneDX"
+      ]
+    },
+    "specVersion": {
+      "type": "string"
+    },
+    "serialNumber": {
+      "type": "string",
+      "pattern": "^urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 1
+    },
+    "metadata": {
+      "$ref": "#/definitions/metadata"
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/component"
+      },
+      "uniqueItems": true
+    },
+    "services": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/service"
+      },
+      "uniqueItems": true
+    },
+    "externalReferences": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/externalReference"
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/dependency"
+      },
+      "uniqueItems": true
+    },
+    "compositions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/compositions"
+      },
+      "uniqueItems": true
+    },
+    "vulnerabilities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/vulnerability"
+      },
+      "uniqueItems": true
+    },
+    "annotations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/annotations"
+      },
+      "uniqueItems": true
+    },
+    "formulation": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/formula"
+      },
+      "uniqueItems": true
+    },
+    "properties": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/property"
+      }
+    },
+    "signature": {
+      "$ref": "#/definitions/signature"
+    }
+  },
+  "definitions": {
+    "refType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "refLinkType": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/refType"
+        }
+      ]
+    },
+    "bomLinkDocumentType": {
+      "type": "string",
+      "format": "iri-reference",
+      "pattern": "^urn:cdx:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/[1-9][0-9]*$"
+    },
+    "bomLinkElementType": {
+      "type": "string",
+      "format": "iri-reference",
+      "pattern": "^urn:cdx:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/[1-9][0-9]*#.+$"
+    },
+    "bomLink": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/bomLinkDocumentType"
+        },
+        {
+          "$ref": "#/definitions/bomLinkElementType"
+        }
+      ]
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lifecycles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "oneOf": [
+              {
+                "required": [
+                  "phase"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "phase": {
+                    "type": "string",
+                    "enum": [
+                      "design",
+                      "pre-build",
+                      "build",
+                      "post-build",
+                      "operations",
+                      "discovery",
+                      "decommission"
+                    ]
+                  }
+                }
+              },
+              {
+                "required": [
+                  "name"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "tools": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "components": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/component"
+                  },
+                  "uniqueItems": true
+                },
+                "services": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/service"
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/tool"
+              }
+            }
+          ]
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/organizationalContact"
+          }
+        },
+        "component": {
+          "$ref": "#/definitions/component"
+        },
+        "manufacture": {
+          "$ref": "#/definitions/organizationalEntity"
+        },
+        "supplier": {
+          "$ref": "#/definitions/organizationalEntity"
+        },
+        "licenses": {
+          "$ref": "#/definitions/licenseChoice"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "vendor": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "hashes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hash"
+          }
+        },
+        "externalReferences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/externalReference"
+          }
+        }
+      }
+    },
+    "organizationalEntity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "iri-reference"
+          }
+        },
+        "contact": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/organizationalContact"
+          }
+        }
+      }
+    },
+    "organizationalContact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "idn-email"
+        },
+        "phone": {
+          "type": "string"
+        }
+      }
+    },
+    "component": {
+      "type": "object",
+      "required": [
+        "type",
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "application",
+            "framework",
+            "library",
+            "container",
+            "platform",
+            "operating-system",
+            "device",
+            "device-driver",
+            "firmware",
+            "file",
+            "machine-learning-model",
+            "data"
+          ]
+        },
+        "mime-type": {
+          "type": "string",
+          "pattern": "^[-+a-z0-9.]+/[-+a-z0-9.]+$"
+        },
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "supplier": {
+          "$ref": "#/definitions/organizationalEntity"
+        },
+        "author": {
+          "type": "string"
+        },
+        "publisher": {
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "required",
+            "optional",
+            "excluded"
+          ],
+          "default": "required"
+        },
+        "hashes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hash"
+          }
+        },
+        "licenses": {
+          "$ref": "#/definitions/licenseChoice"
+        },
+        "copyright": {
+          "type": "string"
+        },
+        "cpe": {
+          "type": "string"
+        },
+        "purl": {
+          "type": "string"
+        },
+        "swid": {
+          "$ref": "#/definitions/swid"
+        },
+        "modified": {
+          "type": "boolean"
+        },
+        "pedigree": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ancestors": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/component"
+              }
+            },
+            "descendants": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/component"
+              }
+            },
+            "variants": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/component"
+              }
+            },
+            "commits": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/commit"
+              }
+            },
+            "patches": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/patch"
+              }
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
+        },
+        "externalReferences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/externalReference"
+          }
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/component"
+          },
+          "uniqueItems": true
+        },
+        "evidence": {
+          "$ref": "#/definitions/componentEvidence"
+        },
+        "releaseNotes": {
+          "$ref": "#/definitions/releaseNotes"
+        },
+        "modelCard": {
+          "$ref": "#/definitions/modelCard"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/componentData"
+          }
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        },
+        "signature": {
+          "$ref": "#/definitions/signature"
+        }
+      }
+    },
+    "swid": {
+      "type": "object",
+      "required": [
+        "tagId",
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "tagId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string",
+          "default": "0.0"
+        },
+        "tagVersion": {
+          "type": "integer",
+          "default": 0
+        },
+        "patch": {
+          "type": "boolean",
+          "default": false
+        },
+        "text": {
+          "$ref": "#/definitions/attachment"
+        },
+        "url": {
+          "type": "string",
+          "format": "iri-reference"
+        }
+      }
+    },
+    "attachment": {
+      "type": "object",
+      "required": [
+        "content"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "contentType": {
+          "type": "string",
+          "default": "text/plain"
+        },
+        "encoding": {
+          "type": "string",
+          "enum": [
+            "base64"
+          ]
+        },
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "hash": {
+      "type": "object",
+      "required": [
+        "alg",
+        "content"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "alg": {
+          "$ref": "#/definitions/hash-alg"
+        },
+        "content": {
+          "$ref": "#/definitions/hash-content"
+        }
+      }
+    },
+    "hash-alg": {
+      "type": "string",
+      "enum": [
+        "MD5",
+        "SHA-1",
+        "SHA-256",
+        "SHA-384",
+        "SHA-512",
+        "SHA3-256",
+        "SHA3-384",
+        "SHA3-512",
+        "BLAKE2b-256",
+        "BLAKE2b-384",
+        "BLAKE2b-512",
+        "BLAKE3"
+      ]
+    },
+    "hash-content": {
+      "type": "string",
+      "pattern": "^([a-fA-F0-9]{32}|[a-fA-F0-9]{40}|[a-fA-F0-9]{64}|[a-fA-F0-9]{96}|[a-fA-F0-9]{128})$"
+    },
+    "license": {
+      "type": "object",
+      "oneOf": [
+        {
+          "required": [
+            "id"
+          ]
+        },
+        {
+          "required": [
+            "name"
+          ]
+        }
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "id": {
+          "$ref": "spdx.schema.json"
+        },
+        "name": {
+          "type": "string"
+        },
+        "text": {
+          "$ref": "#/definitions/attachment"
+        },
+        "url": {
+          "type": "string",
+          "format": "iri-reference"
+        },
+        "licensing": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "altIds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "licensor": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "organization": {
+                  "$ref": "#/definitions/organizationalEntity"
+                },
+                "individual": {
+                  "$ref": "#/definitions/organizationalContact"
+                }
+              },
+              "oneOf": [
+                {
+                  "required": [
+                    "organization"
+                  ]
+                },
+                {
+                  "required": [
+                    "individual"
+                  ]
+                }
+              ]
+            },
+            "licensee": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "organization": {
+                  "$ref": "#/definitions/organizationalEntity"
+                },
+                "individual": {
+                  "$ref": "#/definitions/organizationalContact"
+                }
+              },
+              "oneOf": [
+                {
+                  "required": [
+                    "organization"
+                  ]
+                },
+                {
+                  "required": [
+                    "individual"
+                  ]
+                }
+              ]
+            },
+            "purchaser": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "organization": {
+                  "$ref": "#/definitions/organizationalEntity"
+                },
+                "individual": {
+                  "$ref": "#/definitions/organizationalContact"
+                }
+              },
+              "oneOf": [
+                {
+                  "required": [
+                    "organization"
+                  ]
+                },
+                {
+                  "required": [
+                    "individual"
+                  ]
+                }
+              ]
+            },
+            "purchaseOrder": {
+              "type": "string"
+            },
+            "licenseTypes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "academic",
+                  "appliance",
+                  "client-access",
+                  "concurrent-user",
+                  "core-points",
+                  "custom-metric",
+                  "device",
+                  "evaluation",
+                  "named-user",
+                  "node-locked",
+                  "oem",
+                  "perpetual",
+                  "processor-points",
+                  "subscription",
+                  "user",
+                  "other"
+                ]
+              }
+            },
+            "lastRenewal": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "expiration": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "licenseChoice": {
+      "type": "array",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "license"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "license": {
+                "$ref": "#/definitions/license"
+              }
+            }
+          }
+        },
+        {
+          "type": "array",
+          "additionalItems": false,
+          "minItems": 1,
+          "maxItems": 1,
+          "items": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "expression"
+              ],
+              "properties": {
+                "expression": {
+                  "type": "string"
+                },
+                "bom-ref": {
+                  "$ref": "#/definitions/refType"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "commit": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "uid": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "iri-reference"
+        },
+        "author": {
+          "$ref": "#/definitions/identifiableAction"
+        },
+        "committer": {
+          "$ref": "#/definitions/identifiableAction"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "patch": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "unofficial",
+            "monkey",
+            "backport",
+            "cherry-pick"
+          ]
+        },
+        "diff": {
+          "$ref": "#/definitions/diff"
+        },
+        "resolves": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/issue"
+          }
+        }
+      }
+    },
+    "diff": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "$ref": "#/definitions/attachment"
+        },
+        "url": {
+          "type": "string",
+          "format": "iri-reference"
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "defect",
+            "enhancement",
+            "security"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string",
+              "format": "iri-reference"
+            }
+          }
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "iri-reference"
+          }
+        }
+      }
+    },
+    "identifiableAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "idn-email"
+        }
+      }
+    },
+    "externalReference": {
+      "type": "object",
+      "required": [
+        "url",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "iri-reference"
+            },
+            {
+              "$ref": "#/definitions/bomLink"
+            }
+          ]
+        },
+        "comment": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "vcs",
+            "issue-tracker",
+            "website",
+            "advisories",
+            "bom",
+            "mailing-list",
+            "social",
+            "chat",
+            "documentation",
+            "support",
+            "distribution",
+            "distribution-intake",
+            "license",
+            "build-meta",
+            "build-system",
+            "release-notes",
+            "security-contact",
+            "model-card",
+            "log",
+            "configuration",
+            "evidence",
+            "formulation",
+            "attestation",
+            "threat-model",
+            "adversary-model",
+            "risk-assessment",
+            "vulnerability-assertion",
+            "exploitability-statement",
+            "pentest-report",
+            "static-analysis-report",
+            "dynamic-analysis-report",
+            "runtime-analysis-report",
+            "component-analysis-report",
+            "maturity-report",
+            "certification-report",
+            "codified-infrastructure",
+            "quality-metrics",
+            "poam",
+            "other"
+          ]
+        },
+        "hashes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hash"
+          }
+        }
+      }
+    },
+    "dependency": {
+      "type": "object",
+      "required": [
+        "ref"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "ref": {
+          "$ref": "#/definitions/refLinkType"
+        },
+        "dependsOn": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/refLinkType"
+          }
+        }
+      }
+    },
+    "service": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "provider": {
+          "$ref": "#/definitions/organizationalEntity"
+        },
+        "group": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "iri-reference"
+          }
+        },
+        "authenticated": {
+          "type": "boolean"
+        },
+        "x-trust-boundary": {
+          "type": "boolean"
+        },
+        "trustZone": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/serviceData"
+          }
+        },
+        "licenses": {
+          "$ref": "#/definitions/licenseChoice"
+        },
+        "externalReferences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/externalReference"
+          }
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/service"
+          },
+          "uniqueItems": true
+        },
+        "releaseNotes": {
+          "$ref": "#/definitions/releaseNotes"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        },
+        "signature": {
+          "$ref": "#/definitions/signature"
+        }
+      }
+    },
+    "serviceData": {
+      "type": "object",
+      "required": [
+        "flow",
+        "classification"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "flow": {
+          "$ref": "#/definitions/dataFlowDirection"
+        },
+        "classification": {
+          "$ref": "#/definitions/dataClassification"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "governance": {
+          "type": "object",
+          "$ref": "#/definitions/dataGovernance"
+        },
+        "source": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "iri-reference"
+              },
+              {
+                "$ref": "#/definitions/bomLinkElementType"
+              }
+            ]
+          }
+        },
+        "destination": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "iri-reference"
+              },
+              {
+                "$ref": "#/definitions/bomLinkElementType"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "dataFlowDirection": {
+      "type": "string",
+      "enum": [
+        "inbound",
+        "outbound",
+        "bi-directional",
+        "unknown"
+      ]
+    },
+    "copyright": {
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "componentEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "identity": {
+          "type": "object",
+          "required": [
+            "field"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "field": {
+              "type": "string",
+              "enum": [
+                "group",
+                "name",
+                "version",
+                "purl",
+                "cpe",
+                "swid",
+                "hash"
+              ]
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "methods": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "technique",
+                  "confidence"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "technique": {
+                    "type": "string",
+                    "enum": [
+                      "source-code-analysis",
+                      "binary-analysis",
+                      "manifest-analysis",
+                      "ast-fingerprint",
+                      "hash-comparison",
+                      "instrumentation",
+                      "dynamic-analysis",
+                      "filename",
+                      "attestation",
+                      "other"
+                    ]
+                  },
+                  "confidence": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "tools": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/refLinkType"
+                  },
+                  {
+                    "$ref": "#/definitions/bomLinkElementType"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "occurrences": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "location"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "bom-ref": {
+                "$ref": "#/definitions/refType"
+              },
+              "location": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "callstack": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "frames": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "module"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "package": {
+                    "type": "string"
+                  },
+                  "module": {
+                    "type": "string"
+                  },
+                  "function": {
+                    "type": "string"
+                  },
+                  "parameters": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "line": {
+                    "type": "integer"
+                  },
+                  "column": {
+                    "type": "integer"
+                  },
+                  "fullFilename": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "licenses": {
+          "$ref": "#/definitions/licenseChoice"
+        },
+        "copyright": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/copyright"
+          }
+        }
+      }
+    },
+    "compositions": {
+      "type": "object",
+      "required": [
+        "aggregate"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "aggregate": {
+          "$ref": "#/definitions/aggregateType"
+        },
+        "assemblies": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/refLinkType"
+              },
+              {
+                "$ref": "#/definitions/bomLinkElementType"
+              }
+            ]
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "vulnerabilities": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "signature": {
+          "$ref": "#/definitions/signature"
+        }
+      }
+    },
+    "aggregateType": {
+      "type": "string",
+      "default": "not_specified",
+      "enum": [
+        "complete",
+        "incomplete",
+        "incomplete_first_party_only",
+        "incomplete_first_party_proprietary_only",
+        "incomplete_first_party_opensource_only",
+        "incomplete_third_party_only",
+        "incomplete_third_party_proprietary_only",
+        "incomplete_third_party_opensource_only",
+        "unknown",
+        "not_specified"
+      ]
+    },
+    "property": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "localeType": {
+      "type": "string",
+      "pattern": "^([a-z]{2})(-[A-Z]{2})?$"
+    },
+    "releaseType": {
+      "type": "string"
+    },
+    "note": {
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "locale": {
+          "$ref": "#/definitions/localeType"
+        },
+        "text": {
+          "$ref": "#/definitions/attachment"
+        }
+      }
+    },
+    "releaseNotes": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/releaseType"
+        },
+        "title": {
+          "type": "string"
+        },
+        "featuredImage": {
+          "type": "string",
+          "format": "iri-reference"
+        },
+        "socialImage": {
+          "type": "string",
+          "format": "iri-reference"
+        },
+        "description": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "resolves": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/issue"
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/note"
+          }
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "advisory": {
+      "type": "object",
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "iri-reference"
+        }
+      }
+    },
+    "cwe": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "critical",
+        "high",
+        "medium",
+        "low",
+        "info",
+        "none",
+        "unknown"
+      ]
+    },
+    "scoreMethod": {
+      "type": "string",
+      "enum": [
+        "CVSSv2",
+        "CVSSv3",
+        "CVSSv31",
+        "CVSSv4",
+        "OWASP",
+        "SSVC",
+        "other"
+      ]
+    },
+    "impactAnalysisState": {
+      "type": "string",
+      "enum": [
+        "resolved",
+        "resolved_with_pedigree",
+        "exploitable",
+        "in_triage",
+        "false_positive",
+        "not_affected"
+      ]
+    },
+    "impactAnalysisJustification": {
+      "type": "string",
+      "enum": [
+        "code_not_present",
+        "code_not_reachable",
+        "requires_configuration",
+        "requires_dependency",
+        "requires_environment",
+        "protected_by_compiler",
+        "protected_at_runtime",
+        "protected_at_perimeter",
+        "protected_by_mitigating_control"
+      ]
+    },
+    "rating": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "$ref": "#/definitions/vulnerabilitySource"
+        },
+        "score": {
+          "type": "number"
+        },
+        "severity": {
+          "$ref": "#/definitions/severity"
+        },
+        "method": {
+          "$ref": "#/definitions/scoreMethod"
+        },
+        "vector": {
+          "type": "string"
+        },
+        "justification": {
+          "type": "string"
+        }
+      }
+    },
+    "vulnerabilitySource": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "vulnerability": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "id": {
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/definitions/vulnerabilitySource"
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "source"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "source": {
+                "$ref": "#/definitions/vulnerabilitySource"
+              }
+            }
+          }
+        },
+        "ratings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/rating"
+          }
+        },
+        "cwes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/cwe"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "recommendation": {
+          "type": "string"
+        },
+        "workaround": {
+          "type": "string"
+        },
+        "proofOfConcept": {
+          "type": "object",
+          "properties": {
+            "reproductionSteps": {
+              "type": "string"
+            },
+            "environment": {
+              "type": "string"
+            },
+            "supportingMaterial": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/attachment"
+              }
+            }
+          }
+        },
+        "advisories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/advisory"
+          }
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "published": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "rejected": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "credits": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "organizations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/organizationalEntity"
+              }
+            },
+            "individuals": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/organizationalContact"
+              }
+            }
+          }
+        },
+        "tools": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "components": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/component"
+                  },
+                  "uniqueItems": true
+                },
+                "services": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/service"
+                  },
+                  "uniqueItems": true
+                }
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/tool"
+              }
+            }
+          ]
+        },
+        "analysis": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "$ref": "#/definitions/impactAnalysisState"
+            },
+            "justification": {
+              "$ref": "#/definitions/impactAnalysisJustification"
+            },
+            "response": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "can_not_fix",
+                  "will_not_fix",
+                  "update",
+                  "rollback",
+                  "workaround_available"
+                ]
+              }
+            },
+            "detail": {
+              "type": "string"
+            },
+            "firstIssued": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "lastUpdated": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "affects": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "required": [
+              "ref"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "ref": {
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/refLinkType"
+                  },
+                  {
+                    "$ref": "#/definitions/bomLinkElementType"
+                  }
+                ]
+              },
+              "versions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "required": [
+                        "version"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "range"
+                      ]
+                    }
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "version": {
+                      "$ref": "#/definitions/version"
+                    },
+                    "range": {
+                      "$ref": "#/definitions/range"
+                    },
+                    "status": {
+                      "$ref": "#/definitions/affectedStatus",
+                      "default": "affected"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "affectedStatus": {
+      "type": "string",
+      "enum": [
+        "affected",
+        "unaffected",
+        "unknown"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "range": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "annotations": {
+      "type": "object",
+      "required": [
+        "subjects",
+        "annotator",
+        "timestamp",
+        "text"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "subjects": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/refLinkType"
+              },
+              {
+                "$ref": "#/definitions/bomLinkElementType"
+              }
+            ]
+          }
+        },
+        "annotator": {
+          "type": "object",
+          "oneOf": [
+            {
+              "required": [
+                "organization"
+              ]
+            },
+            {
+              "required": [
+                "individual"
+              ]
+            },
+            {
+              "required": [
+                "component"
+              ]
+            },
+            {
+              "required": [
+                "service"
+              ]
+            }
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "organization": {
+              "$ref": "#/definitions/organizationalEntity"
+            },
+            "individual": {
+              "$ref": "#/definitions/organizationalContact"
+            },
+            "component": {
+              "$ref": "#/definitions/component"
+            },
+            "service": {
+              "$ref": "#/definitions/service"
+            }
+          }
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "text": {
+          "type": "string"
+        },
+        "signature": {
+          "$ref": "#/definitions/signature"
+        }
+      }
+    },
+    "modelCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "modelParameters": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "approach": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "supervised",
+                    "unsupervised",
+                    "reinforcement-learning",
+                    "semi-supervised",
+                    "self-supervised"
+                  ]
+                }
+              }
+            },
+            "task": {
+              "type": "string"
+            },
+            "architectureFamily": {
+              "type": "string"
+            },
+            "modelArchitecture": {
+              "type": "string"
+            },
+            "datasets": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/definitions/componentData"
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "ref": {
+                        "anyOf": [
+                          {
+                            "$ref": "#/definitions/refLinkType"
+                          },
+                          {
+                            "$ref": "#/definitions/bomLinkElementType"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "inputs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/inputOutputMLParameters"
+              }
+            },
+            "outputs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/inputOutputMLParameters"
+              }
+            }
+          }
+        },
+        "quantitativeAnalysis": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "performanceMetrics": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/performanceMetric"
+              }
+            },
+            "graphics": {
+              "$ref": "#/definitions/graphicsCollection"
+            }
+          }
+        },
+        "considerations": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "users": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "useCases": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "technicalLimitations": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "performanceTradeoffs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "ethicalConsiderations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/risk"
+              }
+            },
+            "fairnessAssessments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fairnessAssessment"
+              }
+            }
+          }
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "inputOutputMLParameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "type": "string"
+        }
+      }
+    },
+    "componentData": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "source-code",
+            "configuration",
+            "dataset",
+            "definition",
+            "other"
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "contents": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "attachment": {
+              "$ref": "#/definitions/attachment"
+            },
+            "url": {
+              "type": "string",
+              "format": "iri-reference"
+            },
+            "properties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/property"
+              }
+            }
+          }
+        },
+        "classification": {
+          "$ref": "#/definitions/dataClassification"
+        },
+        "sensitiveData": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "graphics": {
+          "$ref": "#/definitions/graphicsCollection"
+        },
+        "description": {
+          "type": "string"
+        },
+        "governance": {
+          "type": "object",
+          "$ref": "#/definitions/dataGovernance"
+        }
+      }
+    },
+    "dataGovernance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "custodians": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dataGovernanceResponsibleParty"
+          }
+        },
+        "stewards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dataGovernanceResponsibleParty"
+          }
+        },
+        "owners": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dataGovernanceResponsibleParty"
+          }
+        }
+      }
+    },
+    "dataGovernanceResponsibleParty": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "organization": {
+          "$ref": "#/definitions/organizationalEntity"
+        },
+        "contact": {
+          "$ref": "#/definitions/organizationalContact"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "organization"
+          ]
+        },
+        {
+          "required": [
+            "contact"
+          ]
+        }
+      ]
+    },
+    "graphicsCollection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "collection": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/graphic"
+          }
+        }
+      }
+    },
+    "graphic": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "image": {
+          "$ref": "#/definitions/attachment"
+        }
+      }
+    },
+    "performanceMetric": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "slice": {
+          "type": "string"
+        },
+        "confidenceInterval": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "lowerBound": {
+              "type": "string"
+            },
+            "upperBound": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "mitigationStrategy": {
+          "type": "string"
+        }
+      }
+    },
+    "fairnessAssessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupAtRisk": {
+          "type": "string"
+        },
+        "benefits": {
+          "type": "string"
+        },
+        "harms": {
+          "type": "string"
+        },
+        "mitigationStrategy": {
+          "type": "string"
+        }
+      }
+    },
+    "dataClassification": {
+      "type": "string"
+    },
+    "formula": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/component"
+          },
+          "uniqueItems": true
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/service"
+          },
+          "uniqueItems": true
+        },
+        "workflows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/workflow"
+          },
+          "uniqueItems": true
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "workflow": {
+      "type": "object",
+      "required": [
+        "bom-ref",
+        "uid",
+        "taskTypes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "resourceReferences": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/resourceReferenceChoice"
+          }
+        },
+        "tasks": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/task"
+          }
+        },
+        "taskDependencies": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/dependency"
+          }
+        },
+        "taskTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/taskType"
+          }
+        },
+        "trigger": {
+          "$ref": "#/definitions/trigger"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/step"
+          },
+          "uniqueItems": true
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/inputType"
+          },
+          "uniqueItems": true
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/outputType"
+          },
+          "uniqueItems": true
+        },
+        "timeStart": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "timeEnd": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "workspaces": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/workspace"
+          }
+        },
+        "runtimeTopology": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/dependency"
+          }
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "task": {
+      "type": "object",
+      "required": [
+        "bom-ref",
+        "uid",
+        "taskTypes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "resourceReferences": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/resourceReferenceChoice"
+          }
+        },
+        "taskTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/taskType"
+          }
+        },
+        "trigger": {
+          "$ref": "#/definitions/trigger"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/step"
+          },
+          "uniqueItems": true
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/inputType"
+          },
+          "uniqueItems": true
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/outputType"
+          },
+          "uniqueItems": true
+        },
+        "timeStart": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "timeEnd": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "workspaces": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/workspace"
+          },
+          "uniqueItems": true
+        },
+        "runtimeTopology": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/dependency"
+          },
+          "uniqueItems": true
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/command"
+          }
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "executed": {
+          "type": "string"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "workspace": {
+      "type": "object",
+      "required": [
+        "bom-ref",
+        "uid"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "resourceReferences": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/resourceReferenceChoice"
+          }
+        },
+        "accessMode": {
+          "type": "string",
+          "enum": [
+            "read-only",
+            "read-write",
+            "read-write-once",
+            "write-once",
+            "write-only"
+          ]
+        },
+        "mountPath": {
+          "type": "string"
+        },
+        "managedDataType": {
+          "type": "string"
+        },
+        "volumeRequest": {
+          "type": "string"
+        },
+        "volume": {
+          "$ref": "#/definitions/volume"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "volume": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "uid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "filesystem",
+            "block"
+          ],
+          "default": "filesystem"
+        },
+        "path": {
+          "type": "string"
+        },
+        "sizeAllocated": {
+          "type": "string"
+        },
+        "persistent": {
+          "type": "boolean"
+        },
+        "remote": {
+          "type": "boolean"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "trigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "bom-ref",
+        "uid"
+      ],
+      "properties": {
+        "bom-ref": {
+          "$ref": "#/definitions/refType"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "resourceReferences": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/resourceReferenceChoice"
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "manual",
+            "api",
+            "webhook",
+            "scheduled"
+          ]
+        },
+        "event": {
+          "$ref": "#/definitions/event"
+        },
+        "conditions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/condition"
+          }
+        },
+        "timeActivated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/inputType"
+          },
+          "uniqueItems": true
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/outputType"
+          },
+          "uniqueItems": true
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "uid": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "timeReceived": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "data": {
+          "$ref": "#/definitions/attachment"
+        },
+        "source": {
+          "$ref": "#/definitions/resourceReferenceChoice"
+        },
+        "target": {
+          "$ref": "#/definitions/resourceReferenceChoice"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "inputType": {
+      "type": "object",
+      "oneOf": [
+        {
+          "required": [
+            "resource"
+          ]
+        },
+        {
+          "required": [
+            "parameters"
+          ]
+        },
+        {
+          "required": [
+            "environmentVars"
+          ]
+        },
+        {
+          "required": [
+            "data"
+          ]
+        }
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "$ref": "#/definitions/resourceReferenceChoice"
+        },
+        "target": {
+          "$ref": "#/definitions/resourceReferenceChoice"
+        },
+        "resource": {
+          "$ref": "#/definitions/resourceReferenceChoice"
+        },
+        "parameters": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/parameter"
+          }
+        },
+        "environmentVars": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/property"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "data": {
+          "$ref": "#/definitions/attachment"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "outputType": {
+      "type": "object",
+      "oneOf": [
+        {
+          "required": [
+            "resource"
+          ]
+        },
+        {
+          "required": [
+            "environmentVars"
+          ]
+        },
+        {
+          "required": [
+            "data"
+          ]
+        }
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "artifact",
+            "attestation",
+            "log",
+            "evidence",
+            "metrics",
+            "other"
+          ]
+        },
+        "source": {
+          "$ref": "#/definitions/resourceReferenceChoice"
+        },
+        "target": {
+          "$ref": "#/definitions/resourceReferenceChoice"
+        },
+        "resource": {
+          "$ref": "#/definitions/resourceReferenceChoice"
+        },
+        "data": {
+          "$ref": "#/definitions/attachment"
+        },
+        "environmentVars": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/property"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "uniqueItems": true
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "resourceReferenceChoice": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ref": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/refLinkType"
+            },
+            {
+              "$ref": "#/definitions/bomLinkElementType"
+            }
+          ]
+        },
+        "externalReference": {
+          "$ref": "#/definitions/externalReference"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "ref"
+          ]
+        },
+        {
+          "required": [
+            "externalReference"
+          ]
+        }
+      ]
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "expression": {
+          "type": "string"
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        }
+      }
+    },
+    "taskType": {
+      "type": "string",
+      "enum": [
+        "copy",
+        "clone",
+        "lint",
+        "scan",
+        "merge",
+        "build",
+        "test",
+        "deliver",
+        "deploy",
+        "release",
+        "clean",
+        "other"
+      ]
+    },
+    "parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "dataType": {
+          "type": "string"
+        }
+      }
+    },
+    "signature": {
+      "$ref": "jsf-0.82.schema.json#/definitions/signature"
+    }
+  }
+}

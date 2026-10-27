@@ -1,0 +1,248 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  checks:
+    name: checks (${{ matrix.os }})
+    # Private repositories opt in to hosted runner usage with a repository variable.
+    if: ${{ !github.event.repository.private || vars.HOSTED_CI == 'true' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON('[{"os":"linux","runner":"ubuntu-latest"},{"os":"windows","runner":"windows-latest"}]') }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    env:
+      CI: 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Report quarantine
+        run: |
+          '## CI quarantine' >> $env:GITHUB_STEP_SUMMARY
+          $quarantine = Get-Content tests/ci_quarantine.txt
+          if ($quarantine) {
+            '```text' >> $env:GITHUB_STEP_SUMMARY
+            $quarantine >> $env:GITHUB_STEP_SUMMARY
+            '```' >> $env:GITHUB_STEP_SUMMARY
+          } else {
+            'No quarantined tests.' >> $env:GITHUB_STEP_SUMMARY
+          }
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version-file: .python-version
+          cache: pip
+          cache-dependency-path: |
+            requirements-dev.txt
+            requirements-reuse.txt
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: |
+            ui/package-lock.json
+            motion-core/package-lock.json
+
+      - name: Cache Windows ffmpeg archive
+        if: runner.os == 'Windows'
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/ffmpeg-8.1.1-essentials_build.zip
+          key: ffmpeg-windows-6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541
+
+      - name: Install verified Windows ffmpeg
+        if: runner.os == 'Windows'
+        run: |
+          $archive = Join-Path $env:RUNNER_TEMP 'ffmpeg-8.1.1-essentials_build.zip'
+          if (-not (Test-Path -LiteralPath $archive)) {
+            Invoke-WebRequest -Uri 'https://github.com/GyanD/codexffmpeg/releases/download/8.1.1/ffmpeg-8.1.1-essentials_build.zip' -OutFile $archive
+          }
+          $expected = '6f58ce889f59c311410f7d2b18895b33c03456463486f3b1ebc93d97a0f54541'
+          if ((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expected) {
+            throw 'ffmpeg archive checksum mismatch'
+          }
+          $destination = Join-Path $env:RUNNER_TEMP 'ffmpeg'
+          Expand-Archive -LiteralPath $archive -DestinationPath $destination -Force
+          $bins = @(Get-ChildItem -LiteralPath $destination -Directory -Recurse -Filter bin)
+          if ($bins.Count -ne 1) { throw 'Expected one ffmpeg bin directory' }
+          $bins[0].FullName >> $env:GITHUB_PATH
+
+      - name: Cache Linux ffmpeg archive
+        if: runner.os == 'Linux'
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/ffmpeg-8.1.3-linux64-gpl.tar.xz
+          key: ffmpeg-linux-97ce978979194b5cf7e06a5e68020dbdaa7a4f3294c5452b6a1bc347100dbb79
+
+      - name: Install verified Linux ffmpeg
+        if: runner.os == 'Linux'
+        run: |
+          $archive = Join-Path $env:RUNNER_TEMP 'ffmpeg-8.1.3-linux64-gpl.tar.xz'
+          if (-not (Test-Path -LiteralPath $archive)) {
+            Invoke-WebRequest -Uri 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-09-30-13-08/ffmpeg-n8.1.3-9-g29e619e767-linux64-gpl-8.1.tar.xz' -OutFile $archive
+          }
+          $expected = '97ce978979194b5cf7e06a5e68020dbdaa7a4f3294c5452b6a1bc347100dbb79'
+          if ((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expected) {
+            throw 'ffmpeg archive checksum mismatch'
+          }
+          $destination = Join-Path $env:RUNNER_TEMP 'ffmpeg'
+          New-Item -ItemType Directory -Path $destination -Force | Out-Null
+          tar -xJf $archive -C $destination
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $bins = @(Get-ChildItem -LiteralPath $destination -Directory -Recurse -Filter bin)
+          if ($bins.Count -ne 1) { throw 'Expected one ffmpeg bin directory' }
+          $bins[0].FullName >> $env:GITHUB_PATH
+
+      - name: Install Python dependencies
+        run: |
+          python -m venv .venv
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $relative = if ($IsWindows) { '.venv/Scripts/python.exe' } else { '.venv/bin/python' }
+          $python = Join-Path $env:GITHUB_WORKSPACE $relative
+          & $python -m pip install --require-hashes -r requirements-dev.txt
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "STUDIO_PYTHON=$python" >> $env:GITHUB_ENV
+          "CUTGRAPH_STATE_HOME=$(Join-Path $env:RUNNER_TEMP 'studio-state')" >> $env:GITHUB_ENV
+
+      - name: Report REUSE compliance
+        continue-on-error: true
+        run: |
+          python -m pip install --require-hashes -r requirements-reuse.txt
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          '## REUSE compliance (report only)' >> $env:GITHUB_STEP_SUMMARY
+          '```text' >> $env:GITHUB_STEP_SUMMARY
+          reuse lint 2>&1 | Tee-Object -Variable reuseReport
+          $reuseStatus = $LASTEXITCODE
+          $reuseReport >> $env:GITHUB_STEP_SUMMARY
+          '```' >> $env:GITHUB_STEP_SUMMARY
+          exit $reuseStatus
+
+      - name: Install UI dependencies
+        working-directory: ui
+        run: npm ci
+
+      - name: Install motion-core dependencies
+        working-directory: motion-core
+        run: npm ci
+
+      - name: Environment doctor
+        run: '& $env:STUDIO_PYTHON scripts/bootstrap.py'
+
+      - name: Source SBOMs and licence policy
+        if: runner.os == 'Windows'
+        run: |
+          & $env:STUDIO_PYTHON scripts/model_manifest.py dist/sbom/model-manifest.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & $env:STUDIO_PYTHON scripts/sbom.py --output-dir dist/sbom --model-manifest dist/sbom/model-manifest.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & $env:STUDIO_PYTHON scripts/license_policy.py --sbom-dir dist/sbom --report dist/sbom/license-policy-report.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Upload SBOMs
+        if: ${{ !cancelled() && runner.os == 'Windows' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: sbom
+          path: dist/sbom/
+          if-no-files-found: error
+
+      - name: Python lint
+        run: '& $env:STUDIO_PYTHON -m ruff check .'
+
+      - name: Python types
+        run: '& $env:STUDIO_PYTHON -m pyright'
+
+      # A short base keeps the maximum-length name tests under Windows' path limit on any runner account.
+      - name: Python tests
+        run: '& $env:STUDIO_PYTHON -m pytest -q -p no:cacheprovider --basetemp "$env:RUNNER_TEMP/pytest"'
+
+      - name: UI tests
+        working-directory: ui
+        run: npm test
+
+      - name: UI types
+        working-directory: ui
+        run: npm run typecheck
+
+      - name: UI build
+        working-directory: ui
+        run: npm run build
+
+      - name: Motion-core tests
+        working-directory: motion-core
+        run: node --test (Get-ChildItem test/*.test.ts).FullName
+
+      - name: Browser e2e
+        run: '& $env:STUDIO_PYTHON tests/e2e/run.py'
+
+  installer:
+    name: unsigned Windows installer
+    if: ${{ github.event_name == 'pull_request' && (!github.event.repository.private || vars.HOSTED_CI == 'true') }}
+    runs-on: windows-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version-file: .python-version
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Isolate packaging state
+        run: |
+          "CUTGRAPH_STATE_HOME=$(Join-Path $env:RUNNER_TEMP 'installer-state')" >> $env:GITHUB_ENV
+
+      - name: Install locked build tools
+        run: python -m pip install --require-hashes -r requirements-dev.txt
+
+      - name: Prepare pinned compiler
+        run: ./installer/prepare_compiler.ps1 -Destination (Join-Path $env:RUNNER_TEMP 'inno')
+
+      - name: Build unsigned installer
+        run: python installer/build.py --installer --out "$env:RUNNER_TEMP/installer" --cache "$env:RUNNER_TEMP/downloads" --iscc "$env:RUNNER_TEMP/inno/ISCC.exe"
+
+      - name: Collect release assets
+        run: python installer/release_assets.py collect "$env:RUNNER_TEMP/installer" --out "$env:RUNNER_TEMP/assets"
+
+      - name: Upload unsigned installer assets
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: unsigned-installer
+          path: ${{ runner.temp }}/assets/*
+          if-no-files-found: error
+          retention-days: 7

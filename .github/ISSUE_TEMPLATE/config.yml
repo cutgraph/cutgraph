@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and discussions
+    url: https://github.com/cutgraph/cutgraph/discussions
+    about: Ask questions and discuss ideas with the community.
+  - name: Security vulnerabilities
+    url: https://github.com/cutgraph/cutgraph/blob/main/SECURITY.md
+    about: Follow the security policy to report vulnerabilities privately.

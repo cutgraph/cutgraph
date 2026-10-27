@@ -1,0 +1,23 @@
+{
+  "total": 900,
+  "totalHits": 500,
+  "hits": [
+    {
+      "id": 900006,
+      "pageURL": "https://pixabay.com/photos/example-900006/",
+      "type": "photo",
+      "tags": "garden, planters, gardening",
+      "previewURL": "https://cdn.pixabay.com/photo/2019/01/01/900006_150.jpg",
+      "webformatURL": "https://pixabay.com/get/example_640.jpg",
+      "largeImageURL": "https://pixabay.com/get/example_1280.jpg",
+      "imageWidth": 1920,
+      "imageHeight": 1280,
+      "imageSize": 450000,
+      "views": 50000,
+      "downloads": 21000,
+      "likes": 300,
+      "user_id": 900103,
+      "user": "example-photo"
+    }
+  ]
+}

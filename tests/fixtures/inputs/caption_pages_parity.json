@@ -1,0 +1,111 @@
+{
+  "project": {
+    "schemaVersion": 3,
+    "name": "synthetic-story",
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "revision": 2,
+    "transcript": null,
+    "tracks": [
+      {
+        "id": "speech",
+        "kind": "speech",
+        "clips": [
+          {
+            "id": "source-r251-s545",
+            "media": {
+              "source": "data/source/synthetic-story.mp4",
+              "proxy": null
+            },
+            "srcInF": 611,
+            "srcOutF": 696,
+            "tlStartF": 0,
+            "gainDb": 0.0
+          },
+          {
+            "id": "source",
+            "media": {
+              "source": "data/source/synthetic-story.mp4",
+              "proxy": null
+            },
+            "srcInF": 0,
+            "srcOutF": 179,
+            "tlStartF": 85,
+            "gainDb": 0.0
+          },
+          {
+            "id": "source-s179",
+            "media": {
+              "source": "data/source/synthetic-story.mp4",
+              "proxy": null
+            },
+            "srcInF": 179,
+            "srcOutF": 352,
+            "tlStartF": 264,
+            "gainDb": 0.0
+          },
+          {
+            "id": "source-r251",
+            "media": {
+              "source": "data/source/synthetic-story.mp4",
+              "proxy": null
+            },
+            "srcInF": 365,
+            "srcOutF": 611,
+            "tlStartF": 437,
+            "gainDb": 0.0
+          }
+        ]
+      }
+    ],
+    "scenes": [
+      {
+        "id": "scene-3",
+        "title": "Beat 45",
+        "role": "Wrap",
+        "startWord": 44,
+        "shot": {
+          "pose": "wave"
+        }
+      },
+      {
+        "id": "scene-1",
+        "title": "Beat 1",
+        "role": "Hook",
+        "startWord": 0,
+        "shot": {
+          "mode": "animation",
+          "pose": "cheer",
+          "cueWord": 8,
+          "headline": "Parity"
+        }
+      },
+      {
+        "id": "scene-2",
+        "title": "Beat 24",
+        "role": "Beat",
+        "startWord": 23,
+        "shot": {
+          "mode": "cameo",
+          "expression": "happy",
+          "cueWord": 26
+        }
+      }
+    ]
+  },
+  "cases": [
+    {
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "width": 1080,
+      "height": 1920
+    },
+    {
+      "width": 1080,
+      "height": 1080
+    }
+  ]
+}

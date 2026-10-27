@@ -1,0 +1,14 @@
+# Cutgraph Studio core — local editing, proxying, and CPU rendering.
+# Heavy inference engines and provider CLIs intentionally live in optional sets.
+fastapi==0.142.2
+cryptography==50.0.2
+cffi==2.1.1 ; platform_python_implementation != 'PyPy'
+pycparser==3.0 ; implementation_name != 'PyPy' and platform_python_implementation != 'PyPy'
+httpx==0.28.1
+jsonpatch==1.33
+jsonschema==4.23.0
+numpy==2.4.6
+pillow==13.0.0
+sse-starlette==3.5.0
+starlette==1.7.0
+uvicorn==0.54.0

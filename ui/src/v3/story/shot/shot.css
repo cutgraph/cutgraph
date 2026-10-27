@@ -1,0 +1,95 @@
+/* Shot editing sheet, recipe and look tiles. */
+.v3 .story .shot-layer { position: fixed; inset: 0; z-index: 20; background: rgba(5, 7, 9, .62); backdrop-filter: blur(4px); }
+.v3 .story .shot { position: absolute; inset: 22px; background: var(--bg); border: 1px solid var(--line2); border-radius: 18px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 80px rgba(0, 0, 0, .5); outline: none; }
+.v3 .story .shot-top { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.v3 .story .shot-title { min-width: 0; }
+.v3 .story .shot-title .eyebrow, .v3 .story .shot-title h2 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.v3 .story .shot-top h2 { font-size: 18px; }
+.v3 .story .shot-top .grow { flex: 1; }
+.v3 .story .shot-top .icon { flex: none; }
+.v3 .story .shot-draft { flex: none; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; background: rgba(240, 139, 110, .16); color: var(--coral); }
+.v3 .story .shot-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(340px, 1fr); min-height: 0; flex: 1; }
+.v3 .story .shot-stage { padding: 20px; overflow: auto; }
+.v3 .story .shot-stage .frame { position: relative; width: min(100%, calc(70vh * (var(--ar)))); }
+.v3 .story .shot-stage .frame > * { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.v3 .story .shot-stage .frame video { object-fit: contain; }
+.v3 .story .shot .code { background: #0a0c0e; border: 1px solid var(--line); border-radius: 10px; padding: 14px; font: 12px/1.6 var(--mono); overflow: auto; margin: 12px 0 0; color: #c9d2d8; font-variant-ligatures: none; }
+.v3 .story .recipe { border-left: 1px solid var(--line); padding: 16px 18px; overflow: auto; min-width: 0; }
+.v3 .story .rrow { margin-bottom: 16px; }
+.v3 .story .rrow h4 { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.v3 .story .recipe .seg { display: inline-flex; }
+.v3 .story .mode-hint { color: var(--muted); font-size: 12.5px; margin-top: 8px; }
+.v3 .story .strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+.v3 .story .atile { flex: none; display: grid; justify-items: center; gap: 4px; padding: 6px; border-radius: 11px; border: 1px solid var(--line); background: var(--panel); font-size: 11.5px; color: var(--muted); }
+.v3 .story .atile:hover { border-color: #3d464f; color: var(--text); }
+.v3 .story .atile canvas { width: 84px; height: 91px; image-rendering: pixelated; border-radius: 7px; display: block; }
+.v3 .story .atile.wide canvas { width: 112px; height: 63px; image-rendering: auto; }
+.v3 .story .atile.on { border-color: var(--yellow); color: var(--text); }
+.v3 .story [data-picker="character"] .atile > span { max-width: 84px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v3 .story .cuewords { display: flex; flex-wrap: wrap; gap: 4px; }
+.v3 .story .cuewords button { font-size: 12px; padding: 3px 8px; border-radius: 7px; border: 1px solid var(--line); color: var(--muted); }
+.v3 .story .cuewords button:hover { color: var(--text); }
+.v3 .story .cuewords button.on { border-color: var(--yellow); color: var(--yellow); }
+.v3 .story .rrow input { width: 100%; background: var(--panel); border: 1px solid var(--line2); border-radius: 9px; padding: 8px 10px; outline: none; }
+.v3 .story .rrow input:focus { border-color: #4d5760; }
+.v3 .story .rrow input::placeholder { color: var(--dim); }
+.v3 .story .rrow input:disabled { opacity: .55; }
+
+/* The eyebrow over the headline: the brand's, the shot's own, or hidden. hideHeadline
+   shares the same pill toggle to show or hide the headline (and eyebrow) on the stage. */
+.v3 .story .eyebrow-row input { font-weight: 800; letter-spacing: .04em; }
+.v3 .story .hide-toggle { font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line2); color: var(--muted); }
+.v3 .story .hide-toggle:hover { color: var(--text); border-color: #454e57; }
+.v3 .story .hide-toggle.on { border-color: var(--yellow); color: var(--yellow); }
+
+/* Duo shots: the co-star's pickers, set off from the lead's. */
+.v3 .story .rhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.v3 .story .rhead h4 { margin-bottom: 0; }
+.v3 .story .costar-set { border-left: 2px solid rgba(182, 156, 255, .3); padding-left: 12px; margin-bottom: 16px; }
+.v3 .story .costar-remove { padding: 4px 10px; font-size: 12px; }
+.v3 .story .costar-add { border: 1px dashed var(--line2); border-radius: 10px; padding: 7px 13px; color: var(--muted); font-size: 13px; }
+.v3 .story .costar-add:hover { color: var(--text); border-color: #454e57; }
+.v3 .story .rhead .costar-add { padding: 3px 11px; font-size: 12px; }
+.v3 .story .duo-hint { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.v3 .story .duo-hint .mode-hint { flex: 1 1 220px; margin-top: 0; }
+
+/* The Script scene header's shot button. */
+.v3 .story .shot-chip { flex: none; max-width: 45%; overflow: hidden; text-overflow: ellipsis; font-size: 11px; line-height: 1.4; padding: 2px 8px; border-radius: 999px; font-weight: 650; border: 1px dashed var(--line2); color: var(--dim); white-space: nowrap; }
+.v3 .story .panel-cues .cue-anim { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v3 .story .shot-chip:hover { color: var(--text); border-color: #454e57; }
+.v3 .story .shot-chip.on { border-style: solid; background: rgba(182, 156, 255, .14); color: #cbb8ff; border-color: rgba(182, 156, 255, .3); }
+
+@media (max-width: 860px) {
+  .v3 .story .shot { inset: 0; border-radius: 0; }
+  .v3 .story .shot-top { gap: 6px; padding: 10px 12px; }
+  .v3 .story .shot-grid { grid-template-columns: minmax(0, 1fr); overflow: auto; }
+  .v3 .story .shot-stage { padding: 14px; overflow: visible; }
+  .v3 .story .recipe { border-left: 0; border-top: 1px solid var(--line); overflow: visible; }
+  .v3 .story .recipe .seg { display: flex; }
+}
+
+/* Under the stage: the critic line, the numbered takes, "Direct it" and the scene's code. */
+.v3 .story .critic { margin-top: 12px; padding: 10px 13px; border-radius: 10px; font-size: 13px; }
+.v3 .story .critic.ok { background: rgba(144, 202, 165, .1); color: #b9e2c7; }
+.v3 .story .critic.warn { background: rgba(232, 132, 92, .13); color: #f1c0a9; }
+.v3 .story .takes { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 12px; font-size: 12px; }
+.v3 .story .takes .muted { margin-right: 4px; }
+.v3 .story .takes button { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--line2); font-size: 12px; color: var(--muted); }
+.v3 .story .takes button:hover { color: var(--text); border-color: #454e57; }
+.v3 .story .takes button.on { background: var(--text); color: #111; border-color: var(--text); }
+.v3 .story .direct-it { display: grid; gap: 8px; margin-top: 12px; }
+.v3 .story .direct { display: flex; gap: 8px; align-items: center; border: 1px solid var(--line2); border-radius: 12px; padding: 6px 12px; background: var(--panel); }
+.v3 .story .direct:focus-within { border-color: #505a63; }
+.v3 .story .direct .spark { color: var(--yellow); font-size: 16px; line-height: 1; }
+.v3 .story .direct input { flex: 1; background: none; border: 0; outline: none; padding: 7px 0; min-width: 0; }
+.v3 .story .direct input::placeholder { color: var(--dim); }
+.v3 .story .direct-status { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+.v3 .story .direct-cards { display: grid; gap: 8px; }
+.v3 .story .direct-cards .proposal { display: flex; align-items: center; gap: 12px; background: linear-gradient(90deg, rgba(245, 197, 24, .13), rgba(245, 197, 24, .04)); border: 1px solid rgba(245, 197, 24, .35); border-radius: 12px; padding: 9px 10px 9px 14px; min-width: 0; }
+.v3 .story .direct-cards .spark { color: var(--yellow); font-size: 16px; line-height: 1; }
+.v3 .story .code-bar { display: flex; justify-content: flex-end; margin-top: 12px; }
+.v3 .story .code-copy { font-size: 12px; padding: 3px 10px; }
+.v3 .story .code-wrap .code { margin-top: 6px; }
+@media (max-width: 860px) {
+  .v3 .story .direct-cards .proposal { flex-wrap: wrap; }
+}

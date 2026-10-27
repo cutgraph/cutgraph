@@ -1,0 +1,19 @@
+{
+  "name": "motion-core",
+  "private": true,
+  "version": "0.2.0",
+  "license": "FSL-1.1-ALv2",
+  "engines": {
+    "node": ">=24"
+  },
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "node --test test/*.test.ts",
+    "contact-sheet": "node scripts/contact-sheet.ts",
+    "duo-sheet": "node scripts/duo-sheet.ts"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "1.0.11"
+  }
+}

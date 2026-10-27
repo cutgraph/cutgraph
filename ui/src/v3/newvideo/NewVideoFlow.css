@@ -1,0 +1,240 @@
+/* Footage source picker and processing card, scoped to the shell tokens. */
+
+.v3 .nv-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(5, 7, 9, 0.62);
+  backdrop-filter: blur(4px);
+}
+
+.v3 .nv-card {
+  width: min(560px, 100%);
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  background: var(--panel);
+  border: 1px solid var(--line2);
+  border-radius: 18px;
+  padding: 28px;
+}
+
+.v3 .nv-card > header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.v3 .nv-card > header > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.v3 .nv-card h2 {
+  font-size: 22px;
+  margin-top: 4px;
+}
+
+.v3 .nv-tabs {
+  margin: 16px 0 4px;
+}
+
+.v3 .nv-drop {
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  text-align: center;
+  border: 1.5px dashed var(--line2);
+  border-radius: 14px;
+  padding: 28px 16px;
+  margin-top: 14px;
+  cursor: pointer;
+}
+
+.v3 .nv-drop.over {
+  border-color: var(--yellow);
+  background: color-mix(in srgb, var(--yellow) 6%, transparent);
+}
+
+.v3 .nv-drop .nv-drop-ic {
+  font-size: 22px;
+  color: var(--dim);
+}
+
+.v3 .nv-library {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+  max-height: 320px;
+  overflow: auto;
+}
+
+.v3 .nv-asset {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--raised);
+}
+
+.v3 .nv-asset.on {
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 1px var(--yellow);
+}
+
+.v3 .nv-asset img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  background: #0a0c0e;
+  display: block;
+}
+
+.v3 .nv-asset span {
+  padding: 6px 8px 8px;
+  font-size: 12.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v3 .nv-confirm {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.v3 .nv-confirm label {
+  display: grid;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.v3 .nv-confirm input[type="text"] {
+  background: var(--bg);
+  border: 1px solid var(--line2);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: 14px;
+  outline: none;
+}
+
+.v3 .nv-confirm input[type="text"]:focus {
+  border-color: var(--cyan);
+}
+
+.v3 .nv-confirm-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.v3 .nv-process h2 {
+  margin-top: 6px;
+}
+
+.v3 .nv-steps {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 4px;
+  display: grid;
+  gap: 14px;
+}
+
+.v3 .nv-steps li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  color: var(--muted);
+}
+
+.v3 .nv-steps li > i {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-radius: 50%;
+  border: 2px solid var(--line2);
+  flex: none;
+}
+
+.v3 .nv-steps li.active > i {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cyan) 20%, transparent);
+  animation: nv-pulse 1.1s ease-in-out infinite;
+}
+
+.v3 .nv-steps li.done {
+  color: var(--text);
+}
+
+.v3 .nv-steps li.done > i {
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.v3 .nv-steps li.error {
+  color: var(--coral);
+}
+
+.v3 .nv-steps li.error > i {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+
+.v3 .nv-steps li > span {
+  display: grid;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.v3 .nv-steps li small {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.v3 .nv-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.v3 .nv-error small {
+  color: var(--coral);
+}
+
+.v3 .nv-progress {
+  height: 5px;
+  border-radius: 999px;
+  background: var(--line2);
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.v3 .nv-progress > i {
+  display: block;
+  height: 100%;
+  background: var(--yellow);
+  transition: width 0.2s;
+}
+
+.v3 .nv-fineprint {
+  font-size: 11px;
+  color: var(--dim);
+  margin-top: 16px;
+}
+
+@keyframes nv-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}

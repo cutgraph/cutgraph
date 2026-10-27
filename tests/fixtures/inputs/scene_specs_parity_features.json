@@ -1,0 +1,648 @@
+{
+  "castInput": "acting_cast.json",
+  "cases": [
+    {
+      "name": "member-labels",
+      "project": {
+        "schemaVersion": 3,
+        "name": "member-labels",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "member-labels",
+            "title": "member-labels",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "character": "default-character",
+              "backdrop": "work",
+              "eyebrow": "",
+              "cueWord": 2,
+              "diagram": "none",
+              "pose": "rest",
+              "headline": "Evening walk",
+              "headlineAt": "costar",
+              "costar": {
+                "character": "visitor-guide",
+                "pose": "rest",
+                "expression": "curious"
+              },
+              "ensemble": [
+                {
+                  "character": "visitor-reader",
+                  "pose": "wave",
+                  "expression": "happy"
+                },
+                {
+                  "character": "visitor-helper",
+                  "pose": "point",
+                  "expression": "focused"
+                },
+                {
+                  "character": "default-character",
+                  "pose": "think",
+                  "expression": "neutral"
+                }
+              ],
+              "badges": [
+                {
+                  "text": "HI",
+                  "tone": "accent"
+                },
+                {
+                  "text": "7",
+                  "tone": "ink"
+                },
+                {
+                  "text": "OAK",
+                  "tone": "paper"
+                }
+              ]
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "tree-labels",
+      "project": {
+        "schemaVersion": 3,
+        "name": "tree-labels",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "tree-labels",
+            "title": "tree-labels",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "character": "default-character",
+              "backdrop": "work",
+              "eyebrow": "",
+              "cueWord": 3,
+              "diagram": "tree",
+              "pose": "point",
+              "boardLabels": [
+                "INDEX",
+                "Files",
+                "Pages",
+                "Notes"
+              ],
+              "costar": {
+                "character": "visitor-guide",
+                "pose": "rest",
+                "bubble": "exclaims"
+              }
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "cameo-question",
+      "project": {
+        "schemaVersion": 3,
+        "name": "cameo-question",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "cameo-question",
+            "title": "cameo-question",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "cameo",
+              "character": "default-character",
+              "backdrop": "work",
+              "eyebrow": "",
+              "cueWord": 4,
+              "pose": "rest",
+              "bubble": "question"
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "list-partial-labels",
+      "project": {
+        "schemaVersion": 3,
+        "name": "list-partial-labels",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "list-partial-labels",
+            "title": "list-partial-labels",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "character": "default-character",
+              "backdrop": "work",
+              "eyebrow": "",
+              "cueWord": 5,
+              "diagram": "list",
+              "pose": "wave",
+              "boardLabels": [
+                "INDEX",
+                "",
+                "Pages"
+              ]
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "chain-labels",
+      "project": {
+        "schemaVersion": 3,
+        "name": "chain-labels",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "chain-labels",
+            "title": "chain-labels",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "character": "default-character",
+              "backdrop": "work",
+              "eyebrow": "",
+              "cueWord": 6,
+              "diagram": "chain",
+              "pose": "point",
+              "boardLabels": [
+                "INDEX",
+                "Files",
+                "Pages",
+                "Notes"
+              ]
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "radial-question",
+      "project": {
+        "schemaVersion": 3,
+        "name": "radial-question",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "radial-question",
+            "title": "radial-question",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "character": "default-character",
+              "backdrop": "work",
+              "eyebrow": "",
+              "cueWord": 7,
+              "diagram": "radial",
+              "pose": "rest",
+              "costar": {
+                "character": "visitor-guide",
+                "bubble": "question"
+              }
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "grid-diagram",
+      "project": {
+        "schemaVersion": 3,
+        "name": "grid-diagram",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "grid-diagram",
+            "title": "grid-diagram",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "character": "default-character",
+              "backdrop": "work",
+              "eyebrow": "",
+              "cueWord": 3,
+              "diagram": "grid",
+              "pose": "point",
+              "boardLabels": [
+                "First",
+                "",
+                "Third",
+                "Fourth",
+                "Next",
+                "Last"
+              ]
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "chain-diagram",
+      "project": {
+        "schemaVersion": 3,
+        "name": "chain-diagram",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "chain-diagram",
+            "title": "chain-diagram",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "character": "default-character",
+              "backdrop": "work",
+              "eyebrow": "",
+              "cueWord": 3,
+              "diagram": "chain",
+              "pose": "point",
+              "boardLabels": [
+                "First",
+                "",
+                "Third",
+                "Fourth",
+                "Next",
+                "Last"
+              ]
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "radial-diagram",
+      "project": {
+        "schemaVersion": 3,
+        "name": "radial-diagram",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "radial-diagram",
+            "title": "radial-diagram",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "character": "default-character",
+              "backdrop": "work",
+              "eyebrow": "",
+              "cueWord": 3,
+              "diagram": "radial",
+              "pose": "point",
+              "boardLabels": [
+                "First",
+                "",
+                "Third",
+                "Fourth",
+                "Next",
+                "Last"
+              ]
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "tree-diagram",
+      "project": {
+        "schemaVersion": 3,
+        "name": "tree-diagram",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "tree-diagram",
+            "title": "tree-diagram",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "character": "default-character",
+              "backdrop": "work",
+              "eyebrow": "",
+              "cueWord": 3,
+              "diagram": "tree",
+              "pose": "point",
+              "boardLabels": [
+                "First",
+                "",
+                "Third",
+                "Fourth",
+                "Next",
+                "Last"
+              ]
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    },
+    {
+      "name": "list-diagram",
+      "project": {
+        "schemaVersion": 3,
+        "name": "list-diagram",
+        "fps": 30,
+        "width": 1920,
+        "height": 1080,
+        "revision": 2,
+        "transcript": null,
+        "tracks": [
+          {
+            "id": "speech",
+            "kind": "speech",
+            "clips": [
+              {
+                "id": "sample",
+                "media": {
+                  "source": "data/source/synthetic-story.mp4",
+                  "proxy": null
+                },
+                "srcInF": 0,
+                "srcOutF": 900,
+                "tlStartF": 0,
+                "gainDb": 0.0
+              }
+            ]
+          }
+        ],
+        "scenes": [
+          {
+            "id": "list-diagram",
+            "title": "list-diagram",
+            "role": "Beat",
+            "startWord": 0,
+            "shot": {
+              "mode": "animation",
+              "character": "default-character",
+              "backdrop": "work",
+              "eyebrow": "",
+              "cueWord": 3,
+              "diagram": "list",
+              "pose": "point",
+              "boardLabels": [
+                "First",
+                "",
+                "Third",
+                "Fourth",
+                "Next",
+                "Last"
+              ]
+            }
+          }
+        ],
+        "workspaceId": "garden-space"
+      }
+    }
+  ]
+}

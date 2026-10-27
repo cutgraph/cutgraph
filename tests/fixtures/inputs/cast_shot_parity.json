@@ -1,0 +1,369 @@
+{
+  "cast": {
+    "characters": [
+      {
+        "id": "default-character",
+        "name": "Lens",
+        "rig": "lens",
+        "art": [],
+        "palette": "periwinkle",
+        "expressions": [
+          {
+            "id": "smug",
+            "name": "Smug",
+            "spec": {
+              "eyes": "side",
+              "mouth": "smile"
+            },
+            "createdAt": "2026-09-23T00:00:00.000000Z"
+          }
+        ],
+        "createdAt": "",
+        "workspaceId": "brand",
+        "approved": true
+      },
+      {
+        "id": "notes-guest",
+        "name": "Visitor guide (placeholder: Character rig)",
+        "rig": "lens",
+        "art": [],
+        "palette": "periwinkle",
+        "expressions": [
+          {
+            "id": "grin",
+            "name": "Grin",
+            "spec": {
+              "eyes": "arc",
+              "mouth": "smile"
+            },
+            "createdAt": "2026-09-23T00:00:00.000000Z"
+          }
+        ],
+        "createdAt": "2026-09-23T00:00:00.000000Z",
+        "workspaceId": "garden-space",
+        "approved": true
+      },
+      {
+        "id": "visitor-guide",
+        "name": "Visitor guide",
+        "rig": "sample-rig",
+        "art": [],
+        "palette": "fern",
+        "approved": true,
+        "expressions": [
+          {
+            "id": "focus",
+            "name": "Quiet focus",
+            "spec": {
+              "brows": "raised",
+              "eyes": "open",
+              "mouth": "closed"
+            },
+            "createdAt": "2026-09-23T00:00:00.000000Z"
+          }
+        ],
+        "createdAt": "2026-09-23T00:00:00.000000Z",
+        "workspaceId": "garden-space"
+      },
+      {
+        "id": "stored-character",
+        "name": "Stored character",
+        "rig": "retired-rig",
+        "available": false,
+        "art": [],
+        "palette": "stored-palette",
+        "approved": true,
+        "workspaceId": "brand",
+        "createdAt": "",
+        "expressions": [
+          {
+            "id": "stored-look",
+            "name": "Stored look",
+            "spec": {
+              "old-part": "old-option"
+            },
+            "createdAt": ""
+          }
+        ]
+      }
+    ],
+    "default": "default-character",
+    "workspace": {
+      "id": "garden-space",
+      "name": "Garden"
+    },
+    "brand": {
+      "name": "MUSEUM VISIT",
+      "accent": "#2bb3a3"
+    }
+  },
+  "cases": [
+    {
+      "role": "Hook",
+      "title": "Open",
+      "shot": {
+        "mode": "animation",
+        "expression": "smug",
+        "pose": "cheer"
+      }
+    },
+    {
+      "role": "Wrap",
+      "title": "Close",
+      "shot": {
+        "mode": "cameo",
+        "expression": "deleted-one",
+        "move": "hop"
+      }
+    },
+    {
+      "role": "Beat",
+      "title": "Middle",
+      "shot": {
+        "mode": "cameo",
+        "expression": "happy"
+      }
+    },
+    {
+      "role": "Build",
+      "title": "Build it",
+      "shot": {
+        "mode": "animation",
+        "headline": "Go"
+      }
+    },
+    {
+      "role": "Payoff",
+      "title": "Done",
+      "shot": null
+    },
+    {
+      "role": "Hook",
+      "title": "Open",
+      "shot": {
+        "mode": "cameo",
+        "character": "notes-guest",
+        "expression": "grin",
+        "move": "wave"
+      }
+    },
+    {
+      "role": "Check",
+      "title": "Review",
+      "shot": {
+        "mode": "animation",
+        "character": "notes-guest",
+        "expression": "smug"
+      }
+    },
+    {
+      "role": "Beat",
+      "title": "Middle",
+      "shot": {
+        "mode": "animation",
+        "character": "notes-guest",
+        "expression": "curious"
+      }
+    },
+    {
+      "role": "Wrap",
+      "title": "Close",
+      "shot": {
+        "mode": "cameo",
+        "character": "gone-client-character",
+        "expression": "grin"
+      }
+    },
+    {
+      "role": "Payoff",
+      "title": "Launch",
+      "shot": {
+        "mode": "animation",
+        "expression": "smug",
+        "costar": {
+          "character": "notes-guest",
+          "expression": "grin",
+          "pose": "point"
+        },
+        "interaction": "fistbump"
+      }
+    },
+    {
+      "role": "Build",
+      "title": "Together",
+      "shot": {
+        "mode": "animation",
+        "character": "notes-guest",
+        "costar": {
+          "character": "gone-client-character",
+          "expression": "grin"
+        },
+        "interaction": "highfive"
+      }
+    },
+    {
+      "role": "Wrap",
+      "title": "See you",
+      "shot": {
+        "mode": "animation",
+        "costar": {
+          "character": "default-character",
+          "expression": "smug",
+          "move": "hop"
+        },
+        "interaction": "point"
+      }
+    },
+    {
+      "role": "Payoff",
+      "title": "Launch",
+      "shot": {
+        "mode": "animation",
+        "character": "visitor-guide",
+        "pose": "wave",
+        "expression": "happy",
+        "move": "nod"
+      }
+    },
+    {
+      "role": "Hook",
+      "title": "Open",
+      "shot": {
+        "mode": "cameo",
+        "character": "visitor-guide",
+        "expression": "focus",
+        "move": "nod"
+      }
+    },
+    {
+      "role": "Beat",
+      "title": "Middle",
+      "shot": {
+        "mode": "animation",
+        "character": "visitor-guide",
+        "pose": "not-a-pose",
+        "expression": "not-a-look",
+        "move": "wave"
+      }
+    },
+    {
+      "role": "Wrap",
+      "title": "Close",
+      "shot": {
+        "mode": "cameo",
+        "character": "visitor-guide",
+        "expression": "grin",
+        "pose": "wave"
+      }
+    },
+    {
+      "role": "Payoff",
+      "title": "Launch",
+      "shot": {
+        "mode": "animation",
+        "character": "default-character",
+        "pose": "point",
+        "costar": {
+          "character": "visitor-guide",
+          "pose": "not-a-pose",
+          "expression": "focus"
+        },
+        "interaction": "fistbump"
+      }
+    },
+    {
+      "role": "Payoff",
+      "title": "Launch",
+      "shot": {
+        "mode": "animation",
+        "character": "visitor-guide",
+        "pose": "wave",
+        "eyebrow": "FIELD NOTES"
+      }
+    },
+    {
+      "role": "Wrap",
+      "title": "See you",
+      "shot": {
+        "mode": "animation",
+        "eyebrow": "",
+        "costar": {
+          "character": "visitor-guide"
+        },
+        "interaction": "highfive"
+      }
+    },
+    {
+      "name": "unavailable lead",
+      "role": "Beat",
+      "title": "Stored look",
+      "shot": {
+        "mode": "animation",
+        "character": "stored-character",
+        "expression": "stored-look",
+        "pose": "wave",
+        "move": "idle"
+      }
+    },
+    {
+      "name": "unavailable co-star",
+      "role": "Beat",
+      "title": "Stored look",
+      "shot": {
+        "mode": "animation",
+        "costar": {
+          "character": "stored-character",
+          "expression": "stored-look",
+          "pose": "wave",
+          "move": "idle"
+        },
+        "interaction": "face"
+      }
+    },
+    {
+      "name": "unavailable ensemble entrance",
+      "role": "Beat",
+      "title": "Stored look",
+      "shot": {
+        "mode": "animation",
+        "ensemble": [
+          {
+            "character": "stored-character",
+            "expression": "stored-look",
+            "pose": "wave",
+            "move": "enter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "unavailable cameo",
+      "role": "Beat",
+      "title": "Stored look",
+      "shot": {
+        "mode": "cameo",
+        "character": "stored-character",
+        "expression": "stored-look",
+        "pose": "wave",
+        "move": "idle"
+      }
+    },
+    {
+      "name": "signoff-unbranded",
+      "shot": {
+        "mode": "animation",
+        "layout": "signoff",
+        "eyebrow": ""
+      }
+    },
+    {
+      "name": "signoff-explicit-mark",
+      "shot": {
+        "mode": "animation",
+        "layout": "signoff",
+        "mark": "XYZ"
+      }
+    }
+  ],
+  "rigInput": "synthetic_rig.json"
+}

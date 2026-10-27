@@ -1,0 +1,23 @@
+{
+  "page": 1,
+  "per_page": 12,
+  "total_results": 6500,
+  "photos": [
+    {
+      "id": 900003,
+      "width": 5472,
+      "height": 3648,
+      "url": "https://www.pexels.com/photo/example-photo-900003/",
+      "photographer": "Sample Photographer",
+      "photographer_url": "https://www.pexels.com/@example",
+      "src": {
+        "original": "https://images.pexels.com/photos/900003/example-photo-900003.jpeg",
+        "large2x": "https://images.pexels.com/photos/900003/example-photo-900003.jpeg?auto=compress&cs=tinysrgb&h=1080&w=1920",
+        "large": "https://images.pexels.com/photos/900003/example-photo-900003.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "medium": "https://images.pexels.com/photos/900003/example-photo-900003.jpeg?auto=compress&cs=tinysrgb&h=350",
+        "small": "https://images.pexels.com/photos/900003/example-photo-900003.jpeg?auto=compress&cs=tinysrgb&h=130",
+        "tiny": "https://images.pexels.com/photos/900003/example-photo-900003.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=280"
+      }
+    }
+  ]
+}

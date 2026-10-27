@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 2,
+  "name": "graphics-synthetic",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "revision": 1,
+  "tracks": [
+    {
+      "id": "video",
+      "kind": "video",
+      "clips": [
+        {
+          "id": "clip",
+          "media": {
+            "source": "data/source/synthetic-grid.mp4",
+            "proxy": null
+          },
+          "srcInF": 0,
+          "srcOutF": 456,
+          "tlStartF": 0,
+          "gainDb": 0.0
+        }
+      ]
+    },
+    {
+      "id": "graphics",
+      "kind": "text",
+      "items": [
+        {
+          "type": "graphic",
+          "id": "synthetic-lower-third",
+          "componentId": "lower-third",
+          "componentVersion": 1,
+          "props": {
+            "eyebrow": "FORM",
+            "title": "Lower Third",
+            "detail": "A square moves across a grid"
+          },
+          "pos": {
+            "x": 0.5,
+            "y": 0.2
+          },
+          "scale": 0.7,
+          "tlStartF": 0,
+          "durF": 60
+        },
+        {
+          "type": "graphic",
+          "id": "synthetic-callout",
+          "componentId": "callout",
+          "componentVersion": 1,
+          "props": {
+            "label": "CALLOUT",
+            "body": "Follow the blue square",
+            "accent": "#4cc9f0"
+          },
+          "pos": {
+            "x": 0.5,
+            "y": 0.35
+          },
+          "scale": 0.7,
+          "tlStartF": 60,
+          "durF": 60
+        },
+        {
+          "type": "graphic",
+          "id": "synthetic-evidence-card",
+          "componentId": "evidence-card",
+          "componentVersion": 1,
+          "props": {
+            "source": "Sample note",
+            "claim": "Straight path",
+            "detail": "Evidence card"
+          },
+          "pos": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "scale": 0.7,
+          "tlStartF": 120,
+          "durF": 60
+        },
+        {
+          "type": "graphic",
+          "id": "synthetic-chapter-card",
+          "componentId": "chapter-card",
+          "componentVersion": 1,
+          "props": {
+            "chapter": "01",
+            "title": "Grid",
+            "subtitle": "Chapter card"
+          },
+          "pos": {
+            "x": 0.5,
+            "y": 0.65
+          },
+          "scale": 0.7,
+          "tlStartF": 180,
+          "durF": 60
+        },
+        {
+          "type": "graphic",
+          "id": "synthetic-simple-chart",
+          "componentId": "simple-chart",
+          "componentVersion": 1,
+          "props": {
+            "title": "Distance",
+            "labels": [
+              "A",
+              "B",
+              "C"
+            ],
+            "values": [
+              1,
+              2,
+              3
+            ]
+          },
+          "pos": {
+            "x": 0.5,
+            "y": 0.8
+          },
+          "scale": 0.7,
+          "tlStartF": 240,
+          "durF": 60
+        }
+      ]
+    }
+  ]
+}

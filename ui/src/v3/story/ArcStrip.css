@@ -1,0 +1,15 @@
+/* Arc strip. Blocks are placed from their duration shares so the
+   marker lands exactly: x = i gaps + share of the width left after the n-1 gaps. */
+.v3 .story .arc-in { --gap: 3px; position: relative; height: 49px; }
+.v3 .story .arc-seg { position: absolute; top: 0; bottom: 0; left: calc(var(--i) * var(--gap) + (100% - (var(--n) - 1) * var(--gap)) * var(--l)); width: calc((100% - (var(--n) - 1) * var(--gap)) * var(--w)); min-width: 0; text-align: left; padding: 6px 10px 7px; border-radius: 8px; background: color-mix(in srgb, var(--c) 12%, transparent); border-top: 3px solid var(--c); overflow: hidden; }
+.v3 .story .arc-seg:hover { background: color-mix(in srgb, var(--c) 18%, transparent); }
+.v3 .story .arc-seg.thin { padding-inline: 2px; }
+.v3 .story .arc-seg b { display: block; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--c); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.v3 .story .arc-seg span { display: block; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.v3 .story .arc-seg.on { background: color-mix(in srgb, var(--c) 24%, transparent); }
+.v3 .story .arc-seg.on span { color: var(--text); }
+.v3 .story .arc-head { position: absolute; top: -4px; bottom: -4px; left: calc(var(--i) * var(--gap) + (100% - (var(--n) - 1) * var(--gap)) * var(--at)); width: 2px; margin-left: -1px; background: #fff; border-radius: 2px; pointer-events: none; box-shadow: 0 0 8px rgba(255, 255, 255, .5); }
+
+@media (max-width: 860px) {
+  .v3 .story .arc-in { min-width: 560px; }
+}

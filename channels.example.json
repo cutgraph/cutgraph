@@ -1,0 +1,38 @@
+{
+  "channels": {
+    "quick-tips": {
+      "name": "Quick Tips",
+      "voice": "energetic, concise, practical",
+      "audience": "viewers learning a new skill",
+      "accentColor": "&H0000FFFF",
+      "captionStyle": {
+        "wordsPerPage": 3,
+        "font": "Inter",
+        "bold": true,
+        "baseColor": "&HFFFFFF",
+        "activeColor": "&H0000FFFF",
+        "emphasisColor": "&H0000FFFF",
+        "marginVPct": 0.15,
+        "alignment": 2,
+        "outlineRatio": 14
+      }
+    },
+    "deep-dives": {
+      "name": "Deep Dives",
+      "voice": "calm, precise, thoughtful",
+      "audience": "viewers exploring ideas in detail",
+      "accentColor": "&H00CCFF66",
+      "captionStyle": {
+        "wordsPerPage": 3,
+        "font": "Inter",
+        "bold": true,
+        "baseColor": "&HFFFFFF",
+        "activeColor": "&H00CCFF66",
+        "emphasisColor": "&H00CCFF66",
+        "marginVPct": 0.15,
+        "alignment": 2,
+        "outlineRatio": 14
+      }
+    }
+  }
+}

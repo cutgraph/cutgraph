@@ -1,0 +1,27 @@
+/* Search stock: a drawer overlay reusing the drawer's tile grid + tokens. */
+.v3 .story .stock-panel { display: grid; gap: 12px; }
+.v3 .story .stock-head { display: flex; align-items: flex-start; gap: 10px; }
+.v3 .story .stock-back { flex: none; padding: 6px 10px; }
+.v3 .story .stock-search { display: flex; gap: 8px; }
+.v3 .story .stock-search input { flex: 1; min-width: 0; background: var(--panel); border: 1px solid var(--line2); border-radius: 9px; padding: 8px 10px; font-size: 13px; outline: none; color: var(--text); }
+.v3 .story .stock-search input:focus { border-color: #4d5760; }
+.v3 .story .stock-kind { margin-bottom: 0; }
+
+.v3 .story .stock-tile { cursor: default; }
+.v3 .story .stock-preview-btn { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+.v3 .story .stock-thumb { position: relative; display: block; width: 100%; aspect-ratio: 16/9; margin-bottom: 7px; background: var(--raised); overflow: hidden; }
+.v3 .story .stock-thumb img, .v3 .story .stock-thumb video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.v3 .story .stock-thumb .tile-ic { position: absolute; inset: 0; margin: 0; }
+.v3 .story .stock-badge { position: absolute; right: 6px; bottom: 6px; background: rgba(13,15,18,.78); color: #fff; font-size: 10.5px; font-weight: 650; padding: 2px 6px; border-radius: 999px; }
+.v3 .story .stock-add { width: 100%; justify-content: center; margin: 7px 10px 0; padding: 6px 10px; font-size: 12px; }
+.v3 .story .stock-add.on { color: var(--green); border-color: rgba(144,202,165,.4); }
+.v3 .story .stock-more { justify-self: center; }
+
+.v3 .story .stock-lightbox { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; background: rgba(8,9,11,.72); padding: 24px; }
+.v3 .story .stock-lightbox-body { display: grid; gap: 10px; width: min(560px, 100%); background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+.v3 .story .stock-lightbox-meta small { display: block; color: var(--muted); margin-top: 2px; }
+
+@media (max-width: 480px) {
+  .v3 .story .stock-search { flex-wrap: wrap; }
+  .v3 .story .stock-search .primary { flex: 1; justify-content: center; }
+}

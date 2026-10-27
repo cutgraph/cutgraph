@@ -1,0 +1,86 @@
+{
+  "total": 512,
+  "totalHits": 500,
+  "hits": [
+    {
+      "id": 900004,
+      "pageURL": "https://pixabay.com/videos/example-900004/",
+      "type": "film",
+      "tags": "garden, planting, gardening",
+      "duration": 11,
+      "picture_id": "example-video",
+      "videos": {
+        "large": {
+          "url": "https://cdn.pixabay.com/video/2020/03/01/900004-large.mp4",
+          "width": 1920,
+          "height": 1080,
+          "size": 9800000
+        },
+        "medium": {
+          "url": "https://cdn.pixabay.com/video/2020/03/01/900004-medium.mp4",
+          "width": 1280,
+          "height": 720,
+          "size": 5200000
+        },
+        "small": {
+          "url": "https://cdn.pixabay.com/video/2020/03/01/900004-small.mp4",
+          "width": 640,
+          "height": 360,
+          "size": 1900000
+        },
+        "tiny": {
+          "url": "https://cdn.pixabay.com/video/2020/03/01/900004-tiny.mp4",
+          "width": 320,
+          "height": 180,
+          "size": 700000
+        }
+      },
+      "views": 120000,
+      "downloads": 45000,
+      "likes": 900,
+      "comments": 12,
+      "user_id": 900104,
+      "user": "example-video"
+    },
+    {
+      "id": 900005,
+      "pageURL": "https://pixabay.com/videos/example-900005/",
+      "type": "film",
+      "tags": "greenhouse, seedlings, garden",
+      "duration": 7,
+      "picture_id": "example-clip",
+      "videos": {
+        "large": {
+          "url": "https://cdn.pixabay.com/video/2021/06/12/900005-large.mp4",
+          "width": 3840,
+          "height": 2160,
+          "size": 24000000
+        },
+        "medium": {
+          "url": "https://cdn.pixabay.com/video/2021/06/12/900005-medium.mp4",
+          "width": 1920,
+          "height": 1080,
+          "size": 9100000
+        },
+        "small": {
+          "url": "https://cdn.pixabay.com/video/2021/06/12/900005-small.mp4",
+          "width": 960,
+          "height": 540,
+          "size": 3300000
+        },
+        "tiny": {
+          "url": "https://cdn.pixabay.com/video/2021/06/12/900005-tiny.mp4",
+          "width": 480,
+          "height": 270,
+          "size": 900000
+        }
+      },
+      "views": 88000,
+      "downloads": 30000,
+      "likes": 610,
+      "comments": 4,
+      "user_id": 900105,
+      "user": "example-clip"
+    }
+  ]
+}

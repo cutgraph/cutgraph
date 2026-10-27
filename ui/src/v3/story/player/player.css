@@ -1,0 +1,60 @@
+/* Story player, scrub bar, transport controls and format picker. */
+.v3 .story .player { padding: 16px 16px 12px; border-bottom: 1px solid var(--line); flex: none; }
+.v3 .story .player > .muted { padding: 20px 2px; text-align: center; }
+
+/* width first (min() bounds it by 50% of viewport height * aspect), aspect-ratio derives the height —
+   this keeps a portrait frame from blowing out the 440px side column. */
+.v3 .story .frame {
+  aspect-ratio: var(--ar);
+  width: min(100%, calc(50vh * (var(--ar))));
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+
+.v3 .story .scrub {
+  display: block;
+  width: 100%;
+  margin: 10px 0 0;
+  height: 14px;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.v3 .story .scrub::-webkit-slider-runnable-track { height: 3px; border-radius: 999px; background: var(--line2); }
+.v3 .story .scrub::-moz-range-track { height: 3px; border-radius: 999px; background: var(--line2); }
+.v3 .story .scrub::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px; height: 12px;
+  margin-top: -4.5px;
+  border-radius: 50%;
+  background: var(--yellow);
+}
+.v3 .story .scrub::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: 50%; background: var(--yellow); }
+
+.v3 .story .transport { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.v3 .story .play {
+  flex: none;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--yellow);
+  color: #111;
+  font-size: 14px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+}
+.v3 .story .play:hover { background: #ffd73d; }
+.v3 .story .transport .time { font: 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.v3 .story .transport .grow { flex: 1; }
+.v3 .story .transport .chip { font-size: 12px; padding: 5px 9px; border-radius: 8px; border: 1px solid var(--line2); color: var(--muted); }
+.v3 .story .transport .chip.on { color: #111; border-color: var(--yellow); background: var(--yellow); font-weight: 700; }
+
+@media (max-width: 860px) {
+  .v3 .story .player { order: 3; }
+  .v3 .story .frame { width: min(100%, calc(62vh * (var(--ar)))); }
+}

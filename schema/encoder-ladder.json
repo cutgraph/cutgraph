@@ -1,0 +1,61 @@
+{
+  "order": ["h264_nvenc", "h264_qsv", "h264_amf", "h264_mf", "libx264"],
+  "orders": {
+    "withLibx264": {
+      "export": ["h264_nvenc", "libx264"],
+      "proxy": ["h264_nvenc", "libx264"],
+      "script": ["libx264"],
+      "scene": ["h264_nvenc", "libx264"],
+      "conform": ["libx264"]
+    },
+    "withoutLibx264": ["h264_nvenc", "h264_qsv", "h264_amf", "h264_mf"]
+  },
+  "unavailableMessage": "Video encoding isn't available on this PC. If your Windows edition name ends in \"N\", install the Media Feature Pack (Settings > System > Optional features), then restart your PC.",
+  "probeTimeoutMessage": "Checking video encoding support took too long. Please try again.",
+  "probeFailureMessage": "Video encoding support could not be checked. Please try again.",
+  "defaults": {"crf": "18", "preset": "slow", "gop": "12", "bframes": "0", "cq": "28"},
+  "profiles": {
+    "export": {
+      "h264_nvenc": ["-preset", "p7", "-tune", "hq", "-rc", "vbr", "-cq", "19", "-spatial-aq", "1", "-temporal-aq", "1"],
+      "h264_qsv": ["-preset", "slow", "-global_quality", "18"],
+      "h264_amf": ["-quality", "quality", "-rc", "cqp", "-qp_i", "18", "-qp_p", "18", "-qp_b", "20"],
+      "h264_mf": ["-hw_encoding", "0", "-rate_control", "quality", "-quality", "95"],
+      "libx264": ["-crf", "{crf}", "-preset", "{preset}"]
+    },
+    "proxy": {
+      "h264_nvenc": ["-g", "{gop}", "-bf", "{bframes}", "-cq", "{cq}"],
+      "h264_qsv": ["-preset", "veryfast", "-global_quality", "{cq}", "-g", "{gop}", "-bf", "{bframes}"],
+      "h264_amf": ["-quality", "speed", "-rc", "cqp", "-qp_i", "{cq}", "-qp_p", "{cq}", "-g", "{gop}", "-bf", "{bframes}"],
+      "h264_mf": ["-hw_encoding", "0", "-rate_control", "quality", "-quality", "70", "-g", "{gop}", "-bf", "{bframes}"],
+      "libx264": ["-preset", "veryfast", "-crf", "{cq}", "-g", "{gop}", "-bf", "{bframes}"]
+    },
+    "script": {
+      "h264_nvenc": ["-preset", "p1", "-tune", "hq", "-rc", "vbr", "-cq", "23"],
+      "h264_qsv": ["-preset", "veryfast", "-global_quality", "23"],
+      "h264_amf": ["-quality", "speed", "-rc", "cqp", "-qp_i", "23", "-qp_p", "23"],
+      "h264_mf": ["-hw_encoding", "0", "-rate_control", "quality", "-quality", "80"],
+      "libx264": ["-preset", "ultrafast", "-tune", "stillimage"]
+    },
+    "conform": {
+      "h264_nvenc": ["-preset", "p7", "-tune", "hq", "-rc", "vbr", "-cq", "19", "-spatial-aq", "1", "-temporal-aq", "1"],
+      "h264_qsv": ["-preset", "slow", "-global_quality", "18"],
+      "h264_amf": ["-quality", "quality", "-rc", "cqp", "-qp_i", "18", "-qp_p", "18", "-qp_b", "20"],
+      "h264_mf": ["-hw_encoding", "0", "-rate_control", "quality", "-quality", "95"],
+      "libx264": ["-preset", "veryfast", "-crf", "18"]
+    },
+    "scene": {
+      "h264_nvenc": ["-preset", "p5", "-tune", "hq", "-rc", "vbr", "-cq", "16"],
+      "h264_qsv": ["-preset", "medium", "-global_quality", "16"],
+      "h264_amf": ["-quality", "quality", "-rc", "cqp", "-qp_i", "16", "-qp_p", "16", "-qp_b", "18"],
+      "h264_mf": ["-hw_encoding", "0", "-rate_control", "quality", "-quality", "100"],
+      "libx264": ["-crf", "16", "-preset", "medium"]
+    }
+  },
+  "initFailures": {
+    "h264_nvenc": ["cannot load nvcuda", "cannot load libcuda", "no nvenc capable devices", "no capable devices found", "cannot init cuda", "driver does not support the required nvenc api version", "openencodesessionex failed"],
+    "h264_qsv": ["error creating a mfx loader", "error creating a mfx session", "error initializing an mfx session", "failed to initialise vaapi connection", "error initializing the encoder"],
+    "h264_amf": ["dll amfrt64.dll failed to open", "dll libamfrt64.so.1 failed to open", "amf failed to initialise", "failed to create  hardware device context (amf)", "encoder->init() failed"],
+    "h264_mf": ["dll mfplat.dll failed to open", "dll mfplat.dll failed to find function", "could not find any mft", "could not create mft", "could not initialize mediafoundation"],
+    "libx264": []
+  }
+}

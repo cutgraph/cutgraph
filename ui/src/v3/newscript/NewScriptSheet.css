@@ -1,0 +1,40 @@
+/* Script creation sheet with a wide writing surface. */
+.v3 .ns-card { width: min(760px, 100%); display: grid; gap: 14px; }
+.v3 .ns-card > header { margin-bottom: 0; }
+.v3 .ns-idea { display: grid; gap: 10px; padding: 14px; background: var(--bg); border: 1px solid var(--line2); border-radius: 14px; }
+.v3 .ns-idea > label { font-size: 12.5px; color: var(--muted); }
+.v3 .ns-idea textarea { width: 100%; background: var(--panel); border: 1px solid var(--line2); border-radius: 12px; padding: 10px 14px; font-size: 14px; color: var(--text); outline: none; resize: vertical; min-height: 64px; }
+.v3 .ns-idea textarea:focus { border-color: var(--cyan); }
+.v3 .ns-idea textarea:disabled { opacity: .6; }
+.v3 .ns-idea-row { display: flex; justify-content: flex-end; }
+.v3 .ns-idea .nv-steps { margin: 0; }
+.v3 .ns-draft-error { margin: 0; font-size: 12.5px; color: var(--coral); }
+.v3 .ns-field { display: grid; gap: 6px; font-size: 12.5px; color: var(--muted); }
+.v3 .ns-label-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.v3 .ns-label-row .link { font-size: 12.5px; }
+.v3 .ns-field input,
+.v3 .ns-field textarea { width: 100%; background: var(--bg); border: 1px solid var(--line2); border-radius: 12px; padding: 10px 14px; font-size: 15px; color: var(--text); outline: none; }
+.v3 .ns-field textarea { resize: vertical; min-height: 180px; max-height: 52vh; line-height: 1.55; }
+.v3 .ns-field input:focus,
+.v3 .ns-field textarea:focus { border-color: var(--cyan); }
+.v3 .ns-field textarea::placeholder { color: var(--dim); }
+.v3 .ns-sample { font-size: 12px; color: var(--muted); border: 1px dashed var(--line2); border-radius: 10px; padding: 8px 12px; }
+.v3 .ns-meta { font-size: 13px; color: var(--muted); }
+.v3 .ns-meta b { color: var(--text); font-weight: 650; }
+.v3 .ns-scenes { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; max-height: 170px; overflow: auto; }
+.v3 .ns-scenes li { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; align-items: baseline; gap: 10px; font-size: 13px; }
+.v3 .ns-scenes b { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.v3 .ns-scenes small { color: var(--muted); font-variant-numeric: tabular-nums; }
+.v3 .ns-card .role { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--c); white-space: nowrap; }
+.v3 .ns-card .role::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.v3 .ns-error { color: var(--coral); font-size: 13px; }
+.v3 .ns-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.v3 .ns-foot .nv-fineprint { margin: 0; }
+.v3 .ns-foot code { font-size: 11px; padding: 1px 5px; white-space: nowrap; }
+
+@media (max-width: 560px) {
+  .v3 .ns-card { padding: 20px; }
+  .v3 .ns-foot { flex-direction: column; align-items: stretch; }
+  .v3 .ns-foot .primary { justify-content: center; }
+  .v3 .ns-scenes li { grid-template-columns: 78px minmax(0, 1fr) auto; }
+}

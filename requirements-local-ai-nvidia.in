@@ -1,0 +1,19 @@
+# Optional NVIDIA inference capability pack. Install only on a compatible machine.
+# The +cu128 torch wheels come from PyTorch's CUDA 12.8 index, passed explicitly when locking and installing.
+-r requirements-core.in
+-c requirements-core.txt
+mediapipe==0.10.35
+opencv-contrib-python==4.13.0.92
+torch==2.8.0+cu128
+torchaudio==2.8.0+cu128
+torchvision==0.23.0+cu128
+whisperx==3.8.6
+torchcodec==0.7.0
+silero-vad==6.2.1
+# Earlier OmegaConf requires a source-only parser runtime; add-ons accept wheels only.
+omegaconf==2.4.0
+# Use the reviewed PyPI wheels rather than the mirror's older platform-specific build.
+markupsafe==3.0.4
+# Security floors for transitive packages (fixed releases of advisories found by pip-audit).
+aiohttp==3.14.4
+nltk==3.10.4

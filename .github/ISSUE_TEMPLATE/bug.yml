@@ -1,0 +1,47 @@
+name: Bug report
+description: Report a reproducible problem with Cutgraph.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For vulnerabilities, follow SECURITY.md and report privately through the Security tab.
+        Remove credentials, private media, and personal data from all attachments.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Which Cutgraph version are you running?
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system version and relevant hardware or browser details.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include a small synthetic example if possible.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs or screenshots
+      description: Share only evidence with sensitive information removed.
