@@ -1,7 +1,8 @@
 # Characters
 
 `src/characters.ts` is the drawing registry. Lens (`lens`, `src/lens.ts`) is the default character.
-An unregistered id draws Lens with a small "Missing character" marker. Hosts keep the stored id,
+An unregistered id draws Lens with a small "Missing character" marker under its body, which follows
+an entrance and stays inside a thumbnail's frame. Hosts keep the stored id,
 including when another profile or shot field changes; unavailable profiles remain visible in Cast.
 
 A `Character` declares its owner, palettes, expression parts, built-in expressions, poses, moves,

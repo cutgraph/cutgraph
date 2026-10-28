@@ -118,7 +118,7 @@ describe("pill caption overlay (the v3 default)", () => {
   });
 });
 
-describe("the outline outline look stays available", () => {
+describe("the outline look stays available", () => {
   it("renders for a project caption style with look: outline", () => {
     const overlay = at(40, project({ captions: { enabled: true, style: { look: "outline" } } }))!;
     expect(overlay.style.webkitTextStroke).not.toBe("");

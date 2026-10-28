@@ -28,8 +28,8 @@ def test_render_requests_carry_the_staging_like_the_fixture() -> None:
 def test_the_film_fixture_covers_the_travel_features() -> None:
     fx = _fx()
     shots = [r["shot"] for r in fx["requests"]]
-    assert len(shots) == 7
-    assert [s["title"] for s in fx["expected"]] == ["title", "meet", "route", "tickets", "gallery", "ask", "signoff"]
+    assert len(shots) == 6
+    assert [s["title"] for s in fx["expected"]] == ["title", "meet", "route", "tickets", "gallery", "ask"]
     assert shots[0]["badges"] == [{"text": "INDOORS", "tone": "accent"}]
     assert len(shots[1]["ensemble"]) == 1 and shots[1]["ensemble"][0]["pose"] == "point"
     assert shots[1]["costar"]["bubble"] == "say" and shots[1]["headlineAt"] == "costar"
@@ -38,7 +38,7 @@ def test_the_film_fixture_covers_the_travel_features() -> None:
     assert len(phones) == 1 and not phones[0]["screen"].get("more")
     assert shots[4]["camera"] == "pan" and shots[4]["costar"]["move"] == "idle"
     assert shots[5]["bubble"] == "question"
-    assert shots[6]["mark"] == "TOUR"
+    assert not any(s.get("layout") == "signoff" for s in shots), "the staging fixture covers the sign-off"
     assert not {s.get("camera") for s in shots} & {"push-in", "pull-out"}
     footage = next(s for s in fx["project"]["scenes"] if s["id"] == "footage")
     assert "mode" not in footage["shot"] and footage["id"] not in {e["sceneId"] for e in fx["expected"]}

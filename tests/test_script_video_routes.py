@@ -162,7 +162,7 @@ def test_the_draft_route_shape(state: Path, monkeypatch: pytest.MonkeyPatch) -> 
     offline = _call("POST", "/api/script/draft", json={"idea": "how to cook pasta"})
     assert offline.status_code == 503 and offline.json()["error"]
     assert _call("POST", "/api/script/draft", json={"idea": "   "}).status_code == 400
-    assert _call("POST", "/api/script/draft", content=b"{nope").status_code == 400
+    assert _call("POST", "/api/script/draft", content=b"{nope", headers={"content-type": "application/json"}).status_code == 400
 
 
 def test_the_draft_route_returns_a_script_the_create_route_accepts(state: Path, monkeypatch: pytest.MonkeyPatch) -> None:

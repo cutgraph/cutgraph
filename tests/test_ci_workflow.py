@@ -13,7 +13,8 @@ import pytest
 import yaml
 
 _ROOT = Path(__file__).resolve().parents[1]
-_PUBLIC_WORKFLOWS = [_ROOT / ".github/workflows" / name for name in ("ci.yml", "security.yml", "release.yml")]
+_PUBLIC_WORKFLOWS = [_ROOT / ".github/workflows" / name
+                     for name in ("ci.yml", "security.yml", "release.yml", "motion-goldens.yml")]
 
 
 @pytest.mark.parametrize("path", _PUBLIC_WORKFLOWS, ids=lambda p: p.name)
@@ -76,6 +77,8 @@ def test_workflows_use_hosted_images_and_accept_pull_requests(path: Path) -> Non
         assert {"push", "pull_request"} <= set(triggers)
         assert triggers["push"]["branches"] == ["main"]
         assert set(re.findall(r"(?m)^\s*runs-on:\s*(.+?)\s*$", workflow)) == {"ubuntu-latest"}
+    elif path.name == "motion-goldens.yml":
+        assert yaml.load(workflow, Loader=yaml.BaseLoader)["on"] == {"workflow_dispatch": ""}
     else:
         assert yaml.load(workflow, Loader=yaml.BaseLoader)["on"] == {
             "push": {"tags": ["v*"]}, "workflow_dispatch": "",
@@ -185,6 +188,41 @@ def test_ci_runs_same_gates_and_browser_harness_on_both_platforms() -> None:
     assert "python-version-file: .python-version" in setup
 
 
+def test_linux_goldens_are_recorded_for_review_without_write_access() -> None:
+    text = (_ROOT / ".github/workflows/motion-goldens.yml").read_text(encoding="utf-8")
+    workflow = yaml.load(text, Loader=yaml.BaseLoader)
+    assert workflow["on"] == {"workflow_dispatch": ""}
+    assert workflow["permissions"] == {"contents": "read"}
+    assert list(workflow["jobs"]) == ["record"]
+    job = workflow["jobs"]["record"]
+    assert job["runs-on"] == "ubuntu-latest"
+    assert job["if"] == "${{ !github.event.repository.private || vars.HOSTED_CI == 'true' }}"
+    assert "permissions" not in job
+    steps = job["steps"]
+    assert [step["name"] for step in steps] == [
+        "Checkout", "Set up Node", "Install motion-core dependencies", "Record goldens",
+        "Verify recordings", "Render contact sheet", "Upload goldens",
+    ]
+    named = {step["name"]: step for step in steps}
+    assert named["Set up Node"]["with"]["node-version-file"] == ".nvmrc"
+    for name in ("Install motion-core dependencies", "Record goldens", "Verify recordings", "Render contact sheet"):
+        assert named[name]["working-directory"] == "motion-core"
+    assert named["Install motion-core dependencies"]["run"] == "npm ci"
+    record = named["Record goldens"]["run"]
+    assert record.startswith("node scripts/update-goldens.ts\n")
+    assert "test/*.golden.win32.json" in record and "test/*.golden.linux.json" in record
+    assert "throw 'Linux recordings must cover exactly the Windows recordings'" in record
+    assert named["Verify recordings"]["run"] == "node --test (Get-ChildItem test/*.test.ts).FullName"
+    upload = named["Upload goldens"]
+    assert upload["uses"].startswith("actions/upload-artifact@")
+    assert upload["with"]["path"] == "${{ runner.temp }}/goldens/"
+    assert upload["with"]["if-no-files-found"] == "error"
+    assert all("if" not in step for step in steps)
+    # A person reviews and commits the recordings; the job never writes back.
+    for forbidden in ("git commit", "git push", "secrets.", "GITHUB_TOKEN", "github.token"):
+        assert forbidden not in text
+
+
 def test_security_jobs_skip_private_repositories_and_use_scoped_permissions() -> None:
     workflow = (_ROOT / ".github/workflows/security.yml").read_text(encoding="utf-8")
     sections = re.split(r"(?m)^  ([\w-]+):\s*$", workflow.split("\njobs:\n", 1)[1])
@@ -209,7 +247,8 @@ def test_security_jobs_skip_private_repositories_and_use_scoped_permissions() ->
     assert "no-deps: true" in jobs["pip-audit"]
     assert "disable-pip" not in jobs["pip-audit"]
     assert "--config=osv-scanner.toml" in jobs["osv-scanner"]
-    for lock in ("requirements-core.txt", "requirements-agent.txt", "requirements-dev.txt"):
+    for lock in ("requirements-core.txt", "requirements-agent.txt", "requirements-dev.txt", "requirements-reuse.txt",
+                 "requirements-local-ai-nvidia.txt", "requirements-local-ai-cpu.txt"):
         assert lock in jobs["pip-audit"]
         assert lock in jobs["osv-scanner"]
     for lock in ("ui/package-lock.json", "motion-core/package-lock.json"):
@@ -224,21 +263,23 @@ def test_security_jobs_skip_private_repositories_and_use_scoped_permissions() ->
     assert re.search(r"(?m)^    - cron: '.+ \* \* 1'$", workflow)
 
 
-def test_dependabot_updates_actions_and_npm_with_grouped_weekly_updates() -> None:
-    config = (_ROOT / ".github/dependabot.yml").read_text(encoding="utf-8")
-    updates = re.split(r"(?m)^  - package-ecosystem: ", config)[1:]
-    assert len(updates) == 3
-    expected = {("github-actions", "/"), ("npm", "/ui"), ("npm", "/motion-core")}
-    observed = set()
-    for update in updates:
-        ecosystem = update.splitlines()[0]
-        directory = re.search(r"(?m)^    directory: (.+)$", update)
-        assert directory is not None
-        observed.add((ecosystem, directory[1]))
-        assert "interval: weekly" in update
-        assert "update-types: [minor, patch]" in update
-    assert observed == expected
-    assert "pull_request_target" not in config
+def test_pip_audit_accepts_only_the_recorded_transcription_advisories() -> None:
+    steps = yaml.load((_ROOT / ".github/workflows/security.yml").read_text(encoding="utf-8"),
+                      Loader=yaml.BaseLoader)["jobs"]["pip-audit"]["steps"]
+    audits = [step["with"] for step in steps if step.get("uses", "").startswith("pypa/gh-action-pip-audit@")]
+    assert [audit.get("ignore-vulns") is None for audit in audits] == [True, False]
+    assert all(audit["require-hashes"] == audit["no-deps"] == "true" for audit in audits)
+    assert audits[1]["inputs"].split() == ["requirements-local-ai-nvidia.txt", "requirements-local-ai-cpu.txt"]
+    accepted = tomllib.loads((_ROOT / "osv-scanner.toml").read_text(encoding="utf-8"))["IgnoredVulns"]
+    assert audits[1]["ignore-vulns"].split() == [entry["id"] for entry in accepted]
+
+
+def test_ci_reuse_lint_blocks() -> None:
+    steps = yaml.load((_ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8"),
+                      Loader=yaml.BaseLoader)["jobs"]["checks"]["steps"]
+    reuse = next(step for step in steps if "reuse lint" in step.get("run", ""))
+    assert "continue-on-error" not in reuse and "if" not in reuse
+    assert reuse["run"].rstrip().endswith("exit $reuseStatus")
 
 
 def _locked_versions() -> set[tuple[str, str]]:

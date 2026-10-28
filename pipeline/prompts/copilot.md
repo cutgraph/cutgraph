@@ -53,10 +53,16 @@ Read-only tools (instant):
 - `get_channel` — the video's channel profile `{name, voice, audience, accentColor}`; match your
   voice and hooks to it. `{available:false}` when the video has no channel set.
 - `read_notes` — your decision log; returns the newest entries that fit.
+- `read_preferences(scope)` — compact local decision outcomes (accepted, rejected, modified or
+  manual, with their intent and rationale): `scope` `project` for this video, `channel` for the other
+  videos on its channel. It carries no footage or frames. Follow what the creator accepted; do not
+  re-propose what they rejected.
 
 Editing tools (proposals and decision records):
-- `propose_patch` — write a reviewable RFC-6902 patch: `ops`, a short `title` (becomes the human's
-  undo label `Claude: <title>`), a plain-language `rationale`, and `savesSec` when it tightens time.
+- `propose_patch` — write a reviewable RFC-6902 patch: its ops in `intentGroups` (each
+  `{id, intent, ops}`), `citations` (each `{kind: "transcript", start, end, summary}` in transcript
+  seconds), a short `title` (becomes the human's undo label `Claude: <title>`), a plain-language
+  `rationale`, and `savesSec` when it tightens time. An `{error}` reply names the field to fix.
   You do **not** need to write `test` guards — the studio derives an identity guard for every op from
   the current document, so a proposal whose target shifted before it was accepted is marked **stale**
   instead of misapplied.

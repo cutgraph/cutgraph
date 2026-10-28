@@ -24,7 +24,7 @@ from typing import Optional
 
 import config
 from pipeline.errors import ValidationError
-from pipeline.names import check_case_collision, exact_path, project_name
+from pipeline.names import check_case_collision, exact_path, generated_name, project_name, reserved_name, stored_name
 
 CURRENT_SCHEMA_VERSION = 5
 _WRITE_LOCK = threading.RLock()
@@ -503,6 +503,11 @@ def _check_rel_path(path: str, label: str) -> None:
         raise ValidationError(f"{label} must not contain a drive or scheme")
     if ".." in path.split("/"):
         raise ValidationError(f"{label} must not contain a parent directory segment")
+    if re.search(r"[\x00-\x1f\x7f-\x9f\u2028\u2029]", path) or any(not part.strip(". ") for part in path.split("/")):
+        raise ValidationError(f"{label} must not contain control characters or dot/space-only segments")
+    *folders, filename = path.split("/")
+    if any(stored_name(folder) is None for folder in folders) or reserved_name(filename):
+        raise ValidationError(f"{label} must use portable names that are not reserved device names")
 
 
 def _validate_id(value: str, label: str) -> None:
@@ -530,10 +535,10 @@ def _validate_media(media: Media, cid: str) -> None:
 
 def _check_media_path(path: str, label: str) -> None:
     _check_rel_path(path, label)
-    if re.search(r"[\x00-\x1f\x7f-\x9f\u2028\u2029]", path) or any(not part.strip(". ") for part in path.split("/")):
-        raise ValidationError(f"{label} must not contain control characters or dot/space-only segments")
     parts = PurePosixPath(path).parts
-    extension = PurePosixPath(path).suffix.lower()
+    stem, extension = PurePosixPath(path).stem, PurePosixPath(path).suffix.lower()
+    if not (stored_name(stem) or generated_name(stem, "_540")):
+        raise ValidationError(f"{label} must use portable names that are not reserved device names")
     media_root = (
         len(parts) >= 2 and parts[0] in {"data", "media", "proxies"}
         or len(parts) >= 3 and parts[:2] in {

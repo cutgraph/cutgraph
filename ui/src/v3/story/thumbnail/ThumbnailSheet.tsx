@@ -8,6 +8,7 @@ import { domEnv } from "../../../preview/SceneLayer";
 import { useProjectStore } from "../../../store/useProjectStore";
 import type { Badge, ThumbnailMember } from "../../../types/project";
 import { characterFor, expressionName, performerOf, rigOf } from "../../library/cast";
+import { useDraft } from "../../common";
 import { useVideoCast } from "../../library/castStore";
 import { expressionOptions, wears } from "../shot/ActingSet";
 import { BACKDROP_NAMES, POSE_NAMES, nameOf } from "../shot/names";
@@ -43,9 +44,8 @@ function Field({ label, stored, placeholder, maxLength, onCommit, hint }: {
   onCommit: (value: string) => void;
   hint?: ReactNode;
 }) {
-  const [draft, setDraft] = useState(stored);
+  const [draft, setDraft] = useDraft(stored);
   const cancel = useRef(false);
-  useEffect(() => setDraft(stored), [stored]);
   return (
     <div className="rrow">
       <h4>{label}</h4>

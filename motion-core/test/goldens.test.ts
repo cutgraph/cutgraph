@@ -1,16 +1,31 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, rmSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { test } from 'node:test';
 
-function loadMissingGolden(platform: string) {
+function loadGoldenAs(platform: string, name: string) {
   return spawnSync(process.execPath, ['--input-type=module', '-e',
     "import { loadGolden } from './test/goldens.ts'; " +
     `Object.defineProperty(process, 'platform', { value: ${JSON.stringify(platform)} }); ` +
-    "console.log(JSON.stringify(loadGolden('unrecorded')));",
+    `console.log(JSON.stringify(loadGolden(${JSON.stringify(name)})));`,
   ], { cwd: new URL('../', import.meta.url), encoding: 'utf8' });
 }
+
+const loadMissingGolden = (platform: string) => loadGoldenAs(platform, 'unrecorded');
+
+test('a committed Linux recording is compared on Linux', () => {
+  const name = `recorded-${process.pid}`;
+  const path = new URL(`./${name}.golden.linux.json`, import.meta.url);
+  writeFileSync(path, JSON.stringify({ frame: 'abc' }));
+  try {
+    const result = loadGoldenAs('linux', name);
+    assert.equal(result.status, 0, result.stderr);
+    assert.deepEqual(JSON.parse(result.stdout), { value: { frame: 'abc' }, skip: false });
+  } finally {
+    rmSync(path);
+  }
+});
 
 test('a missing Windows recording fails with regeneration instructions', () => {
   const result = loadMissingGolden('win32');

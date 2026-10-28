@@ -172,9 +172,12 @@ function ClaudeKeys({ onChange, available }: { onChange: () => void; available: 
         <small>{status.source === "environment"
           ? "ANTHROPIC_API_KEY is set in this environment and takes precedence"
           : failure ?? status.message ?? "Use your Anthropic API key for the Cutgraph Assistant."}</small>
-        {status.source === "environment" && status.message && <small>{status.message}</small>}
+        {status.source === "environment" && (failure ?? status.message) && <small>{failure ?? status.message}</small>}
         <span className={`st ${label === "Ready" ? "ok" : "warn"}`}>{label}</span>
       </div>
+      {status.source === "environment" && status.connected && <div>
+        <button type="button" className="ghost" disabled={checking} onClick={() => void run(v3api.verifyClaude)}>Verify</button>
+      </div>}
       {status.source !== "environment" && <div>
       {available && <form onSubmit={(e) => {
         e.preventDefault();

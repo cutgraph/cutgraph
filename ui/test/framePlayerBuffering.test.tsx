@@ -28,6 +28,7 @@ class FakeMedia {
   displayed: number[] = [];
   sourceFps: number | null = null;
   decodedTime: number | null = null;
+  composedAt = 0;
   frameNeeded = true;
   decode() {
     if (!this.element.isConnected || this.sourceFps === null || this.seeking) return;
@@ -35,10 +36,16 @@ class FakeMedia {
     if (!this.frameNeeded && mediaTime === this.decodedTime) return;
     this.frameNeeded = false;
     this.decodedTime = mediaTime;
+    this.composedAt = time;
+    this.deliver();
+    if (getComputedStyle(this.element).visibility === "visible") this.displayed.push(mediaTime);
+  }
+  // Runs the callbacks for the picture already composited, as a browser does when they were queued before a seek.
+  deliver() {
     const pending = [...this.frameCallbacks.values()];
     this.frameCallbacks.clear();
-    for (const callback of pending) callback(time, { mediaTime } as VideoFrameCallbackMetadata);
-    if (getComputedStyle(this.element).visibility === "visible") this.displayed.push(mediaTime);
+    const metadata = { mediaTime: this.decodedTime!, presentationTime: this.composedAt } as VideoFrameCallbackMetadata;
+    for (const callback of pending) callback(time, metadata);
   }
   constructor(readonly element: HTMLMediaElement) {
     Object.defineProperty(element, "error", { configurable: true, get: () => this.error });
@@ -684,6 +691,27 @@ describe("video presentation windows", () => {
     view.rerender(<FramePlayer {...playerProps} contentProps={{ sourceStartFrame: 46, shift: 5 }} />);
     expect(getComputedStyle(outgoing).visibility).toBe("hidden");
     await advance(0);
+    expect(state.decodedTime).toBeGreaterThanOrEqual(Math.floor(46 / 30 * 25) / 25);
+    expect(getComputedStyle(outgoing).visibility).toBe("visible");
+  });
+
+  it("keeps a start-trim guard through a stale callback queued before the seek", async () => {
+    const { ref, view, outgoing, playerProps } = setup(1, 25);
+    act(() => ref.current!.seek(0));
+    await advance(0);
+    const state = fake(outgoing);
+    const left = state.decodedTime;
+    expect(left).toBeLessThan(46 / 30);
+    await advance(10);
+    state.seekLatency = 250;
+    act(() => ref.current!.seek(5));
+    view.rerender(<FramePlayer {...playerProps} contentProps={{ sourceStartFrame: 46, shift: 5 }} />);
+    expect(state.seeking).toBe(true);
+    expect(outgoing.style.visibility).toBe("hidden");
+    act(() => state.deliver());
+    expect(state.decodedTime).toBe(left);
+    expect(outgoing.style.visibility).toBe("hidden");
+    await advance(250);
     expect(state.decodedTime).toBeGreaterThanOrEqual(Math.floor(46 / 30 * 25) / 25);
     expect(getComputedStyle(outgoing).visibility).toBe("visible");
   });

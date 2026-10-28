@@ -38,6 +38,7 @@ _ERRORS = {
     405: ("method_not_allowed", "This request method is not allowed."),
     409: ("conflict", "The request conflicts with the current state."),
     413: ("payload_too_large", "The request exceeds the size limit."),
+    415: ("unsupported_media_type", "The request content type is not supported."),
     421: ("misdirected_request", "The request host is not allowed."),
     422: ("validation_failed", "The request could not be validated."),
     429: ("rate_limited", "Too many requests. Please try again later."),

@@ -24,7 +24,10 @@ ticket screen, gallery pan, a question and a word-mark sign-off. Sheet scripts
 demonstrate features separately. The poster sample contains one Lens performer.
 The word input's timingRecipe defines a repeating duration cycle, constant gaps,
 four designed pauses and one unaligned word; no recording supplies its timestamps.
-Scene inputs retain explicit cuts to exercise word-to-timeline mapping.
+The generator is their only owner: the input holds no timestamps, and tests read
+them from the generated fixtures. Scene inputs retain explicit cuts to exercise
+word-to-timeline mapping. Inputs that name another input (`castInput`, `rigInput`)
+must resolve inside `inputs/`.
 
 The staging and feature parity fixtures organise layout, camera, board, mark
 and member-label checks into independent single-scene documents. Each case is

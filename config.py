@@ -53,7 +53,7 @@ BRAND_ACCENT = "#f5c518"
 PROPOSALS_DIR   = OUTPUTS_DIR / "proposals"
 NOTES_DIR       = OUTPUTS_DIR / "notes"
 CHAT_DIR        = OUTPUTS_DIR / "chat"
-# Editing tools: detached jobs (job_id-keyed registry mirror) + windowed judge/choose preview segments.
+# Assistant compute tools: detached jobs (job_id-keyed registry mirror) + windowed judge/choose preview segments.
 JOBS_DIR        = OUTPUTS_DIR / "jobs"
 PREVIEW_DIR     = OUTPUTS_DIR / "preview"
 
@@ -95,7 +95,7 @@ AGENT_MODES: "tuple[str, ...]" = ("default", "plan")
 AGENT_DEFAULT_EFFORT: "str | None" = None   # None ⇒ SDK default reasoning effort
 AGENT_DEFAULT_MODE: str = "default"
 
-# ── Editing tools: judge/choose preview windows ────────────────────────────────
+# ── Assistant compute tools: judge/choose preview windows ──────────────────────
 # A preview is a windowed compile of the timeline. Windows are CAPPED so an unbounded agent request
 # can't launch a multi-minute encode; small windows render inline, larger ones detach as a GPU job.
 PREVIEW_MAX_FRAMES      = 450   # hard cap (~15s @ 30fps); a larger window is rejected with a message

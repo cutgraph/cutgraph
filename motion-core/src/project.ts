@@ -165,7 +165,7 @@ export const CAMEO_IN = 0.5;
  * character (the default rig by default; a co-star or an ensemble is not drawn) and its bubble, springing into
  * the lower corner at `timing.inT` (nothing before it) and then holding there through its move, and
  * leaves every other pixel untouched so footage (or a transparent export) shows through. `footage`
- * paints nothing. A frame larger than its 1080-class design draws the design scaled up (`designScale`).
+ * paints nothing. Any frame draws the 1080-class design at its own size (`designScale`).
  * The preview and the Node renderer both call this.
  */
 export function drawSceneFrame(

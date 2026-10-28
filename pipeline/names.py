@@ -121,10 +121,16 @@ def source_name(name: object) -> str | None:
 def project_name(name: object, *, creating: bool = False) -> str | None:
     if not isinstance(name, str):
         return None
+    literal = safe_name(name) if creating else existing_name(name)
+    if literal is not None:
+        return literal
     match = re.fullmatch(r"(.+)__[1-9][0-9]*x[1-9][0-9]*", name)
-    if match:
-        return name if existing_name(match[1]) else None
-    return safe_name(name) if creating else existing_name(name)
+    return name if match and existing_name(match[1]) else None
+
+
+def stored_name(name: object) -> str | None:
+    """A name an existing file or folder may carry: a source, take, script, Video or render."""
+    return project_name(name) or source_name(name)
 
 
 def existing_filename(raw: str, suffixes: Collection[str]) -> str | None:

@@ -460,6 +460,37 @@ test('the headline sits over the co-star and the badges under the members, clear
   }
 });
 
+test('a headline over the co-star keeps clear of every head, bubble and board in an actual duo and ensemble, in every format', () => {
+  const { ctx } = surface(8, 8);
+  const lens = (bubble?: BubbleId) => ({ character: 'lens', pose: 'rest', expression: 'neutral', move: 'idle', ...(bubble && { bubble }) });
+  const cases: { name: string; stored: ProjectShot; spots: (W: number, H: number) => BoardSpot[] }[] = [
+    { name: 'duo', stored: { ...lens('think'), costar: lens('say'), interaction: 'face', diagram: 'chain', boardLabels: ['Map', 'Desk'] },
+      spots: (W, H) => { const D = duoLayout(W, H, DEFAULT_RIG, DEFAULT_RIG, true); return [D.lead, D.costar].map((s) => ({ ...s, rig: DEFAULT_RIG })); } },
+    { name: 'duo without a board', stored: { ...lens('exclaim'), costar: lens('question'), diagram: 'none' },
+      spots: (W, H) => { const D = duoLayout(W, H, DEFAULT_RIG, DEFAULT_RIG, false); return [D.lead, D.costar].map((s) => ({ ...s, rig: DEFAULT_RIG })); } },
+    { name: 'ensemble', stored: { ...lens('say'), costar: lens('exclaims'), ensemble: [lens('question'), lens(), lens('think')], diagram: 'list' },
+      spots: (W, H) => ensembleLayout(W, H, Array.from({ length: 5 }, () => DEFAULT_RIG)).slots.map((s) => ({ ...s, rig: DEFAULT_RIG })) },
+  ];
+  for (const format of FORMAT_IDS) for (const { name, stored, spots: spotsOf } of cases) {
+    const [W, H] = FORMATS[format], tag = `${format} ${name}`;
+    const shot = resolveShot({ mode: 'animation', hideHeadline: false, headlineAt: 'costar', headline: 'GALLERY HOURS', backdrop: 'work', ...stored }, 'Beat', 'x');
+    const L = stageLabels(ctx, shot, W, H, env), h = L.headline!, spots = spotsOf(W, H);
+    const kinds = [shot.bubble, shot.costar?.bubble, ...(shot.ensemble ?? []).map((m) => m.bubble)];
+    ctx.font = `900 ${h.fs}px "Inter"`;
+    const w = Math.max(...h.lines.map((l) => ctx.measureText(l).width));
+    const text: Box = { x0: h.cx - w / 2, x1: h.cx + w / 2, y0: h.y - h.fs * 0.8, y1: h.y + (h.lines.length - 1) * h.fs * 1.05 + h.fs * 0.25 };
+    assert.ok(h.fs >= 40, `${tag}: a headline you can read (${h.fs} px)`);
+    assert.ok(text.x0 >= 0 && text.x1 <= W && text.y0 >= 0, `${tag}: in frame ${JSON.stringify(text)}`);
+    assert.equal(!!L.board, shot.diagram !== 'none', `${tag}: the board is placed only when drawn`);
+    if (L.board) assert.ok(!overlaps(text, rectBox(L.board)), `${tag}: clear of the board`);
+    spots.forEach((s, i) => {
+      assert.ok(!overlaps(text, bodyBox(s)), `${tag}: clear of performer ${i}'s head`);
+      const kind = kinds[i];
+      if (kind) assert.ok(!overlaps(text, bubbleBox(s, kind, W, H)), `${tag}: clear of performer ${i}'s ${kind}`);
+    });
+  }
+});
+
 test('the headline fades in a quarter of the way in, then the badges drop one after another from 45%', () => {
   const dur = 5.6, t = timingOf(dur, null), [FW, FH] = FORMATS['16:9'], { ctx } = surface(8, 8);
   const L = stageLabels(ctx, resolveShot({ mode: 'animation', ...LABEL_SAMPLE }, 'Beat', 'x'), FW, FH, env);
@@ -486,6 +517,23 @@ test('the headline fades in a quarter of the way in, then the badges drop one af
   assert.ok(count(t0 + 1.3, time, ink) > 300, '7 ink plate at rest under the second member');
   assert.ok(count(t0 + 0.5 - 0.02, oak, white) < count(t0 + 1.6, oak, white) / 4, 'OAK paper plate after the second badge');
   assert.ok(count(t0 + 1.6, oak, white) > 300, 'OAK paper plate at rest under the third member');
+});
+
+test('member badges land without the title card\'s sheen: each one at rest stays the same from landing on', () => {
+  const dur = 5.6, t = timingOf(dur, null), [FW, FH] = FORMATS['16:9'], { ctx } = surface(8, 8), stored = { ...LABEL_SAMPLE, backdrop: 'black' as const };
+  const B = stageLabels(ctx, resolveShot({ mode: 'animation', ...stored }, 'Beat', 'x'), FW, FH, env).badges!;
+  const crop = (lt: number, i: number) => {
+    const p = frame(stored, lt, '16:9', t, 0.5), b = B.items[i], out: number[] = [];
+    for (let y = Math.floor((b.y - B.bh / 2) / 2); y < Math.ceil((b.y + B.bh / 2) / 2); y++) {
+      for (let x = Math.floor((b.x - b.w / 2) / 2); x < Math.ceil((b.x + b.w / 2) / 2); x++) out.push(...p.data.slice((y * p.W + x) * 4, (y * p.W + x) * 4 + 4));
+    }
+    return out;
+  };
+  B.items.forEach((_, i) => {
+    const rest = dur * LABEL_BADGES + i * 0.25 + 0.7, settled = crop(rest + 0.9, i);
+    assert.ok(settled.filter((v, k) => k % 4 === 0 && v > 60).length > 100, `badge ${i} is drawn`);
+    for (const u of [0.1, 0.3, 0.5]) assert.deepEqual(crop(rest + u, i), settled, `badge ${i}, ${u} s after landing: no sheen crosses it`);
+  });
 });
 
 test('labels are drawn only on a duo or an ensemble that has them; a title card keeps its own', () => {

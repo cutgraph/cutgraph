@@ -97,6 +97,14 @@ class CastConflict(CastError):
     """A caller-facing 409: the name is taken by a built-in or another entry."""
 
 
+class CastUnreadable(CastConflict):
+    """A caller-facing 409: a workspace's cast.json can't be parsed, so a write would lose it."""
+
+    def __init__(self, workspace_id: str) -> None:
+        super().__init__(f"the cast file of workspace {workspace_id} (cast.json) is unreadable: "
+                         "repair or remove it before editing its characters")
+
+
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="microseconds").replace("+00:00", "Z")
 
@@ -219,16 +227,47 @@ def _default_character() -> dict:
             "palette": RIGS[DEFAULT_RIG]["palettes"][0], "approved": True, "expressions": [], "createdAt": ""}
 
 
-def _read(workspace_id: str) -> dict:
-    """Read profiles defensively while retaining opaque top-level data."""
-    doc: object = None
+def _parse(workspace_id: str) -> tuple[dict, str] | None:
     path = _path(workspace_id)
-    if path.is_file():
+    try:
+        source = path.read_bytes().decode("utf-8-sig")
+        doc = json.loads(source)
+    except FileNotFoundError:
+        return None
+    except PermissionError:
+        raise
+    except (OSError, ValueError) as e:
+        raise CastUnreadable(workspace_id) from e
+    if not isinstance(doc, dict) or not isinstance(doc.get("characters", []), list):
+        raise CastUnreadable(workspace_id)
+    return doc, source
+
+
+def _load(workspace_id: str) -> tuple[dict, str] | None:
+    """The stored document and its text (a UTF-8 BOM dropped), or None when the workspace has no file.
+    CastUnreadable when it isn't a JSON object with a list of characters, or stays locked.
+
+    Windows refuses a read while a replace or a scanner holds the file; like the library, wait it out.
+    """
+    for delay in library._REPLACE_RETRY_DELAYS_S:
         try:
-            doc = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
-            doc = None
-    doc = doc if isinstance(doc, dict) else {}
+            return _parse(workspace_id)
+        except PermissionError:
+            time.sleep(delay)
+    try:
+        return _parse(workspace_id)
+    except PermissionError as e:
+        raise CastUnreadable(workspace_id) from e
+
+
+def _read(workspace_id: str) -> dict:
+    """Read profiles defensively while retaining opaque top-level data: an unreadable file reads as
+    empty here, and `_write` refuses to replace it."""
+    try:
+        loaded = _load(workspace_id)
+    except CastUnreadable:
+        loaded = None
+    doc = loaded[0] if loaded else {}
     raw = doc.get("characters")
     if not isinstance(raw, list):
         raw = []
@@ -246,37 +285,40 @@ def _read(workspace_id: str) -> dict:
     return {**doc, "default": default if isinstance(default, str) else None, "characters": characters}
 
 
+def _opaque_members(source: str) -> dict[str, str]:
+    """The source text of each top-level member other than `default` and `characters`, keyed by name,
+    from the text of a JSON object."""
+    decoder = json.JSONDecoder()
+    opaque: dict[str, str] = {}
+    pos = source.index("{") + 1
+    while pos < len(source):
+        while source[pos].isspace():
+            pos += 1
+        if source[pos] == "}":
+            break
+        key, pos = decoder.raw_decode(source, pos)
+        pos = source.index(":", pos) + 1
+        while source[pos].isspace():
+            pos += 1
+        start = pos
+        _, pos = decoder.raw_decode(source, pos)
+        if key not in ("default", "characters"):
+            opaque[key] = source[start:pos]
+        while source[pos].isspace():
+            pos += 1
+        if source[pos] == ",":
+            pos += 1
+    return opaque
+
+
 def _write(workspace_id: str, doc: dict) -> None:
+    """Atomically replace the workspace's file. CastUnreadable, before anything is written, when the
+    stored file can't be parsed: `doc` was read without it, so replacing it would lose its characters."""
+    loaded = _load(workspace_id)
+    opaque = _opaque_members(loaded[1]) if loaded else {}
     if workspace_id == BRAND:
         library.ensure_brand_workspace()
     path = _path(workspace_id)
-    opaque: dict[str, str] = {}
-    if path.is_file():
-        try:
-            source = path.read_bytes().decode("utf-8")
-            decoder = json.JSONDecoder()
-            original = decoder.decode(source)
-            if isinstance(original, dict):
-                pos = source.index("{") + 1
-                while pos < len(source):
-                    while source[pos].isspace():
-                        pos += 1
-                    if source[pos] == "}":
-                        break
-                    key, pos = decoder.raw_decode(source, pos)
-                    pos = source.index(":", pos) + 1
-                    while source[pos].isspace():
-                        pos += 1
-                    start = pos
-                    _, pos = decoder.raw_decode(source, pos)
-                    if key not in ("default", "characters"):
-                        opaque[key] = source[start:pos]
-                    while source[pos].isspace():
-                        pos += 1
-                    if source[pos] == ",":
-                        pos += 1
-        except (OSError, UnicodeDecodeError, ValueError):
-            opaque = {}
     members = [json.dumps(key) + ": " + opaque.get(key, json.dumps(value, indent=2))
                for key, value in {**doc, **{key: None for key in opaque if key not in doc}}.items()]
     # Preserve opaque JSON bytes, including number spellings and interior whitespace.

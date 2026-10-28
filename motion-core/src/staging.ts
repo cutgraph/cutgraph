@@ -93,12 +93,16 @@ export const ZOOM = 1.18;
 const PULL_ZOOM = 1.12;
 export interface CameraState { k: number }
 
-/** Push and pull use independent framing and scene-local easing. */
+/**
+ * Push and pull use independent framing and scene-local easing. A push-in lands on the scene's end, so
+ * without a scene length (a picker tile) it keeps the full frame.
+ */
 export function cameraAt(camera: Camera | undefined, lt: number, endT?: number): CameraState {
   const duration = Math.min(CAMERA_S, endT === undefined ? CAMERA_S : Math.max(0, endT));
   if (duration <= 0) return { k: 1 };
   if (camera === 'push-in') {
-    const p = prog(lt, endT === undefined ? 0 : Math.max(0, endT - duration), duration);
+    if (endT === undefined) return { k: 1 };
+    const p = prog(lt, Math.max(0, endT - duration), duration);
     return { k: 1 + (ZOOM - 1) * p * p * (3 - 2 * p) };
   }
   if (camera === 'pull-out') return { k: 1 + (PULL_ZOOM - 1) * (1 - ease.out(prog(lt, 0, duration))) };
@@ -525,9 +529,10 @@ export function badge(ctx: Ctx, text: string, w: number, h: number, fb: number, 
 }
 
 // A badge `w` x `bh` dropping from above the frame onto (restX, restY) from `t0`: it falls, bounces twice and
-// squashes on each landing, kicks up dust and catches a sheen once at rest.
+// squashes on each landing, kicks up dust and, with `sheen`, catches a sheen once at rest.
 function dropBadge(
   ctx: Ctx, b: Badge, w: number, bh: number, fb: number, restX: number, restY: number, t0: number, lt: number, accent: string, font: string,
+  sheen: boolean,
 ): void {
   const p = prog(lt, t0, DROP);
   if (lt < t0) return;
@@ -539,7 +544,7 @@ function dropBadge(
   ctx.scale(1 + sq, 1 - sq);
   ctx.translate(0, -bh / 2);
   const since = lt - t0 - DROP;
-  badge(ctx, b.text, w, bh, fb, tone, font, since >= 0 && since < SHEEN ? since / SHEEN : null);
+  badge(ctx, b.text, w, bh, fb, tone, font, sheen && since >= 0 && since < SHEEN ? since / SHEEN : null);
   ctx.restore();
 }
 
@@ -584,7 +589,7 @@ function drawTitle(ctx: Ctx, shot: Shot, lt: number, W: number, H: number, env: 
   // A stacked badge falls behind the ones above it.
   (stack ? [...badges.keys()].reverse() : [...badges.keys()]).forEach((i) => {
     const restX = stack ? W / 2 : xs[i], restY = top + (stack ? i * (m.bh + m.gap) : 0) + m.bh / 2;
-    dropBadge(ctx, badges[i], m.ws[i], m.bh, fb, restX, restY, BADGE_T + i * STAGGER, lt, accent, font);
+    dropBadge(ctx, badges[i], m.ws[i], m.bh, fb, restX, restY, BADGE_T + i * STAGGER, lt, accent, font, true);
   });
 
   const tH = badges.length ? BADGE_T + (badges.length - 1) * STAGGER + DROP * 0.8 : 0.3;
@@ -759,11 +764,12 @@ function drawSignoff(ctx: Ctx, shot: Shot, lt: number, W: number, H: number, env
     drawMark(ctx, mark, S.lx, S.ground, S.g, S.c, env, shot.accent ?? ACCENT, (i) => ease.back(prog(lt, MARK_T + i * MARK_STAGGER, POP)));
   }
 
+  const lead = performer(shot, lt);
   ctx.save();
   ctx.translate(S.px, S.ground);
-  drawCharacter(ctx, 0, 0, S.h, performer(shot, lt), env, false);
+  drawCharacter(ctx, 0, 0, S.h, lead, env, false);
   ctx.restore();
-  drawMissingCharacter(ctx, S.px, S.ground, S.h, shot.character, env);
+  drawMissingCharacter(ctx, S.px, S.ground, S.h, lead, env);
 
   const T = S.text;
   const { fs, lines } = fit(ctx, shot.headline, T.w, T.fs, 800, font, 2);
@@ -798,10 +804,7 @@ function drawSignoff(ctx: Ctx, shot: Shot, lt: number, W: number, H: number, env
 export const LABEL_HEADLINE = 0.25, LABEL_BADGES = 0.45;
 const LABEL_SCENE = 4, LABEL_FADE = 0.6;
 
-/**
- * A duo's or an ensemble's performers left to right at their settled spots, which one is the co-star, the members,
- * each performer's bubble and the Brief card's scale (its layout's diagram box width).
- */
+/** A duo's or an ensemble's performers left to right at their settled spots, which one is the co-star, the members and each performer's bubble. */
 interface StageRow {
   spots: (DuoSlot & BoardSpot)[];
   costar: number | null;
@@ -917,7 +920,7 @@ export function stageLabels(ctx: Ctx, shot: Shot, W: number, H: number, env: Mot
 /**
  * A duo's or an ensemble's labels at `lt`, over the stage: the headline over the co-star fading in
  * LABEL_HEADLINE into the scene, then the badges dropping under the members one after another from
- * LABEL_BADGES, with the title card's drop, bounce, dust and sheen. Nothing for a shot without them.
+ * LABEL_BADGES, with the title card's drop, bounce and dust but not its sheen. Nothing for a shot without them.
  */
 export function drawStageLabels(ctx: Ctx, shot: Shot, lt: number, timing: ShotTiming, W: number, H: number, env: MotionEnv): void {
   if (!overCostar(shot) && !(shot.badges?.length && shot.ensemble?.length)) return;
@@ -934,7 +937,7 @@ export function drawStageLabels(ctx: Ctx, shot: Shot, lt: number, timing: ShotTi
     ctx.restore();
   }
   const B = L.badges;
-  B?.items.forEach(({ badge: b, x, y, w }, i) => dropBadge(ctx, b, w, B.bh, B.fb, x, y, dur * LABEL_BADGES + i * STAGGER, lt, accent, font));
+  B?.items.forEach(({ badge: b, x, y, w }, i) => dropBadge(ctx, b, w, B.bh, B.fb, x, y, dur * LABEL_BADGES + i * STAGGER, lt, accent, font, false));
   ctx.restore();
 }
 

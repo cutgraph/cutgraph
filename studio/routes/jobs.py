@@ -25,7 +25,7 @@ router = APIRouter()
 
 # ── Compute jobs — the studio owns the ONE registry + ONE GPU serializer ──
 # `scripts/mcp_gpu.py` bridges every compute verb here over loopback HTTP. render_final is detached +
-# human-gated; render_preview_segment runs inline (fast window); reframe/source_broll are stubs.
+# human-gated; a small render_preview_segment window renders inline and a larger one detaches.
 _UNAVAILABLE_JOB = {"available": False, "reason": "not available"}
 
 

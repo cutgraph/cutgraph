@@ -3,9 +3,12 @@ from __future__ import annotations
 import io
 import json
 import logging
+import subprocess
+import sys
 import threading
 import uuid
 from contextlib import contextmanager
+from pathlib import Path
 
 import pytest
 from uvicorn.logging import AccessFormatter
@@ -14,6 +17,12 @@ import config
 from pipeline import agent_credentials, decisions, secret_store
 
 KEY = "synthetic-output-boundary-key"
+STOCK_KEY = "synthetic-stock-key"
+
+
+def assert_redacted(output: str) -> None:
+    assert KEY not in output and STOCK_KEY not in output
+    assert "[redacted]" in output
 
 
 @pytest.fixture(autouse=True)
@@ -23,7 +32,10 @@ def credentials(monkeypatch, tmp_path):
     monkeypatch.setattr(config, "DECISIONS_DIR", tmp_path / "decisions")
     monkeypatch.setattr(agent_credentials, "_known_secrets", set())
     monkeypatch.setattr(agent_credentials, "_secret_pattern", None)
+    monkeypatch.setattr(agent_credentials, "_log_secrets", set())
+    monkeypatch.setattr(agent_credentials, "_log_pattern", None)
     agent_credentials.set_key(KEY)
+    agent_credentials.remember_log_secret(STOCK_KEY)
 
 
 @contextmanager
@@ -173,3 +185,150 @@ def test_direct_decision_write_preserves_identifiers_and_redacts_text():
     for name in ("eventId", "projectId", "proposalId"):
         assert payload[name] == KEY
     assert payload["operationIds"] == payload["evidenceIds"] == [KEY]
+
+
+class _MessageHandler(logging.Handler):
+    """Writes each record's message itself, with no formatter."""
+
+    def __init__(self, stream: io.StringIO) -> None:
+        super().__init__()
+        self.stream = stream
+
+    def emit(self, record: logging.LogRecord) -> None:
+        self.stream.write(record.getMessage() + "\n")
+
+
+class _RecordFormatter(logging.Formatter):
+    """Serialises the raw record without the base Formatter."""
+
+    def format(self, record: logging.LogRecord) -> str:
+        return json.dumps({"msg": record.msg, "args": record.args, "credential": getattr(record, "credential", None)})
+
+
+class _FailingFormatter(logging.Formatter):
+    def format(self, record: logging.LogRecord) -> str:
+        raise RuntimeError(f"cannot format {KEY} {STOCK_KEY}")
+
+
+@pytest.mark.parametrize("case", ["message", "own_formatter"])
+def test_handlers_that_bypass_the_base_formatter_write_redacted_text(case):
+    stream = io.StringIO()
+    handler = _MessageHandler(stream) if case == "message" else logging.StreamHandler(stream)
+    if case == "own_formatter":
+        handler.setFormatter(_RecordFormatter())
+    logger = logging.getLogger(f"random.{uuid.uuid4().hex}")
+    logger.propagate = False
+    logger.setLevel(logging.INFO)
+    logger.addHandler(handler)
+    try:
+        logger.info("key %s stock %s", KEY, STOCK_KEY, extra={"credential": KEY})
+    finally:
+        logger.removeHandler(handler)
+    assert_redacted(stream.getvalue())
+
+
+@pytest.mark.parametrize("case", ["arguments", "exception"])
+def test_logging_error_report_on_stderr_is_redacted(monkeypatch, case):
+    stderr = io.StringIO()
+    monkeypatch.setattr(sys, "stderr", stderr)
+    monkeypatch.setattr(logging, "raiseExceptions", True)
+    formatter = logging.Formatter() if case == "arguments" else _FailingFormatter()
+    with output_logger(f"random.{uuid.uuid4().hex}", formatter) as (logger, streams):
+        logger.info("%d %s", KEY, STOCK_KEY)
+        assert streams[0].getvalue() == ""
+    report = stderr.getvalue()
+    assert_redacted(report)
+    assert report.startswith("--- Logging error ---\n")
+    assert "Call stack:\n" in report and Path(__file__).name in report
+    assert "Message: '%d %s'\nArguments: ('[redacted]', '[redacted]')\n" in report
+    if case == "exception":
+        assert "RuntimeError: cannot format [redacted] [redacted]" in report
+
+
+def _fail() -> None:
+    raise RuntimeError(f"{KEY} {STOCK_KEY}")
+
+
+def test_uncaught_exception_reports_on_stderr_are_redacted(monkeypatch):
+    stderr = io.StringIO()
+    monkeypatch.setattr(sys, "stderr", stderr)
+    monkeypatch.setattr(threading, "excepthook", agent_credentials._thread_excepthook)
+    worker = threading.Thread(target=_fail, name="redaction-worker")
+    worker.start()
+    worker.join(5)
+    thread_report = stderr.getvalue()
+    assert thread_report.startswith("Exception in thread redaction-worker:\nTraceback")
+    assert_redacted(thread_report)
+    try:
+        _fail()
+    except RuntimeError as error:
+        agent_credentials._excepthook(type(error), error, error.__traceback__)
+    main_report = stderr.getvalue()[len(thread_report):]
+    assert main_report.startswith("Traceback") and "RuntimeError: [redacted] [redacted]" in main_report
+    assert_redacted(main_report)
+
+
+def test_exception_hooks_replace_only_the_interpreter_defaults(monkeypatch):
+    monkeypatch.setattr(sys, "excepthook", sys.__excepthook__)
+    monkeypatch.setattr(threading, "excepthook", threading.__excepthook__)
+    monkeypatch.setattr(sys, "unraisablehook", sys.__unraisablehook__)
+    agent_credentials._install_exception_hooks()
+    assert sys.excepthook is agent_credentials._excepthook
+    assert threading.excepthook is agent_credentials._thread_excepthook
+    assert sys.unraisablehook is agent_credentials._unraisablehook
+
+    def custom(*_args):
+        return None
+
+    monkeypatch.setattr(sys, "excepthook", custom)
+    monkeypatch.setattr(threading, "excepthook", custom)
+    monkeypatch.setattr(sys, "unraisablehook", custom)
+    agent_credentials._install_exception_hooks()
+    assert sys.excepthook is custom and threading.excepthook is custom and sys.unraisablehook is custom
+
+
+def test_a_fresh_interpreter_redacts_uncaught_exceptions():
+    code = (
+        "import threading\n"
+        "from pipeline import agent_credentials\n"
+        f"agent_credentials.remember_log_secret({KEY!r})\n"
+        "def fail():\n"
+        f"    raise RuntimeError({KEY!r})\n"
+        "worker = threading.Thread(target=fail, name='worker')\n"
+        "worker.start()\n"
+        "worker.join()\n"
+        "fail()\n"
+    )
+    result = subprocess.run([sys.executable, "-c", code], cwd=Path(__file__).resolve().parents[1],
+                            capture_output=True, text=True, timeout=120)
+    assert result.returncode == 1
+    assert "Exception in thread worker:" in result.stderr
+    assert result.stderr.count("RuntimeError: [redacted]") == 2
+    assert KEY not in result.stderr
+
+
+def test_a_fresh_interpreter_redacts_unraisable_exceptions():
+    code = (
+        "from pipeline import agent_credentials\n"
+        f"agent_credentials.remember_log_secret({KEY!r})\n"
+        "class Holder:\n"
+        "    def __del__(self):\n"
+        f"        raise RuntimeError({KEY!r})\n"
+        "holder = Holder()\n"
+        "del holder\n"
+    )
+    result = subprocess.run([sys.executable, "-c", code], cwd=Path(__file__).resolve().parents[1],
+                            capture_output=True, text=True, timeout=120)
+    assert result.returncode == 0
+    assert result.stderr.startswith("Exception ignored in: <function Holder.__del__")
+    assert "Traceback (most recent call last):" in result.stderr
+    assert "RuntimeError: [redacted]" in result.stderr
+    assert KEY not in result.stderr
+
+
+def test_layered_redaction_keeps_the_marker_for_keys_inside_it():
+    agent_credentials.remember_log_secret("dac")
+    with output_logger(f"random.{uuid.uuid4().hex}", _RecordFormatter(), logging.Formatter()) as (logger, streams):
+        logger.info("%s", "dac")
+    assert json.loads(streams[0].getvalue())["args"] == ["[redacted]"]
+    assert streams[1].getvalue() == "[redacted]\n"

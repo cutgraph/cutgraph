@@ -29,6 +29,7 @@ from pipeline import channels
 from pipeline import edits
 from pipeline import layout
 from pipeline import graphics
+from pipeline import names
 from pipeline import project as project_mod
 from pipeline import reframe
 from pipeline import timebase
@@ -187,12 +188,10 @@ def _merged_intervals(intervals: list[tuple[int, int]]) -> list[tuple[int, int]]
 def _safe_stem(name: str) -> str:
     """A filtergraph-safe stem for an overlay textfile name. The textfile= value is embedded UNQUOTED,
     so the on-disk path must carry no comma/semicolon/quote; strip everything but the slug charset."""
-    from pipeline.names import project_name, reserved_name, validate_existing_name
-
-    if reserved_name(name):
+    if names.reserved_name(name):
         raise ValidationError("name cannot be a reserved device name")
     stem = "".join(ch for ch in name if ch.isascii() and (ch.isalnum() or ch in "-_")) or "proj"
-    return project_name(stem) or validate_existing_name(stem)
+    return names.project_name(stem) or names.validate_existing_name(stem)
 
 
 def _split_labels(kind: str, idx: int, count: int) -> tuple[list[str], list[str]]:
@@ -316,15 +315,12 @@ def _reframe_crop_filter(proj_crop: dict, src_in: int, src_out: int, width: int,
     """Resolve a `crop.mode == "reframe"` descriptor to a CONCRETE `crop=cw:ch:cx:cy` (source px) for
     this segment's span, or None to fall back to the center crop: the reframe.json is
     absent/invalid, or no per-frame rect covers [src_in, src_out). `metaPath` (project-relative) points
-    at a specific sidecar; otherwise the source stem's REFRAME_DIR sidecar is used."""
+    at a specific sidecar; otherwise the source stem's REFRAME_DIR sidecar is used. A sidecar spelled
+    differently on disk, or leading outside the project, raises NameNotFound rather than being read."""
     meta_path = proj_crop.get("metaPath")
-    meta = (
-        reframe.load_metadata(Path(project_dir) / meta_path)
-        if meta_path
-        else reframe.load_metadata(
-            Path(project_dir) / "outputs" / "reframe" / f"{Path(source_path).stem}.reframe.json"
-        )
-    )
+    root = Path(project_dir)
+    sidecar = root / meta_path if meta_path else root / "outputs" / "reframe" / f"{Path(source_path).stem}.reframe.json"
+    meta = reframe.load_metadata(names.exact_path(sidecar, root))
     if meta is None:
         return None
     rect = reframe.span_crop_rect([asdict(fc) for fc in meta.frame_crops],
@@ -350,7 +346,7 @@ def _caption_words(speech: list[project_mod.Clip], fps: int, emphasis: list[int]
             Path(project_dir) / "outputs" / "transcripts"
             if project_dir is not None else config.TRANSCRIPTS_DIR
         )
-        wjson = transcript_dir / f"{Path(c.media.source).stem}.words.json"
+        wjson = names.exact_path(transcript_dir / f"{Path(c.media.source).stem}.words.json", transcript_dir)
         if not wjson.exists():
             continue
         try:

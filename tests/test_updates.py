@@ -244,5 +244,5 @@ def test_routes_persist_the_off_switch_and_refuse_source_install(feed, monkeypat
     assert client.post("/api/updates/check", headers=origin).json()["state"] == "disabled"
     assert client.post("/api/updates/install", headers=origin).status_code == 409
     assert client.put("/api/updates/preferences", json={"automatic": "no"}, headers=origin).status_code == 400
-    assert client.put("/api/updates/preferences", content="{", headers=origin).status_code == 400
+    assert client.put("/api/updates/preferences", content="{", headers={**origin, "Content-Type": "application/json"}).status_code == 400
     assert calls == []

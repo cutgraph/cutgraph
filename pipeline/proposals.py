@@ -178,19 +178,20 @@ def _citation_list(citations: object, *, required: bool) -> list[dict]:
     if citations is None and not required:
         return []
     if not (isinstance(citations, list) and citations):
-        raise ValidationError("major proposals require evidence citations")
+        raise ValidationError("citations: major proposals require evidence citations, a non-empty array of "
+                              "{kind:'transcript', start, end, summary}")
     out: list[dict] = []
     for i, raw in enumerate(citations):
         if not isinstance(raw, dict):
-            raise ValidationError(f"citations[{i}] must be an object")
+            raise ValidationError(f"citations[{i}] must be an object {{kind:'transcript', start, end, summary}}")
         kind = raw.get("kind")
         if kind not in _CITATION_KINDS:
             raise ValidationError(f"citations[{i}].kind must be transcript")
         start, end = raw.get("start"), raw.get("end")
         if not (isinstance(start, (int, float)) and not isinstance(start, bool) and start >= 0):
-            raise ValidationError(f"citations[{i}].start must be non-negative")
+            raise ValidationError(f"citations[{i}].start must be a non-negative number of seconds")
         if not (isinstance(end, (int, float)) and not isinstance(end, bool) and end > start):
-            raise ValidationError(f"citations[{i}].end must be after start")
+            raise ValidationError(f"citations[{i}].end must be after start, in seconds")
         citation = {"kind": kind, "start": start, "end": end, "summary": _nonempty(raw.get("summary"), f"citations[{i}].summary")}
         out.append(citation)
     return out

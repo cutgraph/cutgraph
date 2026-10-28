@@ -49,7 +49,7 @@ describe("short-film staging parity with the export", () => {
       expect(spec.shot).toEqual(req.custom ? { ...node, custom: req.custom } : node);
     });
     const shot = (id: string) => specs.find((s) => s.sceneId === id)!;
-    expect(specs.map((s) => s.sceneId)).toEqual(["scene-1", "scene-2", "scene-3", "scene-4", "scene-5", "scene-6", "scene-7"]);
+    expect(specs.map((s) => s.sceneId)).toEqual(["scene-1", "scene-2", "scene-3", "scene-4", "scene-5", "scene-6"]);
     expect(shot("scene-1").shot.badges).toEqual([{ text: "INDOORS", tone: "accent" }]);
     expect(shot("scene-2").shot.ensemble?.map((m) => m.pose)).toEqual(["point"]);
     expect(shot("scene-2").shot.costar?.bubble).toBe("say");
@@ -60,7 +60,7 @@ describe("short-film staging parity with the export", () => {
     expect(shot("scene-4").shot.screen?.more).toBeUndefined();
     expect([shot("scene-5").shot.camera, shot("scene-5").shot.costar?.move]).toEqual(["pan", "idle"]);
     expect(shot("scene-6").shot.bubble).toBe("question");
-    expect(shot("scene-7").shot.mark).toBe("TOUR");
+    expect(specs.some((s) => s.shot.layout === "signoff")).toBe(false);
   });
 
   it("gives the pan its scene length to settle in", () => {

@@ -19,21 +19,21 @@ const asset = (id: string, name: string, kind: Asset["kind"], tags: string[] = [
 });
 
 const WORKSPACES = [
-  workspace("garden", "Kitchen recipes", 2, 3),
+  workspace("kitchen", "Kitchen recipes", 2, 3),
   workspace("brand", "Brand", 0, 0),
   workspace("unsorted", "Unsorted", 4, 0),
 ];
 
-const GARDEN: WorkspaceDetail = {
+const KITCHEN: WorkspaceDetail = {
   workspace: WORKSPACES[0],
   videos: [
-    { slug: "herb-care", title: "herb care basics", updatedAt: NOW, durationS: 312 },
-    { slug: "watering", title: "watering tips", updatedAt: NOW },
+    { slug: "knife-skills", title: "knife skills basics", updatedAt: NOW, durationS: 312 },
+    { slug: "plating", title: "plating tips", updatedAt: NOW },
   ],
   assets: [
-    asset("a1", "seedling-rack.mp4", "video", ["rack", "seedling"]),
-    asset("a2", "planters.jpg", "image", ["planters"]),
-    asset("a3", "garden-beat.mp3", "audio"),
+    asset("a1", "chopping-board.mp4", "video", ["board", "chopping"]),
+    asset("a2", "pantry.jpg", "image", ["pantry"]),
+    asset("a3", "kitchen-beat.mp3", "audio"),
   ],
 };
 
@@ -93,7 +93,11 @@ describe("v3 shell routing", () => {
     expect(window.location.search).toBe("?view=settings");
     expect(screen.getByRole("heading", { name: "Add-ons" })).toBeTruthy();
     expect(screen.queryByText("WhisperX")).toBeNull();
-    expect(fetchMock.mock.calls.some(([input]) => String(input).startsWith("/api/compute/worker"))).toBe(false);
+    const requested = new Set(fetchMock.mock.calls.map(([input]) => String(input)));
+    expect([...requested].sort()).toEqual([
+      "/api/addons", "/api/agent/connection?verify=0", "/api/chat/config?verify=0", "/api/health",
+      "/api/stock/providers", "/api/updates", "/api/videos/recent?limit=8", "/api/workspaces",
+    ]);
     await userEvent.click(screen.getByRole("link", { name: "Library" }));
     expect(screen.getByRole("heading", { name: "Library" })).toBeTruthy();
     await userEvent.click(screen.getByRole("link", { name: "Story" }));
@@ -103,7 +107,7 @@ describe("v3 shell routing", () => {
 
 describe("v3 Home", () => {
   it("lists workspaces from the API and opens one", async () => {
-    mockApi({ "GET /api/workspaces": WORKSPACES, "GET /api/workspaces/garden": GARDEN });
+    mockApi({ "GET /api/workspaces": WORKSPACES, "GET /api/workspaces/kitchen": KITCHEN });
     openAt("");
     const card = await screen.findByRole("link", { name: /Kitchen recipes/ });
     expect(within(card).getByText("2 videos · 3 assets")).toBeTruthy();
@@ -111,8 +115,8 @@ describe("v3 Home", () => {
     expect(screen.getByRole("link", { name: /Unsorted/ })).toBeTruthy();
 
     await userEvent.click(card);
-    expect(window.location.search).toBe("?view=project&ws=garden");
-    expect(await screen.findByText("seedling-rack.mp4")).toBeTruthy();
+    expect(window.location.search).toBe("?view=project&ws=kitchen");
+    expect(await screen.findByText("chopping-board.mp4")).toBeTruthy();
   });
 
   it("shows an empty state when the workspaces API is missing", async () => {
@@ -149,59 +153,59 @@ describe("v3 Home", () => {
 
 describe("v3 Workspace page", () => {
   it("renders videos, assets with kind badges and tags, and filters by kind", async () => {
-    mockApi({ "GET /api/workspaces/garden": GARDEN });
-    const { container } = openAt("?view=project&ws=garden");
+    mockApi({ "GET /api/workspaces/kitchen": KITCHEN });
+    const { container } = openAt("?view=project&ws=kitchen");
     expect(await screen.findByDisplayValue("Kitchen recipes")).toBeTruthy();
-    expect(screen.getByRole("link", { name: /herb care basics/ }).getAttribute("href")).toBe("/editor/?view=story&ws=garden&video=herb-care");
-    expect(screen.getByText("watering tips")).toBeTruthy();
+    expect(screen.getByRole("link", { name: /knife skills basics/ }).getAttribute("href")).toBe("/editor/?view=story&ws=kitchen&video=knife-skills");
+    expect(screen.getByText("plating tips")).toBeTruthy();
 
     const names = () => Array.from(container.querySelectorAll(".asset b")).map((b) => b.textContent);
-    expect(names()).toEqual(["seedling-rack.mp4", "planters.jpg", "garden-beat.mp3"]);
+    expect(names()).toEqual(["chopping-board.mp4", "pantry.jpg", "kitchen-beat.mp3"]);
     expect(Array.from(container.querySelectorAll(".asset em")).map((e) => e.textContent)).toEqual(["video", "image", "audio"]);
-    expect(screen.getByText("seedling")).toBeTruthy();
-    expect(screen.getByText("planters")).toBeTruthy();
-    expect(container.querySelector(".asset img")?.getAttribute("src")).toBe("/api/workspaces/garden/assets/a1/thumb");
+    expect(screen.getByText("chopping")).toBeTruthy();
+    expect(screen.getByText("pantry")).toBeTruthy();
+    expect(container.querySelector(".asset img")?.getAttribute("src")).toBe("/api/workspaces/kitchen/assets/a1/thumb");
 
     await userEvent.click(screen.getByRole("button", { name: /^Image/ }));
-    expect(names()).toEqual(["planters.jpg"]);
+    expect(names()).toEqual(["pantry.jpg"]);
     await userEvent.click(screen.getByRole("button", { name: /^Audio/ }));
-    expect(names()).toEqual(["garden-beat.mp3"]);
+    expect(names()).toEqual(["kitchen-beat.mp3"]);
     await userEvent.click(screen.getByRole("button", { name: /^All/ }));
     expect(names()).toHaveLength(3);
   });
 
   it("uploads picked files as multipart FormData and adds the new assets", async () => {
-    const fresh = asset("a4", "bench.png", "image");
+    const fresh = asset("a4", "apron.png", "image");
     const fetchMock = mockApi({
-      "GET /api/workspaces/garden": GARDEN,
-      "POST /api/workspaces/garden/assets": { assets: [fresh, GARDEN.assets[0]], deduped: 1 },
+      "GET /api/workspaces/kitchen": KITCHEN,
+      "POST /api/workspaces/kitchen/assets": { assets: [fresh, KITCHEN.assets[0]], deduped: 1 },
     });
-    const { container } = openAt("?view=project&ws=garden");
-    await screen.findByText("seedling-rack.mp4");
+    const { container } = openAt("?view=project&ws=kitchen");
+    await screen.findByText("chopping-board.mp4");
 
     const files = [
-      new File(["png"], "bench.png", { type: "image/png" }),
-      new File(["mp4"], "seedling-rack.mp4", { type: "video/mp4" }),
+      new File(["png"], "apron.png", { type: "image/png" }),
+      new File(["mp4"], "chopping-board.mp4", { type: "video/mp4" }),
     ];
     await userEvent.upload(screen.getByLabelText("Choose files"), files);
 
     const post = fetchMock.mock.calls.find(([, init]) => init?.method === "POST");
-    expect(post?.[0]).toBe("/api/workspaces/garden/assets");
+    expect(post?.[0]).toBe("/api/workspaces/kitchen/assets");
     const body = post?.[1]?.body;
     expect(body).toBeInstanceOf(FormData);
-    expect((body as FormData).getAll("files").map((f) => (f as File).name)).toEqual(["bench.png", "seedling-rack.mp4"]);
+    expect((body as FormData).getAll("files").map((f) => (f as File).name)).toEqual(["apron.png", "chopping-board.mp4"]);
 
-    await waitFor(() => expect(container.querySelector(".asset b")?.textContent).toBe("bench.png"));
+    await waitFor(() => expect(container.querySelector(".asset b")?.textContent).toBe("apron.png"));
     expect(container.querySelectorAll(".asset")).toHaveLength(4);
     expect(await screen.findByText("Added 1 asset · 1 already in the library")).toBeTruthy();
   });
 
   it("renames the workspace on blur", async () => {
     const fetchMock = mockApi({
-      "GET /api/workspaces/garden": GARDEN,
-      "PATCH /api/workspaces/garden": { ...GARDEN.workspace, name: "Kitchen kit" },
+      "GET /api/workspaces/kitchen": KITCHEN,
+      "PATCH /api/workspaces/kitchen": { ...KITCHEN.workspace, name: "Kitchen kit" },
     });
-    openAt("?view=project&ws=garden");
+    openAt("?view=project&ws=kitchen");
     const input = await screen.findByDisplayValue("Kitchen recipes");
     fireEvent.change(input, { target: { value: "Kitchen kit" } });
     fireEvent.blur(input);
@@ -214,15 +218,15 @@ describe("v3 Workspace page", () => {
     const brand = { name: "Kitchen equipment", accent: "#f5c518" };
     const patches: unknown[] = [];
     const fetchMock = mockApi({
-      "GET /api/workspaces/garden": { ...GARDEN, workspace: { ...GARDEN.workspace, brand } },
-      "PATCH /api/workspaces/garden": (init?: RequestInit) => {
+      "GET /api/workspaces/kitchen": { ...KITCHEN, workspace: { ...KITCHEN.workspace, brand } },
+      "PATCH /api/workspaces/kitchen": (init?: RequestInit) => {
         const body = JSON.parse(String(init?.body)) as { brand: Record<string, string | null> };
         patches.push(body);
         Object.assign(brand, { name: body.brand.name === null ? "Kitchen equipment" : body.brand.name ?? brand.name, accent: body.brand.accent ?? brand.accent });
-        return { ...GARDEN.workspace, brand: { ...brand } };
+        return { ...KITCHEN.workspace, brand: { ...brand } };
       },
     });
-    openAt("?view=project&ws=garden");
+    openAt("?view=project&ws=kitchen");
     const name = (await screen.findByRole("textbox", { name: "Brand name" })) as HTMLInputElement;
     const sample = screen.getByLabelText("Headline preview").querySelector("b") as HTMLElement;
     expect([name.value, sample.textContent, sample.style.color]).toEqual(["Kitchen equipment", "Kitchen equipment", "rgb(245, 197, 24)"]);
@@ -244,8 +248,8 @@ describe("v3 Workspace page", () => {
   });
 
   it("opens the New-video-from-footage overlay", async () => {
-    mockApi({ "GET /api/workspaces/garden": GARDEN });
-    openAt("?view=project&ws=garden");
+    mockApi({ "GET /api/workspaces/kitchen": KITCHEN });
+    openAt("?view=project&ws=kitchen");
     await userEvent.click(await screen.findByRole("button", { name: "New video" }));
     await userEvent.click(screen.getByRole("menuitem", { name: /From footage/ }));
     expect(screen.getByRole("dialog", { name: "New video from footage" })).toBeTruthy();
@@ -253,8 +257,8 @@ describe("v3 Workspace page", () => {
   });
 
   it("opens the New-video-from-a-script sheet", async () => {
-    mockApi({ "GET /api/workspaces/garden": GARDEN });
-    openAt("?view=project&ws=garden");
+    mockApi({ "GET /api/workspaces/kitchen": KITCHEN });
+    openAt("?view=project&ws=kitchen");
     await userEvent.click(await screen.findByRole("button", { name: "New video" }));
     await userEvent.click(screen.getByRole("menuitem", { name: /From a script/ }));
     expect(screen.getByRole("dialog", { name: "New video from a script" })).toBeTruthy();

@@ -46,6 +46,7 @@ function useMedia(ref: RefObject<HTMLMediaElement | null>, { src, sourceStartFra
     let startingPlay = false;
     let correcting = false;
     let seekStarted: number | null = null;
+    let seekRequested = -Infinity;
     let seekLatency = 0;
     let lastSeekPosition: number | null = null;
     let seekVersion = -1;
@@ -135,7 +136,7 @@ function useMedia(ref: RefObject<HTMLMediaElement | null>, { src, sourceStartFra
         presentation.pendingSeek = true;
         renderPresentation.current();
         correcting = correction;
-        seekStarted = performance.now();
+        seekStarted = seekRequested = performance.now();
         element.currentTime = target;
       }
     };
@@ -213,7 +214,9 @@ function useMedia(ref: RefObject<HTMLMediaElement | null>, { src, sourceStartFra
         // Frame callbacks precede paint: retain the last safe picture if decoding outruns the clock.
         presentation.hidden = true;
         if (!presentation.pendingSeek) presentation.showStill = presentation.stillAvailable;
-      } else {
+      } else if (metadata.presentationTime >= seekRequested) {
+        // A callback queued before the latest seek carries the old picture, which may lie before a trimmed start,
+        // so only a frame composited after the request may lift the seek guard.
         presentation.pendingSeek = false;
         presentation.hidden = false;
         presentation.showStill = false;

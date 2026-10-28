@@ -31,9 +31,9 @@ def _round_half_away(x: float) -> int:  # NOT banker's; mirror cutmap.sec_to_fra
 
 def design_scale(width: int, height: int) -> float:
     """Device pixels per design pixel of a frame, as motion-core's `designScale`: 1 at every 1080-class
-    size and below, 2 at 4K. Fixed pixel sizes (a graphic's border and padding, a text outline) are
-    1080-class design pixels, so a 4K export draws them twice as large and its layout never changes."""
-    return max(1.0, min(width, height) / 1080)
+    size, 2 at 4K and 2/3 at 720p. Fixed pixel sizes (a graphic's border and padding, a text outline)
+    are 1080-class design pixels, so a 4K export draws them twice as large and its layout never changes."""
+    return min(width, height) / 1080
 
 
 def resolve_layout(item: dict, width: int, height: int) -> dict:

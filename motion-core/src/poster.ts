@@ -489,19 +489,21 @@ export function drawPoster(ctx: Ctx, poster: Poster, W: number, H: number, env: 
     // Outer members first, so the middle one stands in front.
     const mid = (members.length - 1) / 2;
     const order = [...members.keys()].sort((a, b) => Math.abs(b - mid) - Math.abs(a - mid) || a - b);
+    // Missing-character markers go over every member, inside the frame.
     cutout(ctx, env, W, H, L.members[0].g, (oc) => {
-      for (const i of order) drawCharacter(oc, L.members[i].x, L.members[i].by, L.members[i].h, still(poster.ensemble[i]), env);
+      for (const i of order) drawCharacter(oc, L.members[i].x, L.members[i].by, L.members[i].h, still(poster.ensemble[i]), env, false);
+      for (const i of order) drawMissingCharacter(oc, L.members[i].x, L.members[i].by, L.members[i].h, still(poster.ensemble[i]), env, 1, { W, H });
     });
   }
   // The lead stands right of the centre, so it is mirrored to face into the frame (a rig faces screen-right),
-  // about a whole-pixel origin so it stays crisp.
+  // about a whole-pixel origin so it stays crisp. Its feet are below the frame, so its marker is lifted in.
   cutout(ctx, env, W, H, L.lead.g, (oc) => {
     oc.save();
     oc.translate(2 * L.lead.x, 0);
     oc.scale(-1, 1);
     drawCharacter(oc, L.lead.x, L.lead.by, L.lead.h, still(poster.lead), env, false);
     oc.restore();
-    drawMissingCharacter(oc, L.lead.x, L.lead.by, L.lead.h, poster.lead.character, env);
+    drawMissingCharacter(oc, L.lead.x, L.lead.by, L.lead.h, still(poster.lead), env, -1, { W, H });
   });
   drawLabels(ctx, poster, L, W, env);
   drawTitle(ctx, poster, L.title, env);

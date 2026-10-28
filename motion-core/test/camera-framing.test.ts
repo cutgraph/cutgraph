@@ -4,7 +4,8 @@ import { test } from 'node:test';
 import {
   FORMATS, beginCamera, drawCharacter, drawSceneFrame, endCamera, resolveShot,
 } from '../src/index.ts';
-import type { ProjectShot } from '../src/index.ts';
+import { atScale } from '../src/draw.ts';
+import type { MotionEnv, ProjectShot, ShotTiming } from '../src/index.ts';
 import { nodeEnv, surface } from '../scripts/node-env.ts';
 
 const env = nodeEnv();
@@ -126,5 +127,86 @@ test('continuous camera framing keeps sprite colours crisp and places the rig gr
     }
     assert.ok(checked > 1000);
     assert.ok(foot < by * k + H / 2 * (1 - k) && foot > (by - 15) * k + H / 2 * (1 - k), 'feet stay just above their transformed ground anchor');
+  }
+});
+
+// A picker tile draws a whole 16:9 shot scaled into the tile, at rest or looping while hovered, with no scene length.
+function tile(fields: ProjectShot, t: number, timing: ShotTiming = { firstT: 0.2, cueT: 0.6 }): string {
+  const { ctx } = surface(192, 108);
+  ctx.setTransform(192 / 1920, 0, 0, 108 / 1080, 0, 0);
+  drawSceneFrame(ctx, 'animation', resolveShot({ mode: 'animation', ...member, ...fields }, 'Beat', 'Tile'), t, timing, 1920, 1080, env);
+  return createHash('sha256').update(ctx.getImageData(0, 0, 192, 108).data).digest('hex');
+}
+
+test('a push-in picker tile without a scene length shows the full frame, at rest and through its hover loop', () => {
+  for (const fields of [{ diagram: 'blank' }, { diagram: 'grid', costar: member }, { costar: member, ensemble: [member] }] as ProjectShot[]) {
+    for (const t of [0, 0.4, 1.2, 2.2, 3.1]) {
+      assert.equal(tile({ ...fields, camera: 'push-in' }, t), tile(fields, t), `${JSON.stringify(fields)} @${t}: no crop`);
+    }
+    assert.equal(tile({ ...fields, camera: 'pull-out' }, 2.2), tile(fields, 2.2), 'a pull-out tile at rest has returned to the full frame');
+    assert.notEqual(tile({ ...fields, camera: 'push-in' }, 2.2, { firstT: 0.2, cueT: 0.6, endT: 2.2 }), tile(fields, 2.2),
+      'given its length, the same shot pushes in by its end');
+  }
+});
+
+test('a 4K export samples zoomed rigs exactly: every rig pixel is its 1080p pixel enlarged 2x', () => {
+  const [W, H] = FORMATS['16:9'];
+  for (const [camera, lt] of [['push-in', 2.45], ['push-in', 3], ['pull-out', 0], ['pull-out', 0.3]] as const) {
+    const rigs = (k: number) => {
+      const { ctx } = surface(W * k, H * k);
+      atScale(ctx, k, () => {
+        const move = beginCamera(ctx, resolveShot({ mode: 'animation', camera }, '', ''), lt, { endT: 3 }, W, H);
+        drawCharacter(ctx, W * 0.3, H * 0.8, 430, { pose: 'wave', expression: 'happy', t: 0.7 }, env);
+        drawCharacter(ctx, W * 0.62, H * 0.8, 260, { pose: 'point', expression: 'curious', t: 1.3 }, env);
+        endCamera(ctx, move);
+      });
+      return ctx.getImageData(0, 0, W * k, H * k).data;
+    };
+    const hd = rigs(1), uhd = rigs(2);
+    let opaque = 0;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const i = (y * W + x) * 4;
+      if (hd[i + 3] !== 255) continue;
+      opaque++;
+      for (const [dx, dy] of [[0, 0], [1, 0], [0, 1], [1, 1]]) {
+        const j = ((2 * y + dy) * 2 * W + 2 * x + dx) * 4;
+        assert.deepEqual(uhd.slice(j, j + 4), hd.slice(i, i + 4), `${camera} @${lt}: rig pixel (${x}, ${y}) enlarges exactly`);
+      }
+    }
+    let uhdOpaque = 0;
+    for (let i = 3; i < uhd.length; i += 4) if (uhd[i] === 255) uhdOpaque++;
+    assert.ok(opaque > 20000, `${camera} @${lt}: both rigs are drawn`);
+    assert.equal(uhdOpaque, opaque * 4, `${camera} @${lt}: no rig pixel exists at 4K alone`);
+  }
+});
+
+test('a 4K multi-performer camera scene reuses one pixel layer, and shared layers never carry pixels between performers or frames', () => {
+  let made = 0;
+  const counting = (): MotionEnv => {
+    const base = nodeEnv();
+    return { ...base, createCanvas: (w, h) => { made++; return base.createCanvas(w, h); } };
+  };
+  const shots: ProjectShot[] = [
+    { camera: 'push-in', costar: member, ensemble: [member, { ...member, move: 'wave' }, member] },
+    { camera: 'push-in' },
+    { camera: 'pull-out', costar: { ...member, move: 'hop' }, interaction: 'face' },
+  ];
+  const frame = (fields: ProjectShot, lt: number, frameEnv: MotionEnv) => {
+    const { ctx } = surface(960, 540);
+    ctx.scale(0.25, 0.25);
+    drawSceneFrame(ctx, 'animation', resolveShot({ mode: 'animation', ...member, ...fields, hideHeadline: true, diagram: 'none', backdrop: 'black' }, '', ''),
+      lt, { endT: 3 }, 3840, 2160, frameEnv);
+    return createHash('sha256').update(ctx.getImageData(0, 0, 960, 540).data).digest('hex');
+  };
+  const scene = counting(), times = Array.from({ length: 24 }, (_, f) => 2.2 + f / 30);
+  for (const lt of times) frame(shots[0], lt, scene);
+  // The rig canvas, then the layer at most twice as the zoom grows: not once per performer per frame.
+  assert.ok(made <= 3, `${made} canvases for 24 frames of five performers`);
+
+  const cases = shots.flatMap((fields) => [0, 0.3, 2.5, 3].map((lt) => ({ fields, lt })));
+  const fresh = cases.map(({ fields, lt }) => frame(fields, lt, nodeEnv()));
+  const shared = nodeEnv(), order = [...cases.keys()].reverse();
+  for (const i of [...order, ...cases.keys()]) {
+    assert.equal(frame(cases[i].fields, cases[i].lt, shared), fresh[i], `${JSON.stringify(cases[i].fields)} @${cases[i].lt}: no layer state`);
   }
 });

@@ -170,25 +170,6 @@
         }
       },
       {
-        "id": "scene-7",
-        "title": "signoff",
-        "role": "Wrap",
-        "startWord": 42,
-        "shot": {
-          "mode": "animation",
-          "character": "default-character",
-          "layout": "signoff",
-          "backdrop": "black",
-          "headline": "Enjoy your visit",
-          "eyebrow": "",
-          "mark": "TOUR",
-          "pose": "rest",
-          "expression": "happy",
-          "move": "idle",
-          "accent": "#2bb3a3"
-        }
-      },
-      {
         "id": "footage",
         "title": "Source control",
         "role": "Beat",

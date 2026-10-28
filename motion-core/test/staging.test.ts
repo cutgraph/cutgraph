@@ -114,8 +114,10 @@ test('framing zooms have independent bounded endpoints and finish short scenes',
       assert.ok(Number.isFinite(state.k) && state.k >= 1 && state.k <= ZOOM);
       assert.deepEqual(Object.keys(state), ['k']);
     }
-    if (d > 0) assert.equal(cameraAt(camera, d, duration).k, camera === 'push-in' ? ZOOM : 1);
+    if (d > 0) assert.equal(cameraAt(camera, d, duration).k, camera === 'push-in' && duration !== undefined ? ZOOM : 1);
   }
+  for (const lt of [0, CAMERA_S / 2, CAMERA_S, 2.2, 9]) assert.equal(cameraAt('push-in', lt).k, 1, 'no scene end to push into');
+  assert.equal(cameraAt('pull-out', 0).k, 1.12, 'a pull-out still starts from its crop');
 });
 
 test('each zoom covers frame edges, restores the transform and works without a neighbouring shot or rig', () => {

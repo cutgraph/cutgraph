@@ -152,6 +152,78 @@ def test_json_routes_preserve_invalid_json_response(
     assert response.json() == {"error": error, "code": 'invalid_request'}
 
 
+@pytest.mark.parametrize("method,path", JSON_ROUTES)
+@pytest.mark.parametrize("content_type", [
+    "text/plain", "application/x-www-form-urlencoded", "multipart/form-data; boundary=media", "application/jsonp",
+])
+def test_json_routes_reject_declared_non_json_without_reading_body(
+    isolated_state: Path, method: str, path: str, content_type: str,
+) -> None:
+    async def body() -> AsyncIterator[bytes]:
+        pytest.fail("non-JSON body was read")
+        yield b"{}"
+
+    async def scenario() -> httpx.Response:
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://studio.test") as client:
+            return await client.request(method, path, content=body(), headers={"content-type": content_type})
+
+    response = asyncio.run(scenario())
+    assert response.status_code == 415
+    assert response.json() == {"error": "expected application/json", "code": "unsupported_media_type"}
+
+
+@pytest.mark.parametrize("method,path", JSON_ROUTES)
+def test_json_routes_reject_undeclared_body(isolated_state: Path, method: str, path: str) -> None:
+    async def scenario() -> httpx.Response:
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://studio.test") as client:
+            return await client.request(method, path, content=b'{"name": "Media"}')
+
+    response = asyncio.run(scenario())
+    assert response.status_code == 415
+    assert response.json() == {"error": "expected application/json", "code": "unsupported_media_type"}
+    assert all(workspace["name"] != "Media" for workspace in library.list_workspaces())
+
+
+@pytest.mark.parametrize("content_type", ["application/json", "application/json; charset=utf-8", "Application/JSON"])
+def test_json_route_accepts_json_content_types(isolated_state: Path, content_type: str) -> None:
+    async def scenario() -> httpx.Response:
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://studio.test") as client:
+            return await client.post("/api/workspaces", content=b'{"name": "Media"}', headers={"content-type": content_type})
+
+    response = asyncio.run(scenario())
+    assert response.status_code == 201
+    assert response.json()["name"] == "Media"
+
+
+def test_bodyless_json_route_reads_empty_object(isolated_state: Path) -> None:
+    async def scenario() -> httpx.Response:
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://studio.test") as client:
+            return await client.post("/api/workspaces")
+
+    response = asyncio.run(scenario())
+    assert response.status_code == 400
+    assert response.json() == {"error": "name is required", "code": "invalid_request"}
+
+
+def test_multipart_asset_import_still_accepted(isolated_state: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    workspace = library.create_workspace("Media")
+    imported: list[str] = []
+
+    def import_uploads(workspace_id: str, files: list[tuple[str, Path]]) -> tuple[list[dict], list[str]]:
+        imported.extend(name for name, _path in files)
+        return [], []
+
+    monkeypatch.setattr(workspaces, "_import_library_uploads", import_uploads)
+
+    async def scenario() -> httpx.Response:
+        async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://studio.test") as client:
+            return await client.post(f"/api/workspaces/{workspace['id']}/assets", files={"files": ("clip.mp4", b"data")})
+
+    response = asyncio.run(scenario())
+    assert response.status_code == 201
+    assert imported == ["clip.mp4"]
+
+
 def test_source_upload_at_limit_still_succeeds(isolated_state: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(config, "MAX_SOURCE_UPLOAD_BYTES", 64, raising=False)
 

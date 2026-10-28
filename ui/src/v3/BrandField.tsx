@@ -1,7 +1,8 @@
 // The Workspace brand supplies the eyebrow and accent for animated headlines.
 // A shot can change or hide the eyebrow in the Shot view.
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import type { Brand, BrandPatch } from "./api";
+import { useDraft } from "./common";
 import "./brand.css";
 
 const HEX = /^#[0-9a-f]{6}$/i;
@@ -12,10 +13,8 @@ export default function BrandField({ brand, editable, onSave }: {
   editable: boolean;
   onSave: (patch: BrandPatch) => Promise<boolean>;
 }) {
-  const [name, setName] = useState(brand.name);
-  const [accent, setAccent] = useState(brand.accent);
-  useEffect(() => setName(brand.name), [brand.name]);
-  useEffect(() => setAccent(brand.accent), [brand.accent]);
+  const [name, setName] = useDraft(brand.name);
+  const [accent, setAccent] = useDraft(brand.accent);
 
   useEffect(() => {
     if (accent === brand.accent || !HEX.test(accent)) return;

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import re
 import sys
 from dataclasses import dataclass
 from types import SimpleNamespace
@@ -45,6 +46,17 @@ async def _drain_until(sink: list[dict], pred, tries: int = 200) -> None:
 def test_persona_loads_from_product_prompts() -> None:
     assert agent_host._PERSONA_PATH == config.CODE_ROOT / "pipeline" / "prompts" / "copilot.md"
     assert agent_host.load_persona().strip()
+
+
+def test_persona_documents_exactly_the_registered_tools() -> None:
+    persona = agent_host.load_persona()
+    registered = {*agent_host._EDITOR_TOOLS, *agent_host._GPU_TOOLS}
+    # Code spans that open with a snake_case name (optionally called) are tool references; job_id is
+    # the one argument the prompt names on its own.
+    named = set(re.findall(r"`([a-z]+(?:_[a-z]+)+)(?:\([^`]*\))?`", persona)) - {"job_id"}
+    assert named <= registered
+    for name in registered:
+        assert re.search(rf"`{name}[`(]", persona), name
 
 
 @pytest.mark.parametrize("error", [None, "authentication_failed", "server_error", "billing_error"])
@@ -337,6 +349,192 @@ def test_do_propose_patch_carries_grounded_intent_and_material_preview(tmp_path,
     stored = proposals.read("zzhostgrounded", out["id"])
     assert stored is not None
     assert stored["citations"] == [{"kind": "transcript", "start": 0, "end": 1, "summary": "claim"}]
+
+
+def _registered_tool_schemas(monkeypatch) -> dict[str, dict]:
+    schemas: dict[str, dict] = {}
+
+    def tool(name, _description, schema):
+        schemas[name] = schema
+        return lambda function: function
+
+    monkeypatch.setitem(sys.modules, "claude_agent_sdk", SimpleNamespace(
+        tool=tool, create_sdk_mcp_server=lambda *args, **kwargs: kwargs))
+    agent_host.build_editor_server(_stub_ctx("video", []))
+    return schemas
+
+
+def test_propose_patch_schema_describes_each_citation_field(monkeypatch) -> None:
+    import jsonschema
+
+    schema = _registered_tool_schemas(monkeypatch)["propose_patch"]
+    assert schema is agent_host._PROPOSE_PATCH_SCHEMA
+    validator = jsonschema.Draft202012Validator(schema)
+    validator.check_schema(schema)
+    citation = schema["properties"]["citations"]["items"]
+    assert citation["type"] == "object"
+    assert citation["required"] == ["kind", "start", "end", "summary"]
+    assert citation["properties"]["kind"]["enum"] == ["transcript"]
+    assert {citation["properties"][f]["type"] for f in ("start", "end")} == {"number"}
+    assert all("seconds" in citation["properties"][f]["description"] for f in ("start", "end"))
+    # The example embedded in each description is itself a valid value.
+    for name in ("citations", "intentGroups"):
+        description = schema["properties"][name]["description"]
+        example = json.loads(description[description.index("["):])
+        assert not list(jsonschema.Draft202012Validator(schema["properties"][name]).iter_errors(example))
+    valid = {"title": "Cut", "rationale": "r",
+             "intentGroups": [{"id": "trim", "intent": "trim", "ops": [{"op": "remove", "path": "/tracks/0/clips/0"}]}],
+             "citations": [{"kind": "transcript", "start": 0.5, "end": 1.5, "summary": "a restart"}]}
+    assert validator.is_valid(valid)
+    for bad in ('[{"kind":"transcript"}]', [], [{"kind": "transcript", "start": "0", "end": 1, "summary": "s"}],
+                [{"kind": "visual", "start": 0, "end": 1, "summary": "s"}], [{"start": 0, "end": 1, "summary": "s"}]):
+        assert not validator.is_valid({**valid, "citations": bad})
+
+
+@pytest.mark.parametrize("args,field", [
+    ({"citations": [{"kind": "transcript", "start": 2.0, "end": 1.0, "summary": "s"}]}, "citations[0].end"),
+    ({"citations": [{"kind": "transcript", "start": -1, "end": 1.0, "summary": "s"}]}, "citations[0].start"),
+    ({"citations": [{"kind": "transcript", "start": 0, "end": 1.0}]}, "citations[0].summary"),
+    ({"citations": [{"kind": "visual", "start": 0, "end": 1.0, "summary": "s"}]}, "citations[0].kind"),
+    ({"citations": '[{"kind":"transcript"}]'}, "citations"),
+    ({"title": ""}, "title"),
+    ({"intentGroups": [{"id": "trim", "intent": "trim", "ops": []}]}, "intentGroups[0].ops"),
+])
+def test_do_propose_patch_names_the_bad_field(tmp_path, monkeypatch, args, field) -> None:
+    monkeypatch.setattr(config, "PROPOSALS_DIR", tmp_path / "proposals")
+    sink: list[dict] = []
+    ctx = agent_host.ToolCtx(slug="zzhostbadfield", read_doc=lambda: ({"tracks": []}, 3),
+                             read_transcript=lambda: None, fps=lambda: 30, emit=sink.append)
+    valid = {"title": "Cut", "rationale": "r",
+             "intentGroups": [{"id": "trim", "intent": "trim", "ops": [{"op": "replace", "path": "/width", "value": 1}]}],
+             "citations": [{"kind": "transcript", "start": 0, "end": 1, "summary": "claim"}]}
+    out = json.loads(agent_host._do_propose_patch(ctx, {**valid, **args}))
+    assert set(out) == {"error"} and out["error"].startswith(field)
+    assert sink == [] and proposals.list_all("zzhostbadfield") == []
+
+
+def _readiness_sdk(monkeypatch, statuses) -> list:
+    """A fake SDK whose client reports `statuses` (dicts, or exceptions to raise) from get_mcp_status."""
+    clients: list = []
+
+    class ResultMessage:
+        pass
+
+    class Client:
+        def __init__(self, options) -> None:
+            self.log: list[str] = []
+            self.statuses = list(statuses)
+            clients.append(self)
+
+        async def connect(self, prompt) -> None:
+            self.log.append("connect")
+
+        async def get_mcp_status(self) -> dict:
+            self.log.append("status")
+            status = self.statuses.pop(0) if len(self.statuses) > 1 else self.statuses[0]
+            if isinstance(status, BaseException):
+                raise status
+            return status
+
+        async def query(self, text: str) -> None:
+            self.log.append("query")
+
+        async def receive_response(self):
+            yield ResultMessage()
+
+        async def disconnect(self) -> None:
+            self.log.append("disconnect")
+
+    class Other:
+        pass
+
+    monkeypatch.setitem(sys.modules, "claude_agent_sdk", SimpleNamespace(
+        ClaudeSDKClient=Client, ClaudeAgentOptions=lambda **kwargs: kwargs,
+        AssistantMessage=Other, TextBlock=Other, ResultMessage=ResultMessage,
+        UserMessage=Other, ToolResultBlock=Other, ToolUseBlock=Other,
+        tool=lambda *args, **kwargs: lambda function: function,
+        create_sdk_mcp_server=lambda *args, **kwargs: kwargs,
+    ))
+    monkeypatch.setattr(agent_host, "_bundled_cli", lambda: "synthetic-cli")
+    monkeypatch.setattr(agent_host, "_MCP_READY_POLL_S", 0)
+    return clients
+
+
+def _servers(gpu: str, editor: str = "connected") -> dict:
+    return {"mcpServers": [{"name": "editor", "status": editor}, {"name": "gpu", "status": gpu}]}
+
+
+def _first_turn(tmp_path, monkeypatch) -> list[dict]:
+    monkeypatch.setattr(config, "PROJECTS_DIR", tmp_path)
+    events: list[dict] = []
+
+    async def scenario() -> None:
+        host = agent_host.AgentHost(make_session=agent_host.make_provider_session,
+                                    make_ctx=lambda slug: _stub_ctx(slug, events))
+        await host.post_turn("video", "Tighten the opening")
+        await _drain_until(events, lambda event: event["type"] == "turn_done")
+        await host.aclose_all()
+
+    asyncio.run(scenario())
+    return events
+
+
+@pytest.mark.parametrize("terminal", ["connected", "failed"])
+def test_first_turn_waits_for_pending_mcp_servers(tmp_path, monkeypatch, terminal) -> None:
+    clients = _readiness_sdk(monkeypatch, [
+        {"mcpServers": []}, _servers("pending", editor="pending"), _servers("pending"), _servers(terminal),
+    ])
+    assert _first_turn(tmp_path, monkeypatch) == [{"type": "turn_done"}]
+    assert clients[0].log == ["connect", "status", "status", "status", "status", "query", "disconnect"]
+
+
+@pytest.mark.parametrize("statuses", [[_servers("pending")], [RuntimeError("control request timed out")]])
+def test_mcp_readiness_wait_is_bounded_and_best_effort(tmp_path, monkeypatch, statuses) -> None:
+    clients = _readiness_sdk(monkeypatch, statuses)
+    monkeypatch.setattr(agent_host, "_MCP_READY_TIMEOUT_S", 0.05)
+    assert _first_turn(tmp_path, monkeypatch) == [{"type": "turn_done"}]
+    log = clients[0].log
+    assert log[0] == "connect" and log[-2:] == ["query", "disconnect"]
+    assert set(log[1:-2]) == {"status"}
+
+
+def test_turn_posted_while_aclose_all_drains_gets_a_tracked_worker() -> None:
+    events: list[dict] = []
+    closing, release = asyncio.Event(), asyncio.Event()
+    sessions: dict[str, list] = {}
+
+    class Session(FakeAgentSession):
+        async def aclose(self) -> None:
+            if self is sessions["one"][0]:
+                closing.set()
+                await release.wait()
+            await super().aclose()
+
+    def make_session(project: str, ctx: agent_host.ToolCtx) -> FakeAgentSession:
+        session = Session(script=lambda t: [AgentEvent("chat_text", {"text": f"{project}:{t}"}),
+                                            AgentEvent("turn_done", {})])
+        sessions.setdefault(project, []).append(session)
+        return session
+
+    async def scenario() -> None:
+        host = agent_host.AgentHost(make_session=make_session, make_ctx=lambda p: _stub_ctx(p, events))
+        await host.post_turn("one", "first")
+        await _drain_until(events, lambda m: m.get("text") == "one:first")
+        shutdown = asyncio.create_task(host.aclose_all())
+        await closing.wait()
+        await host.post_turn("one", "again")
+        await host.post_turn("two", "hello")
+        await _drain_until(events, lambda m: m.get("text") == "two:hello")
+        release.set()
+        await shutdown
+        assert set(host._workers) == {"one", "two"}
+        await host.aclose_all()
+        assert host._workers == {}
+
+    asyncio.run(scenario())
+    assert {m.get("text") for m in events} >= {"one:again", "two:hello"}
+    assert [s.closed for group in sessions.values() for s in group] == [True, True, True]
+    assert len(sessions["one"]) == 2
 
 
 # ── accept/reject feedback is prepended to the warm session's next turn ──

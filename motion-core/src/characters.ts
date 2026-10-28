@@ -2,7 +2,8 @@
 // character by registry id; hosts map their own character profiles onto these ids.
 
 import { LENS } from './lens.ts';
-import { text } from './draw.ts';
+import { clamp, text } from './draw.ts';
+import { rigShift } from './rig.ts';
 import type { Character, CharacterState, Ctx, MotionEnv, PartSpec, Shot } from './types.ts';
 
 export const CHARACTERS: Readonly<Record<string, Character>> = { lens: LENS };
@@ -157,17 +158,29 @@ export function drawCharacter(ctx: Ctx, cx: number, by: number, h: number, state
     palette: palette !== undefined && character.palettes.includes(palette) ? palette : undefined,
     custom: isSpecOf(character, custom) ? custom : undefined,
   }, env);
-  if (marker) drawMissingCharacter(ctx, cx, by, h, id, env);
+  if (marker) drawMissingCharacter(ctx, cx, by, h, state, env);
 }
 
-/** Paint in frame coordinates, after any performer mirror or squash is restored. */
-export function drawMissingCharacter(ctx: Ctx, cx: number, by: number, h: number, id: string | undefined, env: MotionEnv): void {
-  if (id !== undefined && !Object.prototype.hasOwnProperty.call(CHARACTERS, id)) {
-    const size = Math.max(10, Math.round(h / 18));
-    ctx.save();
-    ctx.fillStyle = '#111214';
-    ctx.fillRect(cx - size * 4.5, by + size / 2, size * 9, size * 1.5);
-    text(ctx, 'Missing character', cx, by + size * 1.6, size, '#ffffff', env.fontFamily ?? 'Inter', 600, 'center');
-    ctx.restore();
+/**
+ * The marker under a performer whose rig this build cannot draw (the default rig stands in), painted in
+ * frame coordinates after any performer mirror or squash is restored. It follows the stand-in's body as
+ * its own move carries it, `face` being the x scale that body was drawn with (negative when mirrored),
+ * and stays inside a W x H `frame` when given one.
+ */
+export function drawMissingCharacter(
+  ctx: Ctx, cx: number, by: number, h: number, state: Performer, env: MotionEnv, face = 1, frame?: { W: number; H: number },
+): void {
+  const id = state.character;
+  if (id === undefined || Object.prototype.hasOwnProperty.call(CHARACTERS, id)) return;
+  const size = Math.max(10, Math.round(h / 18)), half = size * 4.5;
+  let x = cx + face * rigShift(state, h), lift = 0;
+  if (frame) {
+    x = clamp(x, half, frame.W - half);
+    lift = Math.max(0, by + size * 2 - frame.H);
   }
+  ctx.save();
+  ctx.fillStyle = '#111214';
+  ctx.fillRect(x - half, by + size / 2 - lift, size * 9, size * 1.5);
+  text(ctx, 'Missing character', x, by + size * 1.6 - lift, size, '#ffffff', env.fontFamily ?? 'Inter', 600, 'center');
+  ctx.restore();
 }

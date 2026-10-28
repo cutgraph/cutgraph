@@ -68,13 +68,13 @@ export function usePlayerSync(project: Project | null): PlayerSync {
       const s = timelineToSrc(proj, frame);
       if (s) setPreviewSec(frameToSec(s.srcF, proj.fps));
     };
-    const onFrameUpdate: FrameListener<"frame"> = (e) => forward(e.detail.frame);
-    const onSeeked: FrameListener<"seek"> = (e) => forward(e.detail.frame, true);
-    p.listen("frame", onFrameUpdate);
-    p.listen("seek", onSeeked);
+    const onFrame: FrameListener<"frame"> = (e) => forward(e.detail.frame);
+    const onSeek: FrameListener<"seek"> = (e) => forward(e.detail.frame, true);
+    p.listen("frame", onFrame);
+    p.listen("seek", onSeek);
     return () => {
-      p.unlisten("frame", onFrameUpdate);
-      p.unlisten("seek", onSeeked);
+      p.unlisten("frame", onFrame);
+      p.unlisten("seek", onSeek);
     };
   }, [project]);
 

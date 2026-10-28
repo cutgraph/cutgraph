@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type RefObject } from "react";
+import { useCallback, useEffect, useState, type Dispatch, type RefObject, type SetStateAction } from "react";
 import { ApiError, apiErrorText } from "./api";
 
 export type Load<T> =
@@ -31,6 +31,20 @@ export function useLoad<T>(load: () => Promise<T>, key: string) {
     [],
   );
   return { load: state, reload, update };
+}
+
+/**
+ * An editable draft of a saved `value`, reset to it whenever `value` or `key` changes. The reset runs
+ * during render: an effect could still be pending when the first edit after a load lands, and overwrite it.
+ */
+export function useDraft<T>(value: T, key?: unknown): [T, Dispatch<SetStateAction<T>>] {
+  const [draft, setDraft] = useState(value);
+  const [synced, setSynced] = useState({ value, key });
+  if (!Object.is(synced.value, value) || !Object.is(synced.key, key)) {
+    setSynced({ value, key });
+    setDraft(value);
+  }
+  return [draft, setDraft];
 }
 
 /**

@@ -386,17 +386,17 @@ describe("Library → Cast characters", () => {
     expect(within(dialog).queryByRole("group", { name: "Palette" })).toBeNull();
     expect(part("Where it lives", "Garden").getAttribute("aria-pressed")).toBe("true");
     expect(within(dialog).getByText("Only videos in Garden can cast it. It never appears in another workspace.")).toBeTruthy();
-    fireEvent.change(within(dialog).getByRole("textbox", { name: "Name" }), { target: { value: "Garden Calf" } });
-    const sheet = new File(["png"], "calf-sheet.png", { type: "image/png" });
+    fireEvent.change(within(dialog).getByRole("textbox", { name: "Name" }), { target: { value: "Second Character" } });
+    const sheet = new File(["png"], "character-sheet.png", { type: "image/png" });
     fireEvent.change(within(dialog).getByLabelText("Approved art"), { target: { files: [sheet] } });
     fireEvent.click(within(dialog).getByRole("button", { name: "Create" }));
 
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
-    expect(call(studio, "POST /api/cast/characters")?.body).toEqual({ workspace: GARDEN.id, name: "Garden Calf", rig: "lens", palette: "periwinkle" });
+    expect(call(studio, "POST /api/cast/characters")?.body).toEqual({ workspace: GARDEN.id, name: "Second Character", rig: "lens", palette: "periwinkle" });
     expect(call(studio, `POST /api/workspaces/${GARDEN.id}/assets`)?.body).toBeInstanceOf(FormData);
-    expect(call(studio, "PATCH /api/cast/characters/garden-calf")?.body).toEqual({ art: [ART] });
-    expect(screen.getByRole("button", { name: /^Garden Calf/ }).getAttribute("aria-pressed")).toBe("true");
-    expect(screen.getByRole("img", { name: "Garden Calf, approved art 1" })).toBeTruthy();
+    expect(call(studio, "PATCH /api/cast/characters/second-character")?.body).toEqual({ art: [ART] });
+    expect(screen.getByRole("button", { name: /^Second Character/ }).getAttribute("aria-pressed")).toBe("true");
+    expect(screen.getByRole("img", { name: "Second Character, approved art 1" })).toBeTruthy();
   });
 
   it("creates a brand character when Brand is picked", async () => {

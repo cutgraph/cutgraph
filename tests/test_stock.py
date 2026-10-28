@@ -421,6 +421,30 @@ def test_a_rejected_unicode_key_leaves_logging_and_search_working(
     assert "pexels-key" not in caplog.text
 
 
+@pytest.mark.parametrize("source", ["settings", "environment"])
+def test_stock_keys_are_redacted_at_the_log_output_boundary(
+    studio_state: Path, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture, source: str,
+) -> None:
+    from pipeline import agent_credentials
+
+    key = f"stock-{source}-key/with+symbols"
+    if source == "settings":
+        stock.set_keys({"pixabay": key})
+    else:
+        monkeypatch.setenv("PIXABAY_API_KEY", key)
+        assert stock.provider_status()["pixabay"]["configured"]
+    caplog.set_level(logging.DEBUG)
+    logging.getLogger("httpx").info("HTTP Request: GET https://pixabay.com/api/?key=%s", quote_plus(key))
+    logging.getLogger("pipeline.unrelated").warning("%r %s", key, quote(key, safe=""))
+    assert caplog.text.count("[redacted]") == 3
+    for value in (key, repr(key)[1:-1], quote(key, safe=""), quote_plus(key)):
+        assert value not in caplog.text
+    # Redaction happens when a record is formatted, never by mutating records in a logger filter.
+    assert not any(type(f).__module__ == stock.__name__ for f in logging.getLogger("httpx").filters)
+    # Stock keys stay out of assistant-data redaction, where a short key would corrupt ordinary text.
+    assert agent_credentials.redact(key) == key
+
+
 def test_invalid_env_key_is_not_configured_even_with_stored_key(
     studio_state: Path, monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture,
 ) -> None:

@@ -5,7 +5,7 @@ Their `.txt` counterparts contain every resolved dependency, exact versions,
 environment markers and SHA-256 hashes. The sets are core, agent (includes core),
 dev (includes agent and test tools),
 optional local-ai-nvidia and local-ai-cpu (include core and transcription), and reuse (CI's
-report-only license linter). Install `.txt` locks with `--require-hashes`.
+licence linter). Install `.txt` locks with `--require-hashes`.
 
 ## Updating
 
@@ -59,8 +59,10 @@ For JavaScript updates, refresh and review each package lock in its own director
 then use `npm ci` and run its gates. `@napi-rs/canvas` is a runtime dependency of
 motion-core because Node export needs it.
 
-Dependabot checks GitHub Actions and both npm lockfiles weekly, grouping minor
-and patch updates. Python updates go through `scripts/lock_requirements.py`;
+GitHub Actions and both npm lockfiles receive reviewed version updates before
+each published release, so this repository carries no Dependabot version-update
+configuration. Dependabot alerts and security updates stay enabled in the
+repository settings. Python updates go through `scripts/lock_requirements.py`;
 Dependabot cannot regenerate the universal uv-compiled hash locks correctly.
 
 ## CI media tools
@@ -109,6 +111,10 @@ only with a row in the table below, and renew it only after repeating the
 review. The scanner ignores an advisory by ID alone, so
 `tests/test_ci_workflow.py` fails when a listed package's locked version
 changes, forcing that review. A new advisory still fails the scan.
+pip-audit covers every Python lock. The transcription locks run as a separate
+step that ignores exactly the IDs in `osv-scanner.toml`; the same tests keep the
+two lists equal. pip-audit cannot see the `+cu128` and `+cpu` torch builds on
+PyPI; the OSV scan reports them.
 
 ## Auditing
 
@@ -141,6 +147,11 @@ and nltk 3.10.4 replace the versions they supersede. Vite 6.4.5 and Vitest 4.1.1
 5.4.21 and Vitest 2.1.9; full `npm audit` is clean for `ui/` and `motion-core/`. The remaining accepted
 advisories are the transformers 4.57.6 and torch 2.8.0+cu128 rows below: transformers 5 needs
 huggingface-hub 1.x, which WhisperX 3.8.6 does not allow.
+The 2026-10-27 refresh replaces opentelemetry-api 1.45.0 (GHSA-xcq7-p3pf-p88h) with 1.45.1 in every
+lock, moving the transcription sets' OpenTelemetry SDK and exporters to the matching 1.45.1 and
+0.66b1 releases. Those sets also take filelock 4.2.1 (GHSA-v4x8-3wr5-3wq8, GHSA-9vhv-jxww-xfm5,
+GHSA-567q-5qvw-pf92) and setuptools 84.1.0 (GHSA-xmj3-9gf7-h52w); setuptools keeps its reviewed
+`distutils-precedence.pth` startup hook.
 These are recorded results from the refresh, not a guarantee against future
 advisories. Repeat the audits for every dependency update and before release.
 

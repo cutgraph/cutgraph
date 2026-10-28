@@ -21,7 +21,7 @@ const videoAsset = (id: string, name: string): Asset => ({
   id, sha256: `sha-${id}`, name, kind: "video", file: `${id}.mp4`, bytes: 2048, tags: [], createdAt: NOW, durationS: 20,
 });
 
-const GARDEN: WorkspaceDetail = { workspace: workspace("garden", "Kitchen equipment"), videos: [], assets: [videoAsset("a1", "seedling-rack.mp4")] };
+const KITCHEN: WorkspaceDetail = { workspace: workspace("kitchen", "Kitchen equipment"), videos: [], assets: [videoAsset("a1", "stand-mixer.mp4")] };
 
 type Handler = unknown | ((init: RequestInit | undefined) => unknown);
 
@@ -77,7 +77,7 @@ afterEach(() => {
 describe("Home: From footage picks or creates a workspace, then opens the same flow", () => {
   it("lists real workspaces (not brand/unsorted) and opens the picker for the one chosen", async () => {
     mockApi({
-      "GET /api/workspaces": [workspace("garden", "Kitchen equipment"), workspace("brand", "Brand"), workspace("unsorted", "Unsorted")],
+      "GET /api/workspaces": [workspace("kitchen", "Kitchen equipment"), workspace("brand", "Brand"), workspace("unsorted", "Unsorted")],
     });
     openAt("");
     await userEvent.click(await screen.findByRole("button", { name: /From footage/ }));
@@ -88,11 +88,11 @@ describe("Home: From footage picks or creates a workspace, then opens the same f
     await userEvent.click(within(dialog).getByRole("button", { name: "Kitchen equipment" }));
     expect(dialog.isConnected).toBe(false);
     expect(screen.getByRole("dialog", { name: "New video from footage" })).toBeTruthy();
-    expect(useNewVideoFlow.getState().wsId).toBe("garden");
+    expect(useNewVideoFlow.getState().wsId).toBe("kitchen");
   });
 
   it("creates a new workspace inline, then opens the picker for it", async () => {
-    const created = workspace("ws-new", "New shoots");
+    const created = workspace("ws-new", "Weeknight dinners");
     const fetchMock = mockApi({
       "GET /api/workspaces": [],
       "POST /api/workspaces": created,
@@ -100,7 +100,7 @@ describe("Home: From footage picks or creates a workspace, then opens the same f
     openAt("");
     await userEvent.click(await screen.findByRole("button", { name: /From footage/ }));
     await screen.findByRole("dialog", { name: "Which workspace is this video for?" });
-    await userEvent.type(screen.getByPlaceholderText("Workspace name"), "New shoots");
+    await userEvent.type(screen.getByPlaceholderText("Workspace name"), "Weeknight dinners");
     await userEvent.click(screen.getByRole("button", { name: "Create & continue" }));
 
     const post = fetchMock.mock.calls.find(([, init]) => init?.method === "POST");
@@ -113,43 +113,43 @@ describe("Home: From footage picks or creates a workspace, then opens the same f
 describe("Workspace page: New video -> From footage, picking a library asset end to end", () => {
   it("drives the store through the real API chain to a finished story, no re-upload", async () => {
     const fetchMock = mockApi({
-      "GET /api/workspaces/garden": GARDEN,
-      "POST /api/workspaces/garden/assets/a1/use-as-source": { ok: true, name: "a1.mp4", slug: "a1" },
+      "GET /api/workspaces/kitchen": KITCHEN,
+      "POST /api/workspaces/kitchen/assets/a1/use-as-source": { ok: true, name: "a1.mp4", slug: "a1" },
       "POST /api/projects": {
-        project: { name: "seedling-rack", fps: 30, width: 1920, height: 1080, schemaVersion: 3, revision: 1, tracks: [] },
+        project: { name: "stand-mixer", fps: 30, width: 1920, height: 1080, schemaVersion: 3, revision: 1, tracks: [] },
         revision: 1,
         transcription: { status: "queued" },
       },
-      "PUT /api/workspaces/garden/videos/seedling-rack": { project: { name: "seedling-rack", workspaceId: "garden" }, revision: 1 },
-      "GET /api/project/seedling-rack/transcription": { state: "ready", job: null },
-      "GET /api/project/seedling-rack/proxy": { state: "none", proxy: null },
-      "GET /api/project/seedling-rack": { project: { name: "seedling-rack", fps: 30, width: 1920, height: 1080, schemaVersion: 3, revision: 1, tracks: [] }, revision: 1 },
-      "POST /api/project/seedling-rack/scenes/auto?apply=1": {
-        project: { name: "seedling-rack", fps: 30, width: 1920, height: 1080, schemaVersion: 3, revision: 2, tracks: [], scenes: [{ id: "s1" }, { id: "s2" }] },
+      "PUT /api/workspaces/kitchen/videos/stand-mixer": { project: { name: "stand-mixer", workspaceId: "kitchen" }, revision: 1 },
+      "GET /api/project/stand-mixer/transcription": { state: "ready", job: null },
+      "GET /api/project/stand-mixer/proxy": { state: "none", proxy: null },
+      "GET /api/project/stand-mixer": { project: { name: "stand-mixer", fps: 30, width: 1920, height: 1080, schemaVersion: 3, revision: 1, tracks: [] }, revision: 1 },
+      "POST /api/project/stand-mixer/scenes/auto?apply=1": {
+        project: { name: "stand-mixer", fps: 30, width: 1920, height: 1080, schemaVersion: 3, revision: 2, tracks: [], scenes: [{ id: "s1" }, { id: "s2" }] },
         revision: 2,
       },
     });
 
-    openAt("?view=project&ws=garden");
+    openAt("?view=project&ws=kitchen");
     await userEvent.click(await screen.findByRole("button", { name: "New video" }));
     await userEvent.click(screen.getByRole("menuitem", { name: /From footage/ }));
     await userEvent.click(screen.getByRole("tab", { name: "From your library" }));
-    await userEvent.click(await screen.findByRole("button", { name: /seedling-rack\.mp4/ }));
+    await userEvent.click(await screen.findByRole("button", { name: /stand-mixer\.mp4/ }));
 
     const titleInput = screen.getByLabelText("Title");
-    expect((titleInput as HTMLInputElement).value).toBe("seedling-rack");
+    expect((titleInput as HTMLInputElement).value).toBe("stand-mixer");
     await userEvent.click(screen.getByRole("button", { name: "Create video" }));
 
     await waitFor(() => expect(screen.getByRole("heading", { name: "Your story is ready" })).toBeTruthy());
     expect(screen.getByText("Laid out your story · 2 scenes")).toBeTruthy();
 
     const calledUrls = fetchMock.mock.calls.map(([url]) => String(url));
-    expect(calledUrls).toContain("/api/workspaces/garden/assets/a1/use-as-source");
+    expect(calledUrls).toContain("/api/workspaces/kitchen/assets/a1/use-as-source");
     expect(calledUrls).toContain("/api/projects");
-    expect(calledUrls).toContain("/api/workspaces/garden/videos/seedling-rack");
-    expect(calledUrls).toContain("/api/project/seedling-rack/transcription");
-    expect(calledUrls).toContain("/api/project/seedling-rack/scenes/auto?apply=1");
-    expect(useNewVideoFlow.getState().flow).toMatchObject({ phase: "ready", ws: "garden", video: "seedling-rack", sceneCount: 2 });
+    expect(calledUrls).toContain("/api/workspaces/kitchen/videos/stand-mixer");
+    expect(calledUrls).toContain("/api/project/stand-mixer/transcription");
+    expect(calledUrls).toContain("/api/project/stand-mixer/scenes/auto?apply=1");
+    expect(useNewVideoFlow.getState().flow).toMatchObject({ phase: "ready", ws: "kitchen", video: "stand-mixer", sceneCount: 2 });
     // Let the store's own auto-close `setTimeout` (see afterTransition in store.ts) settle here
     // instead of firing during the next test — it uses real timers, not fake ones.
     await new Promise((resolve) => setTimeout(resolve, 350));
@@ -157,23 +157,23 @@ describe("Workspace page: New video -> From footage, picking a library asset end
 
   it("shows a clear failure and a working Retry when transcription fails", async () => {
     mockApi({
-      "GET /api/workspaces/garden": GARDEN,
-      "POST /api/workspaces/garden/assets/a1/use-as-source": { ok: true, name: "a1.mp4", slug: "a1" },
+      "GET /api/workspaces/kitchen": KITCHEN,
+      "POST /api/workspaces/kitchen/assets/a1/use-as-source": { ok: true, name: "a1.mp4", slug: "a1" },
       "POST /api/projects": {
-        project: { name: "seedling-rack", fps: 30, width: 1920, height: 1080, schemaVersion: 3, revision: 1, tracks: [] },
+        project: { name: "stand-mixer", fps: 30, width: 1920, height: 1080, schemaVersion: 3, revision: 1, tracks: [] },
         revision: 1,
         transcription: { status: "queued" },
       },
-      "PUT /api/workspaces/garden/videos/seedling-rack": { project: { name: "seedling-rack", workspaceId: "garden" }, revision: 1 },
-      "GET /api/project/seedling-rack/transcription": { state: "failed", job: { id: "j1", error: "WhisperX is not installed." }, message: "WhisperX is not installed." },
-      "GET /api/project/seedling-rack/proxy": { state: "none", proxy: null },
+      "PUT /api/workspaces/kitchen/videos/stand-mixer": { project: { name: "stand-mixer", workspaceId: "kitchen" }, revision: 1 },
+      "GET /api/project/stand-mixer/transcription": { state: "failed", job: { id: "j1", error: "WhisperX is not installed." }, message: "WhisperX is not installed." },
+      "GET /api/project/stand-mixer/proxy": { state: "none", proxy: null },
     });
 
-    openAt("?view=project&ws=garden");
+    openAt("?view=project&ws=kitchen");
     await userEvent.click(await screen.findByRole("button", { name: "New video" }));
     await userEvent.click(screen.getByRole("menuitem", { name: /From footage/ }));
     await userEvent.click(screen.getByRole("tab", { name: "From your library" }));
-    await userEvent.click(await screen.findByRole("button", { name: /seedling-rack\.mp4/ }));
+    await userEvent.click(await screen.findByRole("button", { name: /stand-mixer\.mp4/ }));
     await userEvent.click(screen.getByRole("button", { name: "Create video" }));
 
     await waitFor(() => expect(screen.getByText("WhisperX is not installed.")).toBeTruthy());

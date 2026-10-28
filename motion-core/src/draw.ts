@@ -19,6 +19,7 @@ const SHADOW_SCALE = new WeakMap<Ctx, number>();
 const DESIGN_TRANSFORM = new WeakMap<Ctx, DOMMatrix>();
 const CAMERA_PIXELS = new WeakSet<Ctx>();
 const PIXEL_LAYERS = new WeakMap<MotionEnv, { canvas: RigCanvas; width: number; height: number }>();
+const LAYER_STEP = 256;
 
 export function cameraPixels(ctx: Ctx, active: boolean): void {
   if (active) CAMERA_PIXELS.add(ctx);
@@ -38,21 +39,30 @@ export function pixelImage(ctx: Ctx, image: RigCanvas, x: number, y: number, w: 
   const ys = corners.map(([px, py]) => m.b * px + m.d * py + m.f);
   const left = Math.floor(Math.min(...xs)), top = Math.floor(Math.min(...ys));
   const width = Math.ceil(Math.max(...xs)) - left, height = Math.ceil(Math.max(...ys)) - top;
+  // Performers of different sizes and a zoom that grows every frame share one layer, which only grows, in
+  // LAYER_STEP steps. Each use clears all of it, so nothing from an earlier performer or frame can show
+  // through. It is drawn whole, clipped to the sprite's box: on a scaled host a source rectangle samples
+  // differently, and the clip keeps the box's edge coverage.
   let layer = PIXEL_LAYERS.get(env);
-  if (!layer || layer.width !== width || layer.height !== height) {
-    layer = { canvas: env.createCanvas(width, height), width, height };
+  if (!layer || layer.width < width || layer.height < height) {
+    const step = (v: number, had = 0): number => Math.max(had, Math.ceil(v / LAYER_STEP) * LAYER_STEP);
+    const lw = step(width, layer?.width), lh = step(height, layer?.height);
+    layer = { canvas: env.createCanvas(lw, lh), width: lw, height: lh };
     PIXEL_LAYERS.set(env, layer);
   }
   const oc = layer.canvas.getContext('2d');
   if (!oc) throw new Error('Pixel layer needs a 2d context');
   oc.setTransform(1, 0, 0, 1, 0, 0);
-  oc.clearRect(0, 0, width, height);
+  oc.clearRect(0, 0, layer.width, layer.height);
   oc.setTransform(m.a, m.b, m.c, m.d, m.e - left, m.f - top);
   oc.imageSmoothingEnabled = false;
   oc.drawImage(image, x, y, w, h);
   ctx.save();
   ctx.setTransform(base.a, base.b, base.c, base.d, base.e, base.f);
   ctx.imageSmoothingEnabled = false;
+  ctx.beginPath();
+  ctx.rect(left, top, width, height);
+  ctx.clip();
   ctx.drawImage(layer.canvas, left, top);
   ctx.restore();
 }

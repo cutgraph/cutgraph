@@ -99,6 +99,20 @@ describe("the Thumbnail section and editor", () => {
     expect(thumb()).toBeUndefined();
   });
 
+  it("replaces a pending title draft with the stored title after an undo", async () => {
+    render(<ExportSheet />);
+    fireEvent.click(screen.getByRole("button", { name: "Edit thumbnail" }));
+    const editor = await screen.findByRole("dialog", { name: "Thumbnail" });
+    const title = within(editor).getByRole("textbox", { name: "Title" }) as HTMLInputElement;
+    fireEvent.change(title, { target: { value: "Museum Visit" } });
+    fireEvent.blur(title);
+    expect(thumb()?.headline).toBe("Museum Visit");
+    fireEvent.change(title, { target: { value: "Pending" } });
+    act(() => undo());
+    expect(thumb()?.headline).toBeUndefined();
+    expect(title.value).toBe("");
+  });
+
   it("edits the title, the lead and the ensemble, each one undo step saved at once, and Escape closes the editor first", async () => {
     render(<ExportSheet />);
     fireEvent.click(screen.getByRole("button", { name: "Edit thumbnail" }));

@@ -1,4 +1,4 @@
-// Rainy Day Museum Visit: seven independently timed travel tips.
+// Rainy Day Museum Visit: six independently timed travel tips. The staging fixtures cover the sign-off.
 import { createHash } from 'node:crypto';
 import { FORMATS, drawSceneFrame, resolveShot, shotTiming } from '../src/index.ts';
 import type { Format, MotionEnv, ProjectShot } from '../src/index.ts';
@@ -50,8 +50,6 @@ export const FILM_SHOTS: FilmShot[] = [
     shot: { mode: 'animation', character: 'lens', camera: 'pan', backdrop: 'work', diagram: 'none', headline: 'Choose one gallery', pose: 'rest', expression: 'curious', move: 'idle', costar: { character: 'lens', pose: 'point', move: 'idle' } } },
   { name: 'ask', role: 'Beat', dur: 3.9, cue: 1.7,
     shot: { mode: 'animation', character: 'lens', backdrop: 'result', diagram: 'none', headline: 'Ask about quiet rooms', pose: 'rest', move: 'nod', expression: 'curious', bubble: 'question' } },
-  { name: 'signoff', role: 'Wrap', dur: 2.9, cue: null,
-    shot: { mode: 'animation', character: 'lens', layout: 'signoff', backdrop: 'black', headline: 'Enjoy your visit', eyebrow: '', mark: 'TOUR', pose: 'rest', expression: 'happy', move: 'idle', accent: '#2bb3a3' } },
 ];
 
 const FPS = 30;

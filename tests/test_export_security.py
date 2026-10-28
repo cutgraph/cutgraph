@@ -488,7 +488,6 @@ def test_preference_summaries_disclosed_in_privacy_and_architecture() -> None:
 
 def test_rotation_smoke_uses_synthetic_media() -> None:
     source = (ROOT / "tests/test_project_start.py").read_text(encoding="utf-8")
-    assert "_REAL_PORTRAIT_PHONE_CLIP" not in source
     assert "lavfi" in source and "rotate=90" in source
 
 

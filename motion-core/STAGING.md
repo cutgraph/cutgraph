@@ -45,11 +45,14 @@ Timing uses scene-local seconds and scene duration. A short scene clamps the
 pan's settling time. Zooms work independently in each scene.
 Cast movement and camera movement are independent fields. `vision` selects a
 bright radial backdrop through the shot's backdrop field.
-All layouts use continuous centre framing. Sprites retain nearest-neighbour
+All layouts use continuous centre framing. Character rigs retain nearest-neighbour
 sampling, with crisp device-pixel edges and feet following the same camera
 transform as the rig grid. Camera zoom does not promise whole rig-cell sizes.
-Zoomed sprites sample the same design pixel grid in preview and export before
-nearest-neighbour enlargement. Text and vector elements retain finer export edges.
+Zoomed rigs sample the same design pixel grid in preview and export before
+nearest-neighbour enlargement, so a 4K export is the 1080p rig enlarged exactly.
+Bubbles, acting marks and sign-off letters stay nearest-neighbour but are sampled
+at device resolution, like text and vector elements, which retain finer export edges.
+Without a scene length, as in picker tiles, a push-in keeps the full frame.
 
 ## Diagrams and board
 
@@ -100,8 +103,39 @@ environment; export decodes local files before rendering. Content-addressed
 image filenames participate in scene cache keys.
 
 The staging parity fixture covers one, two and three phones and missing assets.
-The museum film fixture covers a seven-beat travel example. Focused tests cover
+The museum film fixture covers a six-beat travel example; the staging fixture
+covers the sign-off. Focused tests cover
 independent diagram geometry and labels, cameras, badge tones, groups and marks.
 `node scripts/staging-sheet.ts [out.png] [image]` writes separate feature examples
 in landscape and portrait. `node scripts/acting-sheet.ts [out-dir]` writes
 independent acting rows.
+
+## Platform goldens
+
+Canvas rasterisation differs by platform, so pixel recordings are kept per
+platform as `test/<name>.golden.<platform>.json`. `node scripts/update-goldens.ts`
+writes recordings for the current platform only. A pixel test loads the file
+for `process.platform`. If that file is missing, Windows fails at load with
+regeneration instructions, while other platforms skip the test with a visible
+`Missing platform golden` reason.
+
+Linux recordings come from the `Motion-core Linux goldens` workflow
+(`.github/workflows/motion-goldens.yml`). It runs on `ubuntu-latest` with
+read-only access and never writes back:
+
+1. Dispatch it on the branch to record:
+   `gh workflow run motion-goldens.yml --ref <branch>`. Private copies also
+   need the `HOSTED_CI` repository variable set to `true`.
+2. Once the run passes, download its artifact into an empty directory:
+   `gh run download <run-id> --name motion-core-linux-goldens --dir <empty-dir>`.
+3. Review it. The run has already checked that the recordings cover the same
+   goldens as Windows and that every motion-core test passes against them.
+   Compare the file hashes with the run's summary. Then compare
+   `contact-sheet/` with a local `node scripts/contact-sheet.ts <dir>`. The scenes
+   must match, though anti-aliasing may differ.
+4. Copy only the `*.golden.linux.json` files into `test/`, then commit them on
+   the task branch. The Linux CI leg then runs every pixel check instead of
+   skipping it.
+
+Record again whenever an intentional rendering change regenerates the Windows
+recordings.

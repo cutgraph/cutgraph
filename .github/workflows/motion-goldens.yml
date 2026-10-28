@@ -1,0 +1,73 @@
+name: Motion-core Linux goldens
+
+# Records candidate Linux pixel goldens for review; a maintainer commits them by hand.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  record:
+    name: record Linux goldens
+    # Private repositories opt in to hosted runner usage with a repository variable.
+    if: ${{ !github.event.repository.private || vars.HOSTED_CI == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: motion-core/package-lock.json
+
+      - name: Install motion-core dependencies
+        working-directory: motion-core
+        run: npm ci
+
+      - name: Record goldens
+        working-directory: motion-core
+        run: |
+          node scripts/update-goldens.ts
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $expected = @(Get-ChildItem test/*.golden.win32.json | ForEach-Object { $_.Name -replace '\.win32\.json$', '' } | Sort-Object)
+          $recorded = @(Get-ChildItem test/*.golden.linux.json | Sort-Object Name)
+          $names = @($recorded | ForEach-Object { $_.Name -replace '\.linux\.json$', '' })
+          if (-not $expected -or (Compare-Object $expected $names)) {
+            throw 'Linux recordings must cover exactly the Windows recordings'
+          }
+          $out = Join-Path $env:RUNNER_TEMP 'goldens'
+          New-Item -ItemType Directory -Path $out -Force | Out-Null
+          $recorded | Copy-Item -Destination $out
+          '## Linux goldens' >> $env:GITHUB_STEP_SUMMARY
+          '```text' >> $env:GITHUB_STEP_SUMMARY
+          $recorded | Get-FileHash -Algorithm SHA256 |
+            ForEach-Object { '{0}  {1}' -f $_.Hash.ToLowerInvariant(), (Split-Path -Leaf $_.Path) } >> $env:GITHUB_STEP_SUMMARY
+          '```' >> $env:GITHUB_STEP_SUMMARY
+
+      # Every pixel check must pass against the new recordings before anyone reviews them.
+      - name: Verify recordings
+        working-directory: motion-core
+        run: node --test (Get-ChildItem test/*.test.ts).FullName
+
+      - name: Render contact sheet
+        working-directory: motion-core
+        run: node scripts/contact-sheet.ts "$env:RUNNER_TEMP/goldens/contact-sheet"
+
+      - name: Upload goldens
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: motion-core-linux-goldens
+          path: ${{ runner.temp }}/goldens/
+          if-no-files-found: error
+          retention-days: 14

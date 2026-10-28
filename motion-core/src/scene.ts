@@ -17,10 +17,10 @@ export const FORMATS: Readonly<Record<Format, readonly [number, number]>> = {
 
 /**
  * Device pixels per design pixel of a W x H frame. motion-core is designed in the 1080-class pixels of
- * FORMATS; a larger frame (a 4K export) draws that same design scaled up, so it gains detail and never
- * changes layout. A smaller surface keeps its own pixels, as the preview's scaled canvases always have.
+ * FORMATS, and every frame draws that same design at its own size: a 4K export gains detail, and a
+ * 720p video's preview shows exactly what its 1080 export frames, never a layout of its own.
  */
-export const designScale = (W: number, H: number): number => Math.max(1, Math.min(W, H) / 1080);
+export const designScale = (W: number, H: number): number => Math.min(W, H) / 1080;
 
 export const BACKDROPS: readonly BackdropId[] = ['chaos', 'work', 'route', 'proof', 'result', 'black', 'vision'];
 export const DIAGRAMS: readonly DiagramId[] = [

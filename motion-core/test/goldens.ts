@@ -6,7 +6,7 @@ export function loadGolden<T>(name: string): { value: T | null; skip: string | f
   if (!existsSync(path)) {
     const message = `Missing platform golden: ${path.pathname}; run node scripts/update-goldens.ts`;
     if (process.platform === 'win32') throw new Error(message);
-    // Other platforms skip until their fonts and pixels are qualified.
+    // Other platforms skip visibly until a reviewed recording for them is committed.
     return { value: null, skip: message };
   }
   // This opt-out is for hosts intentionally lacking the recorded fonts; it must be visible in TAP.

@@ -37,8 +37,11 @@ no-referrer and same-origin opener/resource headers. These controls reduce
 browser attacks; they are not authentication for a network service.
 
 The UI sends JSON for JSON routes. `studio/helpers.py` bounds and parses JSON
-bodies, but does not independently require a JSON Content-Type header. Browser
-request isolation is enforced by the origin and Fetch-Metadata controls above.
+bodies and, as defense in depth, answers 415 when a JSON route receives a
+non-JSON Content-Type or a body without one. A request with neither a body nor
+a Content-Type reads as an empty object. Upload routes accept their own media
+types. Browser request isolation is enforced by the origin and Fetch-Metadata
+controls above.
 
 ## Files and media
 

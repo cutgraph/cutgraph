@@ -13,6 +13,7 @@ import json
 import math
 from pathlib import Path
 
+from pipeline import names
 from pipeline import project as project_mod
 from pipeline import timebase
 
@@ -47,12 +48,14 @@ def _timed(w: dict) -> bool:
 
 def transcript_words(proj: project_mod.Project, transcripts_dir: Path) -> list[dict]:
     """The flat words `{w, start, end}` of the speech media's words sidecar (the transcript API's
-    shape); [] when there is no speech or the sidecar is missing or unreadable."""
+    shape); [] when there is no speech or the sidecar is missing or unreadable. A sidecar spelled
+    differently on disk raises NameNotFound rather than being read."""
     speech = next((c for t in proj.tracks if t.kind == "speech" for c in t.clips), None)
     if speech is None:
         return []
+    sidecar = names.exact_path(transcripts_dir / f"{Path(speech.media.source).stem}.words.json", transcripts_dir)
     try:
-        raw = json.loads((transcripts_dir / f"{Path(speech.media.source).stem}.words.json").read_text(encoding="utf-8"))
+        raw = json.loads(sidecar.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return []
     return [{"w": (w.get("word") or "").strip(), "start": w.get("start"), "end": w.get("end")}

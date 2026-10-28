@@ -133,11 +133,17 @@ function motion(move: string, t: number): Motion {
   return m;
 }
 
+const motionOf = (state: CharacterState): Motion =>
+  motion(state.move !== undefined && LENS_MOVES.includes(state.move) ? state.move : 'idle', state.t ?? 0);
+
+/** How far a rig's own move carries its body sideways off its feet's spot, in pixels at height `h`. */
+export const rigShift = (state: CharacterState, h: number): number => motionOf(state).dx * Math.max(1, Math.floor(h / H));
+
 export function rigDraw(ramp: Ramp, body: (ctx: Ctx, m: Motion) => number): Character['draw'] {
   const layers = new WeakMap<MotionEnv, RigCanvas>();
   return (ctx, cx, by, h, state: CharacterState, env) => {
     const t = state.t ?? 0, g = Math.max(1, Math.floor(h / H));
-    const m = motion(LENS_MOVES.includes(state.move as typeof LENS_MOVES[number]) ? state.move! : 'idle', t);
+    const m = motionOf(state);
     const pose = m.pose ?? (LENS_POSES.includes(state.pose as typeof LENS_POSES[number]) ? state.pose! : 'rest');
     const custom = state.custom;
     const valid = custom && Object.keys(custom).length === 2 && Object.entries(PARTS).every(([part, options]) => options.includes(custom[part]));

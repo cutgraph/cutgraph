@@ -43,7 +43,6 @@ def test_tool_overrides_do_not_change_bundled_fonts_or_mutate_environment(tmp_pa
     result = runtime_tools.runtime_environment(environ=environ, source_root=tmp_path / "none")
     assert runtime_tools.font_path(source_root=tmp_path).parent == tmp_path / "assets/fonts/liberation-sans"
     assert result["CUTGRAPH_FONTFILE"] == str(font)
-    assert result["IMAGEIO_FFMPEG_EXE"] == str(ffmpeg.resolve())
     assert result["PATH"].split(os.pathsep)[0] == str(tmp_path)
     assert environ["PATH"] == "original-path"
 

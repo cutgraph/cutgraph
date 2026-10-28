@@ -4,13 +4,14 @@
 // title card's badges and the sign-off's pixel letters. On a stage with a co-star or an ensemble its
 // labels: the headline over the co-star, and badges under the members. On an independent diagram the
 // board's box labels. The headline and eyebrow rows below serve every layout. Every pick is one undo step.
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   BADGE_TONES, BADGES_MAX, BOARD_LABEL_MAX, BOARD_LABELS_MAX, CAMERAS, LAYOUTS, MARK_MAX, SCREEN_MORE_MAX,
   type BadgeTone, type Camera, type StageLayout,
 } from "motion-core";
 import type { Badge, PhoneScreen, Shot } from "../../../types/project";
 import { v3api } from "../../api";
+import { useDraft } from "../../common";
 import { importTarget, refreshLibraries, useLibraryAssets } from "./screenLibrary";
 import type { ShotPatch } from "./specs";
 import "./staging.css";
@@ -45,9 +46,8 @@ function DraftInput({ stored, label, placeholder, maxLength, commit }: {
   maxLength: number;
   commit: (value: string) => void;
 }) {
-  const [draft, setDraft] = useState(stored);
+  const [draft, setDraft] = useDraft(stored);
   const cancel = useRef(false);
-  useEffect(() => setDraft(stored), [stored]);
   return (
     <input
       value={draft}

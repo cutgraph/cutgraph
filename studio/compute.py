@@ -188,6 +188,18 @@ def _owned_process_scope() -> Iterator[None]:
                         state._OWNED_PROCESSES.pop(key, None)
 
 
+def _taskkill_command(pid: int) -> list[str] | None:
+    """Return a ``taskkill /T`` command resolved from the Windows system directory.
+
+    A bare program name would let CreateProcess search the working directory
+    and PATH, where a planted ``taskkill.exe`` could run instead.
+    """
+    system_root = Path(os.environ.get("SystemRoot", ""))
+    if not system_root.is_absolute():
+        return None
+    return [str(system_root / "System32" / "taskkill.exe"), "/PID", str(pid), "/T", "/F"]
+
+
 def _terminate_owned_process_tree(process: subprocess.Popen[str]) -> None:
     """Terminate one owned process and all descendants, escalating promptly."""
     try:
@@ -201,18 +213,13 @@ def _terminate_owned_process_tree(process: subprocess.Popen[str]) -> None:
         return
     if os.name == "nt":
         # ``taskkill /T`` is the Windows equivalent of a process group kill.
-        # Use the original Popen implementation indirectly through os.system
-        # only as a last resort; the normal root terminate/kill path below is
-        # still used when taskkill is unavailable (notably in unit tests).
-        try:
-            subprocess.run(
-                ["taskkill", "/PID", str(pid), "/T", "/F"],
-                check=False,
-                capture_output=True,
-                text=True,
-            )
-        except (OSError, subprocess.SubprocessError):
-            pass
+        # The root wait/kill below still runs when taskkill is unavailable.
+        command = _taskkill_command(pid)
+        if command is not None:
+            try:
+                subprocess.run(command, check=False, capture_output=True, text=True)
+            except (OSError, subprocess.SubprocessError):
+                pass
     else:
         try:
             os.killpg(os.getpgid(pid), signal.SIGTERM)

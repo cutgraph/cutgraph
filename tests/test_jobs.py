@@ -276,6 +276,33 @@ def test_recover_interrupted_fails_closed_without_replaying_or_adopting_outputs(
     )
 
 
+@pytest.mark.parametrize("status,reason", (
+    ("queued", "application_restarted_before_execution"),
+    ("publishing", "application_restarted_during_execution"),
+    ("future-state", "unsupported_job_status"),
+))
+def test_recovery_keeps_earlier_recovery_metadata_as_private_history(status: str, reason: str) -> None:
+    older = {"recoveryReason": "application_restarted_before_execution", "recoveredAt": "2025-01-01T00:00:00Z"}
+    earlier = {"recoveryReason": "unsupported_job_status", "recoveredAt": "2026-01-01T00:00:00Z",
+               "recoveryPreviousStatus": "legacy-state"}
+    record = {"id": "collided-job", "kind": "transcribe", "project": "demo", "status": status, "meta": {},
+              "createdAt": 1700000000.0, **earlier, "recoveryHistory": [older]}
+    config.JOBS_DIR.mkdir(parents=True)
+    (config.JOBS_DIR / "collided-job.json").write_text(json.dumps(record), encoding="utf-8")
+
+    recovered = jobs_mod.recover_interrupted()["collided-job"]
+
+    assert recovered["recoveryReason"] == reason
+    assert recovered["recoveryPreviousStatus"] == status
+    assert recovered["recoveredAt"] != earlier["recoveredAt"]
+    assert recovered["recoveryHistory"] == [older, earlier]
+    assert json.loads((config.JOBS_DIR / "collided-job.json").read_text(encoding="utf-8")) == recovered
+    public = jobs_mod._public_job(recovered)
+    assert public["recoveryReason"] == reason
+    assert not {"recoveryHistory", "recoveryPreviousStatus"} & public.keys()
+    assert jobs_mod.recover_interrupted() == {}
+
+
 def test_recover_interrupted_ignores_corrupt_and_identity_mismatched_records() -> None:
     config.JOBS_DIR.mkdir(parents=True)
     (config.JOBS_DIR / "corrupt.json").write_text("{", encoding="utf-8")

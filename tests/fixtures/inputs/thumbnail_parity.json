@@ -94,7 +94,7 @@
     },
     "brand": {
       "name": "MUSEUM VISIT",
-      "accent": "#d7263d"
+      "accent": "#2bb3a3"
     }
   },
   "cases": [
@@ -181,24 +181,24 @@
             }
           ],
           "character": "default-character",
-          "pose": "cheer",
+          "pose": "rest",
           "expression": "smug",
           "ensemble": [
             {
               "character": "visitor-reader",
-              "pose": "wave",
+              "pose": "point",
               "expression": "smile"
             },
             {
               "character": "notes-guest",
-              "pose": "wave"
+              "pose": "think"
             },
             {
               "character": "reviewer",
               "expression": "gone"
             }
           ],
-          "backdrop": "vision"
+          "backdrop": "result"
         }
       }
     },

@@ -12,7 +12,7 @@ import {
 } from "./api";
 import BrandField from "./BrandField";
 import ScriptCover from "./ScriptCover";
-import { ago, bytes, clock, ErrorState, errorText, plural, useLoad } from "./common";
+import { ago, bytes, clock, ErrorState, errorText, plural, useDraft, useLoad } from "./common";
 import AssetActions from "./library/AssetActions";
 import { OUR_BRAND } from "./library/cast";
 import { reloadCasts, setWorkspaceBrand } from "./library/castStore";
@@ -28,8 +28,7 @@ const FILTERS: [Filter, string][] = [["all", "All"], ["video", "Video"], ["image
 const KIND_ICON: Record<AssetKind, string> = { video: "▶", image: "◩", audio: "♪" };
 
 function NameField({ value, editable, onSave }: { value: string; editable: boolean; onSave: (name: string) => Promise<boolean> }) {
-  const [draft, setDraft] = useState(value);
-  useEffect(() => setDraft(value), [value]);
+  const [draft, setDraft] = useDraft(value);
   if (!editable) {
     return (
       <h1 className="pname-h">

@@ -22,12 +22,12 @@ from copy import deepcopy
 from pathlib import Path
 from threading import RLock
 from typing import Literal
-from urllib.parse import quote, quote_plus, urlparse
+from urllib.parse import urlparse
 
 import httpx
 
 import config
-from pipeline import library, secret_store
+from pipeline import agent_credentials, library, secret_store
 from pipeline.errors import ValidationError
 
 StockKind = Literal["video", "photo"]
@@ -41,23 +41,7 @@ _PIXABAY_CACHE_LOCK = RLock()
 PIXABAY_CACHE_TTL = 24 * 60 * 60
 PIXABAY_CACHE_SIZE = 128
 _pixabay_cache: OrderedDict[tuple[str, str, int, int], tuple[float, tuple[list[dict], bool]]] = OrderedDict()
-_known_secrets: set[str] = set()
 _logger = logging.getLogger(__name__)
-
-
-class _SecretFilter(logging.Filter):
-    def filter(self, record: logging.LogRecord) -> bool:
-        message = record.getMessage()
-        for value in tuple(_known_secrets):
-            for representation in (value, repr(value)[1:-1], quote(value, safe=""), quote_plus(value)):
-                message = message.replace(representation, "[redacted]")
-        record.msg = message
-        record.args = ()
-        return True
-
-
-for _http_logger in ("httpx", "httpcore.connection", "httpcore.http11", "httpcore.http2", "httpcore.proxy"):
-    logging.getLogger(_http_logger).addFilter(_SecretFilter())
 
 RESULTS_PER_PAGE = 12
 MAX_DOWNLOAD_BYTES = 300 * 1024 * 1024  # generous for a single ≤1080p clip or photo
@@ -132,7 +116,7 @@ def _read_stored_keys() -> dict[str, str]:
                     if isinstance(value, str) and value:
                         if not _valid_key(value):
                             raise ValueError("invalid legacy credential")
-                        _known_secrets.add(value)
+                        agent_credentials.remember_log_secret(value)
                         name = f"{provider}-api-key"
                         if secret_store.get(name) is None:
                             secret_store.set(name, value)
@@ -160,7 +144,7 @@ def _resolve_keys() -> dict[str, str]:
             if not _valid_key(value):
                 _logger.warning("Ignoring invalid stock credentials.")
                 continue
-            _known_secrets.add(value)
+            agent_credentials.remember_log_secret(value)
             keys[provider] = value
     return keys
 
@@ -187,7 +171,7 @@ def set_keys(patch: object) -> dict[str, dict[str, bool]]:
                 continue
             value = patch[provider] or ""
             if value:
-                _known_secrets.add(value)
+                agent_credentials.remember_log_secret(value)
                 secret_store.set(f"{provider}-api-key", value)
             else:
                 _remove_legacy_key(provider)

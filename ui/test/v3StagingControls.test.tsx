@@ -122,6 +122,21 @@ describe("Shot view: staging", () => {
     expect(pressed("Layout", "Sign-off")).toBe("true");
   });
 
+  it("replaces a pending badge draft with the stored text after an undo", async () => {
+    await openSheet("s1");
+    press("Layout", "Title card");
+    fireEvent.click(screen.getByRole("button", { name: "+ Add badge" }));
+    const text = () => screen.getByRole("textbox", { name: "Badge 1" }) as HTMLInputElement;
+    const added = shotOf("s1")?.badges?.[0].text;
+    fireEvent.change(text(), { target: { value: "NOTES" } });
+    fireEvent.blur(text());
+    expect(shotOf("s1")?.badges?.[0].text).toBe("NOTES");
+    fireEvent.change(text(), { target: { value: "PENDING" } });
+    act(() => undo());
+    expect(shotOf("s1")?.badges?.[0].text).toBe(added);
+    expect(text().value).toBe(added);
+  });
+
   it("edits a title card's badges: add, rename, tone, remove, never more than four", async () => {
     await openSheet("s1");
     press("Layout", "Title card");

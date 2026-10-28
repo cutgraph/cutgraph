@@ -44,8 +44,19 @@ def build(state: Path) -> None:
         "-t", str(DURATION), "-c:v", "libx264", "-preset", "ultrafast",
         "-pix_fmt", "yuv420p", "-c:a", "aac", "-movflags", "+faststart", str(source),
     ]
-    config.RUN_LOG.write_text(subprocess.list2cmdline(command) + "\n", encoding="utf-8")
+    # A preview far wider than any viewport, served to the stock lightbox as a data URL.
+    stock_preview = state / "synthetic-stock-preview.mp4"
+    preview_command = [
+        "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+        "-f", "lavfi", "-i", "testsrc2=size=2560x320:rate=10", "-t", "1",
+        "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
+        str(stock_preview),
+    ]
+    config.RUN_LOG.write_text(
+        "".join(subprocess.list2cmdline(c) + "\n" for c in (command, preview_command)), encoding="utf-8",
+    )
     subprocess.run(command, check=True, capture_output=True, timeout=60)
+    subprocess.run(preview_command, check=True, capture_output=True, timeout=60)
     tokens = VERSE.split()
     words = [
         contracts.WordToken(word, round(0.5 + i * (DURATION - 1) / len(tokens), 3),
@@ -90,6 +101,7 @@ def build(state: Path) -> None:
         project.write_project(config.PROJECTS_DIR / f"{doc.name}.json", doc)
     (state / "fixture.json").write_text(json.dumps({
         "workspace": workspace["id"], "footage": footage.name, "script": script.name,
+        "stockPreview": stock_preview.name,
     }) + "\n", encoding="utf-8")
 
 

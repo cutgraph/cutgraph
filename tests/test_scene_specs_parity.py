@@ -1,4 +1,4 @@
-"""Preview/export scene parity with original synthetic project-licensed prose. Covers an unaligned word, a cut cue, reordered scenes, footage exclusion, a duo and a delayed cameo. Regenerate with tests/fixtures/generate.py; the TypeScript consumer is an independent check."""
+"""Preview/export scene parity on synthetic prose covered by the project licence, with word timestamps generated from its timing recipe. Covers an unaligned word, a cut cue, reordered scenes, footage exclusion, a duo and a delayed cameo. Regenerate with tests/fixtures/generate.py; the TypeScript consumer is an independent check."""
 from __future__ import annotations
 
 import json

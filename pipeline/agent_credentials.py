@@ -7,7 +7,11 @@ import json
 import logging
 import os
 import re
+import sys
 import threading
+import traceback
+import urllib.request
+from types import TracebackType
 from typing import Any
 from urllib.parse import quote, quote_plus
 
@@ -21,8 +25,14 @@ CONNECT_MESSAGE = "Connect your key in Settings to ask for edits."
 UNVERIFIED_MESSAGE = "Key not verified. Open Settings to verify your Anthropic API key."
 VERIFYING_MESSAGE = "Verifying your key…"
 ENVIRONMENT_MESSAGE = "ANTHROPIC_API_KEY is set in this environment and takes precedence"
+_API_HOST = "api.anthropic.com"
+_REDACTED = "[redacted]"
 _known_secrets: set[str] = set()
 _secret_pattern: re.Pattern[str] | None = None
+# Other services' keys (stock providers) are redacted from log and stderr output only: they may be short enough
+# that substituting them in agent data would corrupt ordinary text.
+_log_secrets: set[str] = set()
+_log_pattern: re.Pattern[str] | None = None
 _lock = threading.RLock()
 
 
@@ -32,23 +42,39 @@ def connection_message(status: dict) -> str:
     return VERIFYING_MESSAGE if status["state"] == "checking" else UNVERIFIED_MESSAGE
 
 
+def _pattern(secrets: set[str]) -> re.Pattern[str]:
+    representations = {representation for secret in secrets
+                       for representation in (secret, repr(secret)[1:-1], json.dumps(secret)[1:-1],
+                                              quote(secret, safe=""), quote_plus(secret))}
+    # The marker matches first and replaces itself, so text redacted at several layers stays intact
+    # even when a short stock key occurs inside the marker.
+    return re.compile("|".join(re.escape(item) for item in
+                               [_REDACTED, *sorted(representations, key=len, reverse=True)]))
+
+
 def _remember_key(value: str) -> None:
     global _secret_pattern
     with _lock:
         if value in _known_secrets:
             return
         _known_secrets.add(value)
-        representations = {representation for secret in _known_secrets
-                           for representation in (secret, repr(secret)[1:-1], json.dumps(secret)[1:-1],
-                                                  quote(secret, safe=""), quote_plus(secret))}
-        _secret_pattern = re.compile("|".join(re.escape(item) for item in
-                                            sorted(representations, key=len, reverse=True)))
+        _secret_pattern = _pattern(_known_secrets)
+
+
+def remember_log_secret(value: str) -> None:
+    """Redact `value`, in every encoding a log line might carry, from all log and stderr output."""
+    global _log_pattern
+    with _lock:
+        if value in _log_secrets:
+            return
+        _log_secrets.add(value)
+        _log_pattern = _pattern(_log_secrets)
 
 
 def redact(text: str) -> str:
     with _lock:
         pattern = _secret_pattern
-    return pattern.sub("[redacted]", text) if pattern else text
+    return pattern.sub(_REDACTED, text) if pattern else text
 
 
 def redact_data(value: Any) -> Any:
@@ -61,14 +87,109 @@ def redact_data(value: Any) -> Any:
     return value
 
 
+def _redact_output(text: str) -> str:
+    """Redact the assistant key and every other service key from text bound for logs or stderr."""
+    text = redact(text)
+    with _lock:
+        pattern = _log_pattern
+    return pattern.sub(_REDACTED, text) if pattern else text
+
+
+# Log records keep their raw values; every text rendering of one is redacted instead: the base
+# Formatter, a handler's own formatter (which may override format entirely), the message a handler
+# without a formatter reads, and the report Handler.handleError prints for a failed record.
 _format = logging.Formatter.format
+_handler_format = logging.Handler.format
+_get_message = logging.LogRecord.getMessage
+_LOGGING_DIRECTORY = os.path.dirname(logging.__file__)
 
 
 def _secret_format(self: logging.Formatter, record: logging.LogRecord) -> str:
-    return redact(_format(self, record))
+    return _redact_output(_format(self, record))
+
+
+def _secret_handler_format(self: logging.Handler, record: logging.LogRecord) -> str:
+    text = _handler_format(self, record)
+    return _redact_output(text) if isinstance(text, str) else text
+
+
+def _secret_message(self: logging.LogRecord) -> str:
+    return _redact_output(_get_message(self))
+
+
+def _write_stderr(text: str) -> None:
+    stream = sys.stderr
+    if stream is None:
+        return
+    try:
+        stream.write(_redact_output(text))
+        stream.flush()
+    except OSError:
+        pass
+
+
+def _handle_error(self: logging.Handler, record: logging.LogRecord) -> None:
+    """The standard library's report, redacted: it names the failed record's raw message and arguments."""
+    if not (logging.raiseExceptions and sys.stderr):
+        return
+    error = sys.exception()
+    report = ["--- Logging error ---\n", *traceback.format_exception(error), "Call stack:\n"]
+    frame = error.__traceback__.tb_frame if error and error.__traceback__ else None
+    while frame and os.path.dirname(frame.f_code.co_filename) == _LOGGING_DIRECTORY:
+        frame = frame.f_back
+    report.extend(traceback.format_stack(frame) if frame else
+                  [f"Logged from file {record.filename}, line {record.lineno}\n"])
+    try:
+        report.append("Message: %r\nArguments: %s\n" % (record.msg, record.args))
+    except RecursionError:
+        raise
+    except Exception:
+        report.append("Unable to print the message and arguments - possible type mismatch? "
+                      "Use %s for numeric values.\n")
+    _write_stderr("".join(report))
+
+
+def _excepthook(kind: type[BaseException], error: BaseException, trace: TracebackType | None) -> None:
+    _write_stderr("".join(traceback.format_exception(kind, error, trace)))
+
+
+def _thread_excepthook(args: threading.ExceptHookArgs) -> None:
+    if args.exc_type is SystemExit:
+        return
+    name = args.thread.name if args.thread is not None else threading.get_ident()
+    _write_stderr(f"Exception in thread {name}:\n"
+                  + "".join(traceback.format_exception(args.exc_type, args.exc_value, args.exc_traceback)))
+
+
+def _unraisablehook(unraisable: sys.UnraisableHookArgs) -> None:
+    report = []
+    if unraisable.object is not None:
+        try:
+            described = repr(unraisable.object)
+        except Exception:
+            described = "<object repr() failed>"
+        report.append(f"{unraisable.err_msg or 'Exception ignored in'}: {described}\n")
+    elif unraisable.err_msg:
+        report.append(f"{unraisable.err_msg}:\n")
+    report.extend(traceback.format_exception(unraisable.exc_type, unraisable.exc_value, unraisable.exc_traceback))
+    _write_stderr("".join(report))
+
+
+def _install_exception_hooks() -> None:
+    # A hook something else installed keeps its own output; the interpreter's defaults print raw text.
+    if sys.excepthook is sys.__excepthook__:
+        sys.excepthook = _excepthook
+    if threading.excepthook is threading.__excepthook__:
+        threading.excepthook = _thread_excepthook
+    if sys.unraisablehook is sys.__unraisablehook__:
+        sys.unraisablehook = _unraisablehook
 
 
 logging.Formatter.format = _secret_format
+logging.Handler.format = _secret_handler_format
+logging.Handler.handleError = _handle_error
+logging.LogRecord.getMessage = _secret_message
+_install_exception_hooks()
 
 
 def _valid_key(value: object) -> bool:
@@ -152,8 +273,18 @@ def _protect_directory(path: str, dacl: str = "D:P(A;OICI;FA;;;OW)") -> None:
         kernel.LocalFree(descriptor)
 
 
+def _api_proxy() -> str | None:
+    """The environment proxy for the API host, from the standard variables the bundled CLI also honours,
+    so Verify takes the route a turn takes. Read explicitly because trust_env stays off: ambient netrc
+    credentials and other environment settings never join a request that carries the key."""
+    proxies = urllib.request.getproxies_environment()
+    proxy = proxies.get("https") or proxies.get("http")
+    # With environment proxies present, proxy_bypass consults NO_PROXY rather than OS settings.
+    return None if not proxy or urllib.request.proxy_bypass(_API_HOST) else proxy
+
+
 def _new_client() -> httpx.Client:
-    return httpx.Client(timeout=5.0, trust_env=False, follow_redirects=False)
+    return httpx.Client(timeout=5.0, trust_env=False, follow_redirects=False, proxy=_api_proxy())
 
 
 class ClaudeConnection:
@@ -259,7 +390,7 @@ class ClaudeConnection:
         rejected = False
         try:
             with _new_client() as client:
-                response = client.get("https://api.anthropic.com/v1/models", headers={
+                response = client.get(f"https://{_API_HOST}/v1/models", headers={
                     "x-api-key": key, "anthropic-version": "2023-06-01",
                 })
             if response.status_code == 200:
@@ -269,7 +400,8 @@ class ClaudeConnection:
                 rejected = True
             else:
                 state, message = "error", "Anthropic could not verify the API key."
-        except httpx.HTTPError:
+        # ValueError/ImportError: an unusable proxy setting (unknown scheme, SOCKS without its extra).
+        except (httpx.HTTPError, ValueError, ImportError):
             state, message = "error", "Couldn't reach Anthropic."
         with self._lock:
             self._refresh_metadata()

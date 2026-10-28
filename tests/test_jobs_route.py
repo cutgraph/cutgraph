@@ -2,8 +2,8 @@
 
 In-process via httpx.ASGITransport, no GPU: compile is stubbed and the single-slot worker is disabled
 so approval just proves the ENQUEUE. Covers render_preview_segment (inline → preview path), the
-render_final human gate (needs-approval → approve → queued+enqueued), GET /api/jobs/{id}, and the
-reframe/source_broll {available:false} stubs.
+render_final human gate (needs-approval → approve → queued+enqueued), GET /api/jobs/{id}, reframe as
+a persisted compute job, and the unavailable source_broll kind.
 """
 from __future__ import annotations
 

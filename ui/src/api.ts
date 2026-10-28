@@ -343,7 +343,7 @@ export const api = {
   getProposals: (p: string, signal?: AbortSignal) =>
     fetch(`/api/chat/${encodeURIComponent(p)}/proposals`, { signal }).then(json<{ proposals: unknown[] }>),
 
-  // --- Claude editing tools detached jobs ---
+  // --- Assistant compute-tool detached jobs ---
   // Long GPU renders return an opaque jobId polled here; the expensive render_final is human-gated and
   // released with approveJob. Job transitions also stream as `job` SSE events (chip status/progress).
   approveJob: (id: string) =>

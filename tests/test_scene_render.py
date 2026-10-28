@@ -102,10 +102,8 @@ def test_an_unaligned_boundary_word_takes_its_timed_neighbour() -> None:
 
 # ── cache ───────────────────────────────────────────────────────────────────────────────────────────
 
-@pytest.mark.parametrize("source", ["staging.ts", "ideas.ts"])
-def test_camera_and_diagram_source_changes_invalidate_cached_scenes(
-    source: str, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
-) -> None:
+def _motion_copy(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    """A private copy of what draws a scene, used in place of motion-core so a test can edit it."""
     motion = tmp_path / "motion"
     shutil.copytree(scene_render.MOTION_CORE / "src", motion / "src")
     shutil.copytree(scene_render.MOTION_CORE / "scripts", motion / "scripts")
@@ -114,6 +112,14 @@ def test_camera_and_diagram_source_changes_invalidate_cached_scenes(
     shutil.copyfile(scene_render.RENDERER, renderer)
     monkeypatch.setattr(scene_render, "MOTION_CORE", motion)
     monkeypatch.setattr(scene_render, "RENDERER", renderer)
+    return motion
+
+
+@pytest.mark.parametrize("source", ["staging.ts", "ideas.ts"])
+def test_camera_and_diagram_source_changes_invalidate_cached_scenes(
+    source: str, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    motion = _motion_copy(tmp_path, monkeypatch)
     request = scene_render.render_request(scene_render.scene_specs(_doc(), WORDS)[0], width=1920, height=1080, fps=30)
     before = scene_render.motion_core_version()
     path = motion / "src" / source
@@ -160,6 +166,23 @@ def test_unchanged_scenes_never_rerender(state: Path, renders: list[dict]) -> No
 
     again, rendered_again = scene_render.ensure_scenes(_doc(), root=state)
     assert rendered_again == 0 and again == layers and len(renders) == 2
+
+
+@pytest.mark.parametrize("source", ["src/staging.ts", "src/draw.ts", "scripts/node-env.ts", "bin/render-scene.ts"])
+def test_an_edit_to_the_drawing_rerenders_every_cached_scene_once(
+    source: str, state: Path, renders: list[dict], monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    motion = _motion_copy(state, monkeypatch)
+    before, rendered = scene_render.ensure_scenes(_doc(), root=state)
+    assert rendered == 2 and scene_render.ensure_scenes(_doc(), root=state) == (before, 0)
+    path = motion / source
+    path.write_bytes(path.read_bytes() + b"\n")
+    after, rerendered = scene_render.ensure_scenes(_doc(), root=state)
+    assert rerendered == 2 and renders[2:] == renders[:2], "the same scenes render again, unchanged"
+    assert [layer.path for layer in after] != [layer.path for layer in before]
+    assert [(x.startF, x.durF, x.alpha) for x in after] == [(x.startF, x.durF, x.alpha) for x in before]
+    assert all(Path(layer.path).exists() for layer in after)
+    assert scene_render.ensure_scenes(_doc(), root=state) == (after, 0), "then they are served from the cache"
 
 
 def test_the_plan_names_each_scene_and_the_render_it_waits_for(state: Path, renders: list[dict]) -> None:

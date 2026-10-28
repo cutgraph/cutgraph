@@ -1,4 +1,4 @@
-"""Independent layout and camera cases shared with the TypeScript preview."""
+"""Preview/export staging parity on synthetic prose covered by the project licence. Independent single-scene layout, camera and screen cases, with screen images resolved through the video's workspace library before the brand kit. Regenerate with tests/fixtures/generate.py; the TypeScript consumer is an independent check."""
 from __future__ import annotations
 
 import json

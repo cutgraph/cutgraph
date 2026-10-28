@@ -17,6 +17,7 @@ import { domEnv } from "../../../preview/SceneLayer";
 import { resolveMedia } from "../../../preview/resolveMedia";
 import { useSourceProxy } from "../../../preview/sourceProxy";
 import { applyLocal, useProjectStore } from "../../../store/useProjectStore";
+import { useDraft } from "../../common";
 import { speechClipAt, timelineToSrc } from "../../../transcript/cutmap";
 import type { Costar, Project } from "../../../types/project";
 import { brandOf, castShot, characterFor, expressionName, isBuiltInExpression, performerOf, rigOf, type Cast } from "../../library/cast";
@@ -97,10 +98,10 @@ export default function ShotSheet() {
   const span = index >= 0 ? spans[index] : null;
   const scene = span?.scene ?? null;
   const stored = scene?.shot?.headline ?? "";
-  const [draft, setDraft] = useState(stored);
+  const [draft, setDraft] = useDraft(stored, sceneId);
   const cancelBlur = useRef(false);
   const storedEyebrow = scene?.shot?.eyebrow;
-  const [eyebrowDraft, setEyebrowDraft] = useState(storedEyebrow ?? "");
+  const [eyebrowDraft, setEyebrowDraft] = useDraft(storedEyebrow ?? "", sceneId);
   const cancelEyebrowBlur = useRef(false);
 
   const takes = useSceneTakes(takesKey(project?.name ?? "", sceneId ?? ""));
@@ -109,9 +110,7 @@ export default function ShotSheet() {
     if (project && sceneId && scene) noteTake(takesKey(project.name, sceneId), storedShot);
   }, [project, sceneId, scene, storedShot]);
 
-  useEffect(() => setDraft(stored), [sceneId, stored]);
   useEffect(() => setCopied(false), [sceneId, showCode]);
-  useEffect(() => setEyebrowDraft(storedEyebrow ?? ""), [sceneId, storedEyebrow]);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent): void => {

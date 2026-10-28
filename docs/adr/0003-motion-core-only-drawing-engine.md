@@ -39,8 +39,8 @@ the player with the Video document's playhead through `usePlayerSync`.
   Font and rendering parity checks still cover differences between the hosts.
 - Export requires Node beside Python. Scene cache keys include drawing code and
   render inputs, so drawing changes invalidate cached scenes.
-- Player names describe product concepts. Preview callers use the product API,
-  and a surface guard checks its documented exports and members.
+- Preview callers use the documented player API, and a surface guard checks its
+  exports and members.
 - Browser media events remain native to HTML media elements; they are separate
   from the frame player's events.
 

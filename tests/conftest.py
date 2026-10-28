@@ -78,6 +78,9 @@ def _studio_agent_credentials(monkeypatch: pytest.MonkeyPatch) -> None:
 
     # Route tests use fake sessions and a synthetic API key; credential tests remove this override.
     monkeypatch.setenv("ANTHROPIC_API_KEY", "test-agent-key-value")
+    # Synthetic stock keys such as "key" would otherwise redact ordinary words from later tests' logs.
+    monkeypatch.setattr(agent_credentials, "_log_secrets", set())
+    monkeypatch.setattr(agent_credentials, "_log_pattern", None)
     monkeypatch.setattr(agent_credentials, "_new_client", lambda: httpx.Client(
         transport=httpx.MockTransport(lambda _request: httpx.Response(200))))
     connection = agent_credentials.ClaudeConnection()

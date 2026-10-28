@@ -139,6 +139,25 @@ def test_proxy_thread_is_tracked_and_kills_owned_child(monkeypatch) -> None:
         assert not studio_state._OWNED_PROCESSES
 
 
+def test_taskkill_resolves_from_system_directory_not_working_directory(monkeypatch, tmp_path) -> None:
+    (tmp_path / "taskkill.exe").write_bytes(b"")
+    system_root = tmp_path / "Windows"
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("PATH", str(tmp_path))
+    monkeypatch.setenv("SystemRoot", str(system_root))
+
+    assert compute._taskkill_command(1234) == [
+        str(system_root / "System32" / "taskkill.exe"), "/PID", "1234", "/T", "/F",
+    ]
+
+
+def test_taskkill_is_skipped_without_an_absolute_system_directory(monkeypatch) -> None:
+    monkeypatch.setenv("SystemRoot", "Windows")
+    assert compute._taskkill_command(1234) is None
+    monkeypatch.delenv("SystemRoot")
+    assert compute._taskkill_command(1234) is None
+
+
 def test_lifespan_closes_agent_children(monkeypatch) -> None:
     calls: list[str] = []
 

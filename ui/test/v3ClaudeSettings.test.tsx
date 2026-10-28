@@ -48,6 +48,18 @@ it("shows the environment override instead of credential controls", async () => 
   expect(screen.queryByRole("button", { name: "Disconnect saved key" })).toBeNull();
 });
 
+it("lets an environment key retry verification after a transient failure", async () => {
+  mocks.status.mockResolvedValue({ connected: true, state: "error", source: "environment", message: "Couldn't reach Anthropic." });
+  mocks.verify.mockResolvedValue({ connected: true, state: "ready", source: "environment" });
+  render(<Settings />);
+  expect(await screen.findByText("Couldn't reach Anthropic.")).toBeTruthy();
+  fireEvent.click(screen.getByRole("button", { name: "Verify" }));
+  expect(await within(screen.getByRole("group", { name: "Assistant key" })).findByText("Ready")).toBeTruthy();
+  expect(mocks.verify).toHaveBeenCalledOnce();
+  expect(screen.queryByText("Couldn't reach Anthropic.")).toBeNull();
+  expect(screen.queryByLabelText("Anthropic API key")).toBeNull();
+});
+
 it("connects, checks, clears the key input and disconnects", async () => {
   let finish!: (value: { connected: boolean; state: string }) => void;
   mocks.connect.mockImplementation(() => new Promise((resolve) => { finish = resolve; }));

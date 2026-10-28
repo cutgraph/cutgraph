@@ -18,6 +18,11 @@ from scripts import agent_host, studio_app
 from studio.routes import chat
 from scripts.public_markdown import reachable_files
 
+from pipeline import agent_credentials as _credentials
+
+# Captured at collection, before the root conftest replaces the client factory for every test.
+_REAL_NEW_CLIENT = _credentials._new_client
+
 
 @pytest.fixture(autouse=True)
 def isolated_credentials(tmp_path, monkeypatch):
@@ -159,10 +164,12 @@ def test_invalid_key_is_not_stored(value):
 
 
 def test_product_has_no_cli_login_or_cli_branding():
+    # Walks the tree and its links rather than asking git, so an archive without a checkout is scanned too.
     root = Path(__file__).resolve().parents[1]
     paths = []
     for folder in ("scripts", "pipeline", "studio", "ui/src"):
-        paths.extend(path for path in (root / folder).rglob("*") if path.suffix in {".py", ".ts", ".tsx"})
+        paths.extend(path for path in (root / folder).rglob("*") if path.suffix in {".py", ".ts", ".tsx", ".md"})
+    paths.extend((root / "motion-core").glob("*.md"))
     paths.extend(root / name for name in reachable_files(root) if name.endswith(".md"))
     for path in paths:
         text = path.read_text(encoding="utf-8").lower()
@@ -170,8 +177,19 @@ def test_product_has_no_cli_login_or_cli_branding():
             assert forbidden not in text, path.relative_to(root)
 
 
-@pytest.mark.parametrize("name", ["SECURITY.md", "docs/getting-started.md", "docs/privacy.md"])
-def test_copy_scan_checks_reachable_markdown(monkeypatch, name):
+def test_copy_scan_needs_no_git_checkout(monkeypatch):
+    import subprocess
+
+    def no_git(*_args, **_kwargs):
+        raise AssertionError("the copy scan started a process")
+
+    monkeypatch.setattr(subprocess, "Popen", no_git)
+    test_product_has_no_cli_login_or_cli_branding()
+
+
+@pytest.mark.parametrize("name", ["SECURITY.md", "docs/getting-started.md", "docs/privacy.md",
+                                  "pipeline/prompts/copilot.md", "motion-core/CHARACTERS.md"])
+def test_copy_scan_checks_public_markdown(monkeypatch, name):
     root = Path(__file__).resolve().parents[1]
     original = Path.read_text
 
@@ -317,3 +335,44 @@ def test_warm_sdk_session_rebuilds_for_replaced_key_and_refuses_after_disconnect
     assert clients[0].turns == ["first"]
     assert clients[1].turns == ["second"]
     assert all(client.closed for client in clients)
+
+
+def _proxy_environment(monkeypatch, env: dict[str, str]) -> None:
+    for name in list(os.environ):
+        if name.lower().endswith("_proxy"):
+            monkeypatch.delenv(name)
+    for name, value in env.items():
+        monkeypatch.setenv(name, value)
+
+
+@pytest.mark.parametrize("env,expected", [
+    ({"HTTPS_PROXY": "http://proxy.test:8080"}, "http://proxy.test:8080"),
+    ({"HTTP_PROXY": "http://plain.test:3128"}, "http://plain.test:3128"),
+    ({"HTTPS_PROXY": "http://proxy.test:8080", "HTTP_PROXY": "http://plain.test:3128"}, "http://proxy.test:8080"),
+    ({"HTTPS_PROXY": "http://proxy.test:8080", "NO_PROXY": "api.anthropic.com"}, None),
+    ({"HTTPS_PROXY": "http://proxy.test:8080", "NO_PROXY": ".anthropic.com"}, None),
+    ({}, None),
+])
+def test_verify_takes_the_environment_proxy_without_trusting_the_environment(monkeypatch, env, expected):
+    from pipeline import agent_credentials
+
+    _proxy_environment(monkeypatch, env)
+    built = []
+    monkeypatch.setattr(httpx, "Client", lambda **kwargs: built.append(kwargs) or SimpleNamespace())
+    assert agent_credentials._api_proxy() == expected
+    _REAL_NEW_CLIENT()
+    assert built == [{"timeout": 5.0, "trust_env": False, "follow_redirects": False, "proxy": expected}]
+
+
+@pytest.mark.parametrize("proxy", ["ftp://proxy.test:21", "not a url"])
+def test_unusable_proxy_reports_unreachable_instead_of_stalling(monkeypatch, proxy):
+    from pipeline import agent_credentials
+
+    _proxy_environment(monkeypatch, {"HTTPS_PROXY": proxy})
+    monkeypatch.setattr(agent_credentials, "_new_client", _REAL_NEW_CLIENT)
+    secret_store.set("anthropic-api-key", "test-api-secret-value")
+    connection = agent_credentials.ClaudeConnection()
+    status = connection.verify()
+    assert status["state"] == "error" and status["message"] == "Couldn't reach Anthropic."
+    assert "test-api-secret-value" not in str(status)
+    assert connection.status()["state"] == "error"

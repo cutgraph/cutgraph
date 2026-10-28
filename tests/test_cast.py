@@ -7,6 +7,8 @@ from __future__ import annotations
 import asyncio
 import json
 import re
+import threading
+import time
 from collections.abc import Awaitable
 from pathlib import Path
 from typing import TypeVar
@@ -445,6 +447,87 @@ def test_a_hand_edited_file_is_read_defensively(state: Path) -> None:
     assert _ids(None) == [DEFAULT_RIG]
 
 
+def test_a_file_saved_with_a_byte_order_mark_keeps_its_characters(state: Path) -> None:
+    garden = _client("Garden")
+    path = config.WORKSPACES_DIR / garden / "cast.json"
+    stored = {"note": 1.50, "default": "buddy", "characters": [{"id": "buddy", "name": "Buddy", "rig": "lens"}]}
+    path.write_bytes(b"\xef\xbb\xbf" + json.dumps(stored, indent=2).replace("1.5", "1.50").encode("utf-8"))
+    assert _ids(garden) == [DEFAULT_RIG, "buddy"]
+    assert cast.video_cast(garden)["default"] == "buddy"
+
+    cast.create_character(garden, "Pal")
+    source = path.read_bytes()
+    assert not source.startswith(b"\xef\xbb\xbf")
+    assert b'"note": 1.50' in source, "opaque members keep their bytes"
+    assert [c["id"] for c in json.loads(source)["characters"]] == ["buddy", "pal"]
+
+
+@pytest.mark.parametrize("source", [
+    b"{not json", b'{"characters": [', b"\xff\xfe{}", b"[]", b'"cast"', b'{"characters": {"buddy": {}}}',
+])
+def test_an_unreadable_file_is_never_overwritten(source: bytes) -> None:
+    garden = _client("Garden")
+    path = config.WORKSPACES_DIR / garden / "cast.json"
+    path.write_bytes(source)
+    assert _ids(garden) == [DEFAULT_RIG], "it reads as empty"
+    with pytest.raises(cast.CastUnreadable, match="repair or remove it"):
+        cast.create_character(garden, "Pal")
+    with pytest.raises(cast.CastUnreadable):
+        cast.set_default(garden, None)
+    assert path.read_bytes() == source
+    assert [p.name for p in path.parent.iterdir() if p.name.startswith(".cast.json.")] == [], "no temp file is left"
+
+    cast.create_character("brand", "Buddy")
+    assert _ids(garden) == [DEFAULT_RIG, "buddy"], "other workspaces stay writable"
+
+    refused = _run(_call("POST", "/api/cast/characters", json={"workspace": garden, "name": "Pal"}))
+    assert refused.status_code == 409 and "cast.json" in refused.json()["error"]
+    assert path.read_bytes() == source
+
+    path.unlink()
+    assert cast.create_character(garden, "Pal")["id"] == "pal"
+
+
+def test_concurrent_writes_all_land_and_readers_never_meet_a_partial_file(state: Path) -> None:
+    garden = _client("Garden")
+    names = [f"Pal {i}" for i in range(8)]
+    start = threading.Barrier(len(names) + 1)
+    done = threading.Event()
+    failures: list[BaseException] = []
+
+    def write(name: str) -> None:
+        try:
+            start.wait()
+            created = cast.create_character(garden, name)
+            cast.create_expression(created["id"], "Smug", SMUG)
+        except Exception as e:
+            failures.append(e)
+
+    def read() -> None:
+        start.wait()
+        while not done.is_set():
+            try:
+                cast._load(garden)
+            except Exception as e:
+                failures.append(e)
+                return
+            # Pause between reads: Windows refuses a replace while a reader holds the file open.
+            time.sleep(0.002)
+
+    writers = [threading.Thread(target=write, args=(name,)) for name in names]
+    reader = threading.Thread(target=read)
+    for thread in (*writers, reader):
+        thread.start()
+    for thread in writers:
+        thread.join()
+    done.set()
+    reader.join()
+    assert failures == []
+    stored = json.loads((config.WORKSPACES_DIR / garden / "cast.json").read_text(encoding="utf-8"))
+    assert sorted(c["id"] for c in stored["characters"]) == sorted(f"pal-{i}" for i in range(8))
+    assert all([e["id"] for e in c["expressions"]] == ["smug"] for c in stored["characters"])
+
+
 # ── resolving a scene's shot ────────────────────────────────────────────────────────────────────────
 
 def test_resolve_shot_casts_the_profiles_rig_and_its_custom_expressions() -> None:
@@ -575,6 +658,9 @@ def _run(coro: Awaitable[T]) -> T:
     return asyncio.run(coro)  # type: ignore[arg-type]
 
 
+JSON = {"content-type": "application/json"}
+
+
 async def _call(method: str, url: str, **kw) -> httpx.Response:
     transport = httpx.ASGITransport(app=studio_app.app)
     async with httpx.AsyncClient(transport=transport, base_url="http://studio.test") as client:
@@ -660,7 +746,7 @@ def test_character_usage_counts_the_animated_scenes_that_draw_it(monkeypatch: py
 def test_the_character_routes_reject_bad_input() -> None:
     assert _run(_call("POST", "/api/cast/characters", json={"workspace": "ghost", "name": "X"})).status_code == 400
     assert _run(_call("POST", "/api/cast/characters", json={"workspace": "brand", "name": "X", "rig": "dragon"})).status_code == 400
-    assert _run(_call("POST", "/api/cast/characters", content=b"{nope")).status_code == 400
+    assert _run(_call("POST", "/api/cast/characters", content=b"{nope", headers=JSON)).status_code == 400
     _run(_call("POST", "/api/cast/characters", json={"workspace": "brand", "name": "Buddy"}))
     assert _run(_call("POST", "/api/cast/characters", json={"workspace": "brand", "name": "buddy"})).status_code == 409
 
@@ -697,7 +783,7 @@ def test_the_expression_routes_draft_and_approve() -> None:
 
 def test_the_expression_routes_reject_bad_input() -> None:
     assert _run(_call("POST", "/api/cast/expressions", json={"name": "Odd", "spec": {**SMUG, "eyes": "x"}})).status_code == 400
-    assert _run(_call("POST", "/api/cast/expressions", content=b"{nope")).status_code == 400
+    assert _run(_call("POST", "/api/cast/expressions", content=b"{nope", headers=JSON)).status_code == 400
     assert _run(_call("POST", "/api/cast/expressions", json=["Smug"])).status_code == 400
     conflict = _run(_call("POST", "/api/cast/expressions", json={"name": "Curious", "spec": SMUG}))
     assert conflict.status_code == 409 and "built-in" in conflict.json()["error"]

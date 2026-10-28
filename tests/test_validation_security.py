@@ -8,6 +8,7 @@ import subprocess
 import sys
 import threading
 from pathlib import Path
+from typing import Any
 
 import httpx
 import pytest
@@ -185,7 +186,7 @@ def test_errors_are_public_and_logged(tmp_path: Path, monkeypatch: pytest.Monkey
         transport = httpx.ASGITransport(app=app, raise_app_exceptions=False)
         async with httpx.AsyncClient(transport=transport, base_url="http://studio.test") as client:
             responses = [await client.get("/api/project/missing"),
-                         await client.post("/api/projects", content=b"{"),
+                         await client.post("/api/projects", content=b"{", headers={"content-type": "application/json"}),
                          await client.put("/api/project/video", json={
                              "project": {"name": "video", "fps": 0, "tracks": []}, "baseRevision": 0,
                          })]
@@ -634,11 +635,9 @@ def test_third_party_tool_discovery_uses_startup_paths(tmp_path: Path, monkeypat
         path.chmod(0o755)
     monkeypatch.setattr(runtime_tools, "_TOOLS", tools)
     monkeypatch.setenv("PATH", os.environ.get("PATH", ""))
-    monkeypatch.setenv("IMAGEIO_FFMPEG_EXE", "previous")
     runtime_tools.configure_process_environment()
     assert os.environ["PATH"].split(os.pathsep)[0] == str(tmp_path)
     assert Path(shutil.which("ffmpeg") or "").resolve() == tools["ffmpeg"]
-    assert os.environ["IMAGEIO_FFMPEG_EXE"] == str(tools["ffmpeg"])
 
 
 @pytest.mark.parametrize("platform", [
@@ -694,7 +693,6 @@ def test_workspace_existing_name_bounds(tmp_path: Path, monkeypatch: pytest.Monk
 def test_process_tool_configuration_is_idempotent(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(runtime_tools, "_TOOLS", {name: tmp_path / f"{name}.exe" for name in ("ffmpeg", "ffprobe")})
     monkeypatch.setenv("PATH", os.environ.get("PATH", ""))
-    monkeypatch.setenv("IMAGEIO_FFMPEG_EXE", "previous")
     runtime_tools.configure_process_environment()
     first = os.environ["PATH"]
     runtime_tools.configure_process_environment()
@@ -1217,3 +1215,171 @@ def test_an_unlistable_parent_does_not_raise(monkeypatch: pytest.MonkeyPatch, tm
 
     monkeypatch.setattr(names.os, "listdir", refuse)
     assert names.exact_path(root / "inner" / "file.json", root) == root / "inner" / "file.json"
+
+
+WORDS = '{"segments": [{"words": [{"word": "Hello", "start": 0, "end": 1}]}]}'
+REFRAME = ('{"clip_id": "clip", "aspect_ratio": "1080:1920", "face_coverage_pct": 90.0, "frame_crops": ['
+           '{"frame_number": 0, "timestamp": 0.0, "cx": 960, "cy": 540,'
+           ' "crop_x": 690, "crop_y": 60, "crop_w": 540, "crop_h": 960}]}')
+
+
+def _speech_doc(source: str, **extra: Any) -> dict[str, Any]:
+    return {"name": "video", "fps": 30, "width": 1080, "height": 1920, "tracks": [{
+        "id": "speech", "kind": "speech", "clips": [{"id": "clip", "media": {"source": source},
+                                                    "srcInF": 0, "srcOutF": 30, "tlStartF": 0}],
+    }], **extra}
+
+
+def _stub_probes(monkeypatch: pytest.MonkeyPatch) -> None:
+    from pipeline import compile as compiler
+
+    monkeypatch.setattr(compiler, "_probe_transfer", lambda *args: "")
+    monkeypatch.setattr(compiler, "_probe_has_audio", lambda *args: False)
+
+
+@pytest.mark.parametrize("source", [
+    "data/source/CON.mp4", "data/source/nul.mov", "media/aux/clip.mp4", "media/COM1.wav",
+    "media/clip.backup/take.mp4", "data/source/bad.name.mp4", "data/source/café.mp4",
+    "media/clip /take.mp4", "media/../take.mp4", "NUL/video.mp4",
+])
+def test_document_media_paths_follow_the_name_rules(source: str, tmp_path: Path,
+                                                   monkeypatch: pytest.MonkeyPatch) -> None:
+    from pipeline import compile as compiler
+    from pipeline import project
+    from pipeline.errors import ValidationError
+
+    monkeypatch.setattr(config, "PROJECTS_DIR", tmp_path)
+    doc = _speech_doc(source)
+    put = asyncio.run(_request("PUT", "/api/project/video", json={"project": doc, "baseRevision": 0}))
+    patch = asyncio.run(_request("PATCH", "/api/project/video", json={"baseRevision": 0, "ops": [
+        {"op": "add", "path": "/tracks/-", "value": doc["tracks"][0]}]}))
+    assert [put.status_code, patch.status_code] == [400, 400]
+    assert not (tmp_path / "video.json").exists()
+    with_proxy = _speech_doc("data/source/video.mp4")
+    with_proxy["tracks"][0]["clips"][0]["media"]["proxy"] = source
+    for rejected in (doc, with_proxy):
+        with pytest.raises(ValidationError):
+            compiler.build_plan(rejected, project_dir=tmp_path)
+    with pytest.raises(ValidationError):
+        project.resolve_media(tmp_path, project.Media(source=source), prefer_proxy=False)
+
+
+@pytest.mark.parametrize("source", [
+    "data/source/video.mp4", "data/source/CON_script.mp4", "data/source/NUL_take1.MOV",
+    "data/source/CON__9x16.mp4", "data/project-media/" + "v" * 200 + "__9x16/Picture.png",
+    "outputs/proxies/" + "v" * 200 + "_take1_540.mp4", "workspaces/ws-1/library/asset_1.png",
+    "outputs/thumbnails/" + "a" * 64 + ".png", "media/b-roll/Clip_01.webm",
+])
+def test_document_media_paths_accept_portable_names(source: str, tmp_path: Path,
+                                                    monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(config, "PROJECTS_DIR", tmp_path)
+    response = asyncio.run(_request("PUT", "/api/project/video", json={
+        "project": _speech_doc(source), "baseRevision": 0}))
+    assert response.status_code == 200
+    assert response.json()["project"]["tracks"][0]["clips"][0]["media"]["source"] == source
+
+
+@pytest.mark.parametrize("source", ["data/source/CON__9x16.mp4", "data/source/NUL_take1.MOV",
+                                    "outputs/proxies/video_540.mp4"])
+def test_compiler_resolves_portable_media_names(source: str, tmp_path: Path,
+                                                monkeypatch: pytest.MonkeyPatch) -> None:
+    from pipeline import compile as compiler
+    from pipeline import project
+
+    _stub_probes(monkeypatch)
+    media = tmp_path / source
+    media.parent.mkdir(parents=True)
+    media.touch()
+    assert project.resolve_media(tmp_path, project.Media(source=source), prefer_proxy=False) == media
+    assert str(media) in compiler.build_plan(_speech_doc(source), project_dir=tmp_path).inputs
+
+
+@pytest.mark.parametrize("name", ["CON__9x16", "NUL__3840x2160", "aux__1x1"])
+def test_literal_render_like_upload_becomes_a_same_named_video(name: str, tmp_path: Path,
+                                                               monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(config, "STATE_HOME", tmp_path)
+    monkeypatch.setattr(config, "DATA_DIR", tmp_path / "data" / "source")
+    monkeypatch.setattr(config, "PROJECTS_DIR", tmp_path / "projects")
+    config.DATA_DIR.mkdir(parents=True)
+    monkeypatch.setattr(compute, "_spawn_proxy", lambda *args, **kwargs: None)
+    monkeypatch.setattr(compute, "_enqueue_transcribe", lambda *args, **kwargs: {"status": "queued"})
+    monkeypatch.setattr(compute, "_gpu_run", lambda fn, *args: fn(*args))
+    monkeypatch.setattr(helpers, "_source_duration_frames", lambda *args: 30)
+    monkeypatch.setattr(helpers, "_project_dimensions_for_source", lambda *args: (1080, 1920))
+    assert names.project_name(name) == names.project_name(name, creating=True) == name
+    assert asyncio.run(_request("PUT", f"/upload/{name}.mp4", content=b"source")).status_code == 200
+    created = asyncio.run(_request("POST", "/api/projects", json={"project": name, "source": name}))
+    assert created.status_code == 201
+    assert created.json()["project"]["tracks"][0]["clips"][0]["media"]["source"] == f"data/source/{name}.mp4"
+    loaded = asyncio.run(_request("GET", f"/api/project/{name}"))
+    assert loaded.status_code == 200 and loaded.json()["project"]["name"] == name
+
+
+def test_render_like_names_still_need_a_valid_base() -> None:
+    assert names.project_name("v" * 200 + "__9x16") == "v" * 200 + "__9x16"
+    for rejected in ("CON", "v" * 201 + "__9x16", "a/b__9x16", "../video__9x16", "café__9x16"):
+        assert names.project_name(rejected) is None
+        assert names.project_name(rejected, creating=True) is None
+
+
+@pytest.mark.parametrize("look", ["outline", "pill"])
+def test_preview_captions_check_transcript_spelling(look: str, tmp_path: Path,
+                                                    monkeypatch: pytest.MonkeyPatch) -> None:
+    from pipeline import compile as compiler
+
+    _stub_probes(monkeypatch)
+    transcripts = tmp_path / "outputs" / "transcripts"
+    transcripts.mkdir(parents=True)
+    (transcripts / "Video.words.json").write_text(WORDS, encoding="utf-8")
+    doc = _speech_doc("data/source/video.mp4", captions={"enabled": True, "style": {"look": look}})
+    with pytest.raises(names.NameNotFound):
+        compiler.build_plan(doc, project_dir=tmp_path, window=(0, 30))
+    (transcripts / "Video.words.json").rename(transcripts / "video.words.json")
+    assert "ass=" in compiler.build_plan(doc, project_dir=tmp_path, window=(0, 30)).filter_complex
+
+
+@pytest.mark.parametrize("meta_path", [None, "outputs/reframe/video.reframe.json"])
+def test_preview_crop_metadata_checks_spelling(meta_path: str | None, tmp_path: Path,
+                                               monkeypatch: pytest.MonkeyPatch) -> None:
+    from pipeline import compile as compiler
+
+    _stub_probes(monkeypatch)
+    sidecars = tmp_path / "outputs" / "reframe"
+    sidecars.mkdir(parents=True)
+    (sidecars / "Video.reframe.json").write_text(REFRAME, encoding="utf-8")
+    crop = {"mode": "reframe", **({"metaPath": meta_path} if meta_path else {})}
+    doc = _speech_doc("data/source/video.mp4", crop=crop)
+    with pytest.raises(names.NameNotFound):
+        compiler.build_plan(doc, project_dir=tmp_path, window=(0, 30))
+    (sidecars / "Video.reframe.json").rename(sidecars / "video.reframe.json")
+    assert "crop=540:960:690:60" in compiler.build_plan(doc, project_dir=tmp_path, window=(0, 30)).filter_complex
+
+
+def test_crop_metadata_stays_inside_the_project(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from pipeline import compile as compiler
+
+    _stub_probes(monkeypatch)
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    (outside / "video.reframe.json").write_text(REFRAME, encoding="utf-8")
+    root = tmp_path / "root"
+    root.mkdir()
+    _link_directory(root / "linked", outside)
+    doc = _speech_doc("data/source/video.mp4", crop={"mode": "reframe", "metaPath": "linked/video.reframe.json"})
+    with pytest.raises(names.NameNotFound):
+        compiler.build_plan(doc, project_dir=root, window=(0, 30))
+
+
+@pytest.mark.parametrize("meta_path", ["CON.reframe.json", "NUL/video.reframe.json", "outputs/reframe/aux",
+                                       "../video.reframe.json", "outputs/re frame/video.reframe.json"])
+def test_crop_metadata_paths_follow_the_name_rules(meta_path: str, tmp_path: Path,
+                                                   monkeypatch: pytest.MonkeyPatch) -> None:
+    from pipeline import project
+    from pipeline.errors import ValidationError
+
+    monkeypatch.setattr(config, "PROJECTS_DIR", tmp_path)
+    doc = _speech_doc("data/source/video.mp4", crop={"mode": "reframe", "metaPath": meta_path})
+    with pytest.raises(ValidationError):
+        project.validate(project.from_dict(doc))
+    response = asyncio.run(_request("PUT", "/api/project/video", json={"project": doc, "baseRevision": 0}))
+    assert response.status_code == 400

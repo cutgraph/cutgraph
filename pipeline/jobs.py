@@ -468,6 +468,9 @@ def all_persisted() -> dict[str, dict]:
         return result
 
 
+_RECOVERY_FIELDS = ("recoveryReason", "recoveredAt", "recoveryPreviousStatus")
+
+
 def recover_interrupted() -> dict[str, dict]:
     """Fail closed for durable jobs abandoned by a previous application instance.
 
@@ -506,9 +509,14 @@ def recover_interrupted() -> dict[str, dict]:
                 "status": next_status,
                 "recoveryReason": reason,
                 "recoveredAt": _created_at(),
+                "recoveryPreviousStatus": status,
             }
-            if reason == "unsupported_job_status":
-                updated.setdefault("recoveryPreviousStatus", status)
+            # Earlier recovery metadata moves to a private history, so the current entry always
+            # describes this recovery and the status it replaced.
+            earlier = {name: job[name] for name in _RECOVERY_FIELDS if name in job}
+            if earlier:
+                history = job.get("recoveryHistory")
+                updated["recoveryHistory"] = [*(history if isinstance(history, list) else []), earlier]
             _registry[job_id] = updated
             _atomic_write(job_id, updated)
             recovered[job_id] = updated

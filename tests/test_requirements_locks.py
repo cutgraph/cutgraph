@@ -230,11 +230,11 @@ def test_all_addons_agree_on_shared_non_core_packages():
 
 
 @pytest.mark.parametrize("stem,digest,hooks", [
-    ("local-ai-cpu", "d5234acf671d00b8b3cdcce5a552222ee81f8d987d0f77f1a350e97806f4f0bb",
-     {"setuptools==84.0.0": {"distutils-precedence.pth"}}),
-    ("local-ai-nvidia", "886f87a00dc9a1f6ff5fd600d0f05619f50b323f72e91f87519bbb399a957638",
-     {"setuptools==84.0.0": {"distutils-precedence.pth"}}),
-    ("agent", "a3037f7f5eb2d44c1d589aa5540868188b9daefc99fd0ff8ca5d81eca9fa7dc4",
+    ("local-ai-cpu", "2ecf4b228eeab2aa7f2af935a68ab9f7ea3b1f799c43b82f6ef6d659877996e2",
+     {"setuptools==84.1.0": {"distutils-precedence.pth"}}),
+    ("local-ai-nvidia", "b688b830fbf2e9fab6f20e9e5cb339b7c031ca036e579b00bdf2944655d9b5cd",
+     {"setuptools==84.1.0": {"distutils-precedence.pth"}}),
+    ("agent", "442483f3642db00dc7e29fe763f9d75ba31a44529ed7d36da0a2b2f9205bea7e",
      {"pywin32==312": {"pywin32.pth"}}),
 ])
 def test_addon_locks_keep_the_reviewed_wheel_startup_hook_inventory(stem, digest, hooks):

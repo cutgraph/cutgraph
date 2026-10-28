@@ -94,10 +94,23 @@ def cleanup_stale_uploads() -> None:
                 continue
 
 
+def _is_json_media_type(content_type: str) -> bool:
+    return content_type.partition(";")[0].strip().lower() == "application/json"
+
+
 async def read_json(request: Request, limit: int | None = None) -> Any:
+    """Parse a JSON route body, requiring a JSON Content-Type for any body that is sent.
+
+    A bodyless request without a Content-Type (a bare POST or DELETE action) reads as `{}`.
+    """
+    content_type = request.headers.get("content-type")
+    if content_type is not None and not _is_json_media_type(content_type):
+        raise BodyReadError(415, "expected application/json")
     body = bytearray()
     async for chunk in limited_stream(request, config.MAX_JSON_BODY_BYTES if limit is None else limit):
         body.extend(chunk)
+    if body and content_type is None:
+        raise BodyReadError(415, "expected application/json")
     try:
         return json.loads(body or b"{}")
     except UnicodeDecodeError as e:
@@ -106,7 +119,7 @@ async def read_json(request: Request, limit: int | None = None) -> Any:
 
 def _safe(name: str) -> str | None:
     """A slug/clip_id is only ever used inside a file path — reject anything that isn't one."""
-    return names.project_name(name) or names.source_name(name)
+    return names.stored_name(name)
 
 
 def _safe_asset_filename(raw: str) -> str | None:

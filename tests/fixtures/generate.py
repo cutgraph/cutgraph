@@ -7,7 +7,9 @@ cast_shot_parity.json, thumbnail_parity.json and timeline_length_parity.json.
 script_video.json also generates script_video_golden.json. Outputs are deterministic UTF-8
 JSON; unchanged files are never written, so a second run is a no-op, including mtimes.
 The generated fixtures, including their synthetic prose and scripts, are covered by the project licence.
-words.json separates that text from the timing geometry (cuts, silence and an unaligned word).
+words.json holds only that text and its timingRecipe; this generator is the sole source of the word
+timestamps, and parity tests read them from the generated fixtures. Inputs that name other inputs
+must resolve inside inputs/.
 """
 from __future__ import annotations
 
@@ -25,6 +27,29 @@ sys.path.insert(0, str(ROOT))
 
 def _read(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _named_input(inputs: Path, name: str) -> dict:
+    # Resolving first refuses absolute names, traversal and links that leave inputs/.
+    path = (inputs / name).resolve()
+    if not path.is_relative_to(inputs.resolve()):
+        raise ValueError(f"Fixture input must stay inside inputs/: {name}")
+    return _read(path)
+
+
+def _recipe_words(word_input: dict) -> list[dict]:
+    if word_input.keys() != {"text", "timingRecipe"}:
+        raise ValueError("Word input holds only text and its timingRecipe; the generator owns the timestamps")
+    recipe = word_input["timingRecipe"]
+    cursor = recipe["start"]
+    words = []
+    for i, token in enumerate(word_input["text"].split()):
+        duration = recipe["duration"] + i % recipe["durationCycle"] * recipe["durationStep"]
+        aligned = i != recipe["unalignedWord"]
+        words.append({"w": token, "start": round(cursor, 3) if aligned else None,
+                      "end": round(cursor + duration, 3) if aligned else None})
+        cursor += duration + recipe["gap"] + recipe["pausesAfter"].get(str(i), 0)
+    return words
 
 
 def _screen_images(fixture: dict) -> None:
@@ -73,19 +98,7 @@ def generate(folder: Path) -> dict[str, dict | str]:
     from pipeline import project as project_mod, story_insert
 
     inputs = folder / "inputs"
-    word_input = _read(inputs / "words.json")
-    recipe = word_input["timingRecipe"]
-    cursor = recipe["start"]
-    timings = []
-    for i, _ in enumerate(word_input["text"].split()):
-        duration = recipe["duration"] + i % recipe["durationCycle"] * recipe["durationStep"]
-        timings.append([None, None] if i == recipe["unalignedWord"] else
-                       [round(cursor, 3), round(cursor + duration, 3)])
-        cursor += duration + recipe["gap"] + recipe["pausesAfter"].get(str(i), 0)
-    if timings != word_input["timings"]:
-        raise ValueError("Word timings must match the synthetic timing recipe")
-    words = [{"w": token, "start": start, "end": end}
-             for token, (start, end) in zip(word_input["text"].split(), word_input["timings"], strict=True)]
+    words = _recipe_words(_read(inputs / "words.json"))
     outputs: dict[str, dict | str] = {}
     for path in sorted(inputs.glob("*parity*.json")):
         fixture = _read(path)
@@ -94,7 +107,7 @@ def generate(folder: Path) -> dict[str, dict | str]:
             outputs[path.name] = fixture
             continue
         if "castInput" in fixture:
-            fixture["cast"] = _read(inputs / fixture.pop("castInput"))
+            fixture["cast"] = _named_input(inputs, fixture.pop("castInput"))
         if path.name.startswith("scene_specs_parity"):
             fixture["words"] = words
             for case in fixture.get("cases", [fixture]):
@@ -125,7 +138,7 @@ def generate(folder: Path) -> dict[str, dict | str]:
             rig_input = fixture.pop("rigInput", None)
             previous_rig = cast.RIGS.get("sample-rig")
             if rig_input:
-                cast.RIGS["sample-rig"] = _read(inputs / rig_input)
+                cast.RIGS["sample-rig"] = _named_input(inputs, rig_input)
             try:
                 for case in fixture["cases"]:
                     shot, custom = cast.resolve_shot(case["shot"], fixture["cast"])

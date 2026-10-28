@@ -38,8 +38,8 @@ def test_unknown_preset_coerces_to_caption() -> None:
 
 
 def test_design_scale_matches_motion_core() -> None:
-    """The 4K export's scale: motion-core scene.ts `designScale`, the same rule on both sides."""
+    """A frame's scale from the 1080-class design: motion-core scene.ts `designScale`, the same rule on both sides."""
     scene_ts = (Path(__file__).resolve().parents[1] / "motion-core" / "src" / "scene.ts").read_text(encoding="utf-8")
-    assert "export const designScale = (W: number, H: number): number => Math.max(1, Math.min(W, H) / 1080);" in scene_ts
-    sizes = [(1920, 1080), (1080, 1920), (1080, 1080), (320, 180), (3840, 2160), (2160, 3840), (2560, 1440)]
-    assert [layout.design_scale(w, h) for w, h in sizes] == [1, 1, 1, 1, 2, 2, 1440 / 1080]
+    assert "export const designScale = (W: number, H: number): number => Math.min(W, H) / 1080;" in scene_ts
+    sizes = [(1920, 1080), (1080, 1920), (1080, 1080), (1280, 720), (320, 180), (3840, 2160), (2160, 3840), (2560, 1440)]
+    assert [layout.design_scale(w, h) for w, h in sizes] == [1, 1, 1, 720 / 1080, 180 / 1080, 2, 2, 1440 / 1080]

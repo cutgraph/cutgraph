@@ -94,7 +94,7 @@
     },
     "brand": {
       "name": "MUSEUM VISIT",
-      "accent": "#d7263d"
+      "accent": "#2bb3a3"
     }
   },
   "cases": [
@@ -166,7 +166,7 @@
             }
           ],
           "palette": "periwinkle",
-          "accent": "#d7263d"
+          "accent": "#2bb3a3"
         }
       }
     },
@@ -206,24 +206,24 @@
             }
           ],
           "character": "default-character",
-          "pose": "cheer",
+          "pose": "rest",
           "expression": "smug",
           "ensemble": [
             {
               "character": "visitor-reader",
-              "pose": "wave",
+              "pose": "point",
               "expression": "smile"
             },
             {
               "character": "notes-guest",
-              "pose": "wave"
+              "pose": "think"
             },
             {
               "character": "reviewer",
               "expression": "gone"
             }
           ],
-          "backdrop": "vision"
+          "backdrop": "result"
         }
       },
       "request": {
@@ -239,12 +239,12 @@
             }
           ],
           "character": "lens",
-          "pose": "cheer",
+          "pose": "rest",
           "expression": "smug",
           "ensemble": [
             {
               "character": "lens",
-              "pose": "wave",
+              "pose": "point",
               "expression": "smile",
               "palette": "periwinkle",
               "custom": {
@@ -254,7 +254,7 @@
             },
             {
               "character": "lens",
-              "pose": "wave",
+              "pose": "think",
               "palette": "periwinkle"
             },
             {
@@ -262,9 +262,9 @@
               "palette": "periwinkle"
             }
           ],
-          "backdrop": "vision",
+          "backdrop": "result",
           "palette": "periwinkle",
-          "accent": "#d7263d",
+          "accent": "#2bb3a3",
           "custom": {
             "eyes": "side",
             "mouth": "smile"
@@ -306,7 +306,7 @@
           "ensemble": [],
           "character": "lens",
           "palette": "periwinkle",
-          "accent": "#d7263d"
+          "accent": "#2bb3a3"
         }
       }
     },
@@ -354,7 +354,7 @@
             }
           ],
           "palette": "periwinkle",
-          "accent": "#d7263d"
+          "accent": "#2bb3a3"
         }
       }
     },
@@ -433,7 +433,7 @@
             }
           ],
           "palette": "periwinkle",
-          "accent": "#d7263d"
+          "accent": "#2bb3a3"
         }
       }
     }

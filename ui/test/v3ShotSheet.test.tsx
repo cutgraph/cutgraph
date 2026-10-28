@@ -134,6 +134,28 @@ describe("Shot view", () => {
     expect(useStory.getState().shotSceneId).toBe("s1");
   });
 
+  it("replaces pending headline and eyebrow drafts with the stored text after an undo or a move to another scene", async () => {
+    const animated = { ...PROJECT, scenes: PROJECT.scenes!.map((s) => (s.id === "s3" ? s : { ...s, shot: { mode: "animation" as const } })) };
+    useProjectStore.setState({ project: animated });
+    await openSheet("s1");
+    const textbox = (name: string) => screen.getByRole("textbox", { name }) as HTMLInputElement;
+    for (const [name, field] of [["Headline", "headline"], ["Eyebrow", "eyebrow"]] as const) {
+      fireEvent.change(textbox(name), { target: { value: "SHIP IT" } });
+      fireEvent.blur(textbox(name));
+      expect(shotOf("s1")?.[field]).toBe("SHIP IT");
+      fireEvent.change(textbox(name), { target: { value: "Pending" } });
+      act(() => undo());
+      expect(shotOf("s1")?.[field]).toBeUndefined();
+      expect(textbox(name).value).toBe("");
+    }
+
+    fireEvent.change(textbox("Headline"), { target: { value: "Pending" } });
+    fireEvent.change(textbox("Eyebrow"), { target: { value: "Pending" } });
+    fireEvent.click(screen.getByRole("button", { name: "Next scene" }));
+    expect(await screen.findByText("Shot · scene 2 · Beat")).toBeTruthy();
+    expect([textbox("Headline").value, textbox("Eyebrow").value]).toEqual(["", ""]);
+  });
+
   it("turns the headline (and eyebrow) off with Show headline, on by default", async () => {
     await openSheet("s1");
     fireEvent.click(within(group("Picture")).getByRole("button", { name: "Animation" }));

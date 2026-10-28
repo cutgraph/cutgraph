@@ -33,12 +33,19 @@ def check_build() -> None:
         raise RuntimeError("UI build missing or stale: run npm run build in ui first")
 
 
+def taskkill_command(pid: int) -> list[str]:
+    # A bare program name would let CreateProcess search the working directory and PATH first.
+    system_root = Path(os.environ.get("SystemRoot", ""))
+    if not system_root.is_absolute():
+        raise OSError("SystemRoot is not an absolute path")
+    return [str(system_root / "System32" / "taskkill.exe"), "/PID", str(pid), "/T", "/F"]
+
+
 def stop_tree(process: subprocess.Popen) -> None:
     if os.name == "nt":
         if process.poll() is None:
             try:
-                subprocess.run(["taskkill", "/PID", str(process.pid), "/T", "/F"],
-                               check=True, capture_output=True, timeout=20)
+                subprocess.run(taskkill_command(process.pid), check=True, capture_output=True, timeout=20)
             except (subprocess.CalledProcessError, subprocess.TimeoutExpired, OSError):
                 process.terminate()
     else:

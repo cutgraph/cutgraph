@@ -170,25 +170,6 @@
         }
       },
       {
-        "id": "scene-7",
-        "title": "signoff",
-        "role": "Wrap",
-        "startWord": 42,
-        "shot": {
-          "mode": "animation",
-          "character": "default-character",
-          "layout": "signoff",
-          "backdrop": "black",
-          "headline": "Enjoy your visit",
-          "eyebrow": "",
-          "mark": "TOUR",
-          "pose": "rest",
-          "expression": "happy",
-          "move": "idle",
-          "accent": "#2bb3a3"
-        }
-      },
-      {
         "id": "footage",
         "title": "Source control",
         "role": "Beat",
@@ -713,32 +694,9 @@
       "role": "Beat",
       "title": "ask",
       "startF": 438,
-      "durF": 121,
+      "durF": 225,
       "firstWordF": 438,
       "cueWordF": 505
-    },
-    {
-      "sceneId": "scene-7",
-      "mode": "animation",
-      "shot": {
-        "mode": "animation",
-        "character": "default-character",
-        "layout": "signoff",
-        "backdrop": "black",
-        "headline": "Enjoy your visit",
-        "eyebrow": "",
-        "mark": "TOUR",
-        "pose": "rest",
-        "expression": "happy",
-        "move": "idle",
-        "accent": "#2bb3a3"
-      },
-      "role": "Wrap",
-      "title": "signoff",
-      "startF": 559,
-      "durF": 104,
-      "firstWordF": 559,
-      "cueWordF": null
     }
   ],
   "requests": [
@@ -875,24 +833,6 @@
         "palette": "periwinkle",
         "eyebrow": "MUSEUM VISIT",
         "accent": "#2bb3a3"
-      },
-      "custom": null
-    },
-    {
-      "sceneId": "scene-7",
-      "shot": {
-        "mode": "animation",
-        "character": "lens",
-        "layout": "signoff",
-        "backdrop": "black",
-        "headline": "Enjoy your visit",
-        "eyebrow": "",
-        "mark": "TOUR",
-        "pose": "rest",
-        "expression": "happy",
-        "move": "idle",
-        "accent": "#2bb3a3",
-        "palette": "periwinkle"
       },
       "custom": null
     }

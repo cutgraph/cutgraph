@@ -1,2 +1,4 @@
-# REUSE license linter, installed only by CI for the report-only lint step.
+# REUSE license linter, installed only by CI for the blocking lint step.
+# charset-normalizer detects file encodings where libmagic is unavailable (Windows).
+charset-normalizer==3.5.2
 reuse==6.2.0

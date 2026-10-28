@@ -210,12 +210,6 @@ def runtime_environment(
     if directories:
         existing = env.get("PATH", "")
         env["PATH"] = os.pathsep.join(directories + ([existing] if existing else []))
-    # MoviePy/imageio-ffmpeg otherwise discovers and ships/uses its own
-    # platform binary.  Point it at the same approved runtime binary that the
-    # ordinary pipeline subprocesses receive so a portable build has one
-    # auditable FFmpeg source.
-    if ffmpeg:
-        env.setdefault("IMAGEIO_FFMPEG_EXE", str(ffmpeg))
     return env
 
 
@@ -227,7 +221,6 @@ def configure_process_environment(*, source_root: Path | None = None) -> None:
     remaining = [entry for entry in os.environ.get("PATH", "").split(os.pathsep)
                  if os.path.normcase(entry) not in preferred]
     os.environ["PATH"] = os.pathsep.join(directories + remaining)
-    os.environ["IMAGEIO_FFMPEG_EXE"] = tool_path("ffmpeg")
 
 
 def capability_report(*, source_root: Path | None = None) -> dict[str, object]:

@@ -1,7 +1,6 @@
 r"""Live co-editor smoke test — one real chat turn against a running studio, asserting the SDK
-authenticates and replies. This is the verification that proves the running service (in the local session) can
-use its configured API key; missing or rejected credentials surface here as an
-`agent_error` instead of a `chat_text`.
+authenticates and replies. It shows that a running Studio can use its configured API key;
+missing or rejected credentials surface here as an `agent_error` instead of a `chat_text`.
 
 Uses the local `.venv` HTTP client with environment proxies disabled. Drives the same async
 contract the UI uses (POST enqueues, the reply lands in the durable chat log): POST one turn tagged
@@ -23,7 +22,7 @@ import httpx
 
 # A plain-text reply that needs no project doc and no tools — keeps the smoke about auth + liveness,
 # not editorial behaviour. The nonce lets us find OUR turn in a shared, truncated (last-200) log tail.
-_PROMPT = "[healthcheck {nonce}] Automated deploy check. Reply with exactly the single word READY and use no tools."
+_PROMPT = "[smoke test {nonce}] Automated connection check. Reply with exactly the single word READY and use no tools."
 
 
 def _headers() -> dict[str, str]:
@@ -83,7 +82,7 @@ def _poll_reply(base: str, project: str, headers: dict[str, str], nonce: str,
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Live co-editor smoke test for the studio verification.")
+    ap = argparse.ArgumentParser(description="Live co-editor smoke test against a running Studio.")
     ap.add_argument("--url", required=True, help="studio base URL, e.g. http://127.0.0.1:8765")
     ap.add_argument("--project", required=True, help="throwaway project slug for the turn")
     ap.add_argument("--timeout", type=float, default=90.0, help="seconds to wait for the reply")

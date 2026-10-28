@@ -86,6 +86,51 @@ _GPU_JOB_TOOLS = frozenset({"mcp__gpu__render_final", "mcp__gpu__render_preview_
 
 _PERSONA_PATH = config.CODE_ROOT / "pipeline" / "prompts" / "copilot.md"
 
+# Field for field what pipeline.proposals.write validates, so a schema-conforming call is accepted first time.
+_PATCH_OPS = {"type": "array", "minItems": 1, "items": {"type": "object", "properties": {
+    "op": {"type": "string", "enum": ["add", "remove", "replace", "move", "copy", "test"]},
+    "path": {"type": "string", "description": "JSON Pointer into the project, e.g. /tracks/0/clips/3"},
+    "from": {"type": "string"}, "value": {},
+}, "required": ["op", "path"]}}
+_PROPOSE_PATCH_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "title": {"type": "string", "minLength": 1, "description": "short; becomes the undo label"},
+        "rationale": {"type": "string", "minLength": 1, "description": "plain-language reason, shown to the human"},
+        "intentGroups": {
+            "type": "array", "minItems": 1,
+            "description": 'the ops grouped by named intent, e.g. [{"id":"trim-intro","intent":"Trim the slow '
+                           'intro","ops":[{"op":"remove","path":"/tracks/0/clips/0"}]}]',
+            "items": {"type": "object", "properties": {
+                "id": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$", "description": "unique in this proposal"},
+                "intent": {"type": "string", "minLength": 1},
+                "ops": _PATCH_OPS,
+            }, "required": ["id", "intent", "ops"]},
+        },
+        "citations": {
+            "type": "array", "minItems": 1,
+            "description": "transcript spans that support the edit, in transcript seconds (the tSec/startSec "
+                           "values find_word and read_story return), e.g. "
+                           '[{"kind":"transcript","start":12.4,"end":15.0,"summary":"the speaker restarts the sentence"}]',
+            "items": {"type": "object", "properties": {
+                "kind": {"type": "string", "enum": ["transcript"]},
+                "start": {"type": "number", "minimum": 0, "description": "span start, seconds"},
+                "end": {"type": "number", "exclusiveMinimum": 0, "description": "span end, seconds; after start"},
+                "summary": {"type": "string", "minLength": 1, "description": "what the span shows, one line"},
+            }, "required": ["kind", "start", "end", "summary"]},
+        },
+        "material": {"type": "boolean", "description": "true for a material choice; then preview is required"},
+        "preview": {"type": "object", "properties": {
+            "startF": {"type": "integer", "minimum": 0, "description": "timeline frame"},
+            "endF": {"type": "integer", "minimum": 1, "description": "timeline frame; after startF"},
+            "previewRef": {"type": "string", "pattern": r"^/media/preview/[A-Za-z0-9_-]+\.mp4$",
+                           "description": "the output render_preview_segment returned"},
+        }, "required": ["startF", "endF", "previewRef"]},
+        "savesSec": {"type": "number", "description": "seconds the edit removes, when it tightens"},
+    },
+    "required": ["title", "rationale", "intentGroups", "citations"],
+}
+
 
 def _do_propose_patch(ctx: "ToolCtx", args: dict) -> str:
     """The propose_patch body, factored out of the SDK `@tool` wrapper so it is testable WITHOUT the
@@ -94,12 +139,16 @@ def _do_propose_patch(ctx: "ToolCtx", args: dict) -> str:
     empty op list and silently applied NOTHING while recording the card as accepted)."""
     args = agent_credentials.redact_data(args)
     doc, revision = ctx.read_doc()
-    proposal = proposals.write(
-        ctx.slug, ops=args.get("ops") or [], title=args["title"], rationale=args["rationale"],
-        base_revision=revision, doc=doc, saves_sec=args.get("savesSec"), intent_groups=args.get("intentGroups"),
-        citations=args.get("citations"), material=bool(args.get("material")), preview=args.get("preview"),
-        require_evidence="citations" in args,
-    )
+    try:
+        proposal = proposals.write(
+            ctx.slug, ops=args.get("ops") or [], title=args.get("title", ""), rationale=args.get("rationale", ""),
+            base_revision=revision, doc=doc, saves_sec=args.get("savesSec"), intent_groups=args.get("intentGroups"),
+            citations=args.get("citations"), material=bool(args.get("material")), preview=args.get("preview"),
+            require_evidence="citations" in args,
+        )
+    except ValidationError as e:
+        # The message names the offending field (e.g. citations[0].end) so the model can fix it in one retry.
+        return json.dumps({"error": str(e)}, separators=(",", ":"))
     ctx.emit(proposals.proposal_event(proposal))
     return json.dumps({"id": proposal["id"]}, separators=(",", ":"))
 
@@ -276,16 +325,10 @@ def build_editor_server(ctx: ToolCtx):  # noqa: ANN201 — SDK type is lazy
     @tool(
         "propose_patch",
         "Write a reviewable RFC-6902 patch proposal (never applied directly). Group ops by named intent; "
-        "Cite transcript spans in seconds to support the edit. "
+        "cite transcript spans in seconds to support the edit. "
         "For a material choice, first call render_preview_segment and supply its /media/preview ref. "
-        "Accepting remains one reversible editor undo checkpoint. Returns its id.",
-        {"type": "object",
-         "properties": {
-             "ops": {"type": "array"}, "intentGroups": {"type": "array"}, "citations": {"type": "array"},
-             "material": {"type": "boolean"}, "preview": {"type": "object"}, "title": {"type": "string"},
-             "rationale": {"type": "string"}, "savesSec": {"type": "number"},
-         },
-         "required": ["intentGroups", "citations", "title", "rationale"]},
+        "Accepting remains one reversible editor undo checkpoint. Returns {id}, or {error} naming the field to fix.",
+        _PROPOSE_PATCH_SCHEMA,
     )
     async def propose_patch(args: dict) -> dict:
         return _text(_do_propose_patch(ctx, args))
@@ -796,6 +839,27 @@ async def draft_script(idea: object, format_hint: object = None) -> dict:
     return {"title": title, "script": script, "source": "copilot"}
 
 
+# connect() returns while the stdio GPU server may still be `pending`, and a turn sent then runs
+# without its tools. The wait is bounded so a slow or broken server delays one connect, never a session.
+_MCP_SERVERS = ("editor", "gpu")
+_MCP_READY_TIMEOUT_S = 10.0
+_MCP_READY_POLL_S = 0.1
+
+
+async def _await_mcp_servers(client: Any) -> None:
+    """Return once every co-editor MCP server has left `pending` (connected or failed), or at the bound."""
+    try:
+        async with asyncio.timeout(_MCP_READY_TIMEOUT_S):
+            while True:
+                status = await client.get_mcp_status()
+                states = {server.get("name"): server.get("status") for server in status.get("mcpServers") or []}
+                if all(states.get(name) not in (None, "pending") for name in _MCP_SERVERS):
+                    return
+                await asyncio.sleep(_MCP_READY_POLL_S)
+    except Exception:  # noqa: BLE001 — readiness is best effort; the turn proceeds with what is connected
+        return
+
+
 class SdkAgentSession:
     """The real `AgentSession`: one long-lived `ClaudeSDKClient` warm session, driven one turn at a
     time. Bound to the asyncio context where `aconnect` ran (SDK constraint) — the `AgentHost` worker
@@ -820,6 +884,7 @@ class SdkAgentSession:
         client = ClaudeSDKClient(options)
         try:
             await client.connect(None)  # warm streaming session; feed turns via query()
+            await _await_mcp_servers(client)
         except BaseException:
             await client.disconnect()
             raise
@@ -1126,21 +1191,23 @@ class AgentHost:
                 await reaper
             except asyncio.CancelledError:
                 pass
-        for q in list(self._queues.values()):
-            await q.put(_SENTINEL)
-        tasks = list(self._workers.values())
-        if tasks:
-            _done, pending = await asyncio.wait(tasks, timeout=self._shutdown_grace_s)
-            for task in pending:
-                task.cancel()
-            if pending:
-                await asyncio.gather(*pending, return_exceptions=True)
+        # Detach every actor before awaiting, as _evict does: a turn posted while they drain then starts
+        # a fresh, tracked worker instead of joining a closing queue or being dropped with an orphan.
+        queues, tasks = list(self._queues.values()), list(self._workers.values())
         self._queues.clear()
         self._workers.clear()
         self._last_active.clear()
         self._busy.clear()
         self._pending_context.clear()
         self._settings.clear()
+        for q in queues:
+            q.put_nowait(_SENTINEL)
+        if tasks:
+            _done, pending = await asyncio.wait(tasks, timeout=self._shutdown_grace_s)
+            for task in pending:
+                task.cancel()
+            if pending:
+                await asyncio.gather(*pending, return_exceptions=True)
 
 
 # Keep the async Emit type referenced for readers of the seam (agent_session.Emit is the contract).

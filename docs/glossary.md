@@ -115,9 +115,4 @@ Canonical domain vocabulary, checked against the source. Architecture evidence l
 - **Many words, one concept** — `co-pilot`, `co-editor`, `assistant` denote **Co-pilot**. Canonical: **Co-pilot**. (`pipeline/copilot.py:743`)
 - **Many words, one concept** — `export`, `render`, `compile` denote **Export**. Canonical: **Export**; render names its parts (**Final render job**, **Scene render**, **Render document**). (`ui/src/v3/story/ExportSheet.tsx:15; pipeline/jobs.py:601; pipeline/scene_render.py:178`)
 - **Many words, one concept** — `character`, `profile` denote **Character**. Canonical: **Character**. (`pipeline/cast.py:396`)
-
 - **One word, many concepts** — `story` denotes both **Story** and **Co-pilot context**. Canonical split: use **Story** for the editing view and **Co-pilot context** for the assistant's reading; never use `story` for the reading context. (`ui/src/v3/story/StoryView.tsx:26`; `pipeline/copilot.py:81`)
-
-## Candidates
-
-None.

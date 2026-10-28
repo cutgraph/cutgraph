@@ -88,6 +88,12 @@ def test_launcher_imports_only_reviewed_core_dependencies_before_addon_activatio
         addons.active = forbidden
         addons.activate = forbidden
         from scripts import studio_app
+        import sysconfig
+        stdlib = Path(sysconfig.__file__).resolve().parent
+        def standard(root, path):
+            # POSIX builds name their configuration module per platform, for example
+            # _sysconfigdata__linux_x86_64-linux-gnu, so sys.stdlib_module_names omits it.
+            return root in sys.stdlib_module_names or (root.startswith("_sysconfigdata_") and path.parent == stdlib)
         allowed = {
             "PIL", "httpx", "uvicorn", "fastapi", "starlette", "sse_starlette",
             "pydantic", "pydantic_core", "annotated_types", "annotated_doc",
@@ -101,7 +107,7 @@ def test_launcher_imports_only_reviewed_core_dependencies_before_addon_activatio
                 continue
             path = Path(filename).resolve()
             root = name.partition(".")[0]
-            if root in sys.stdlib_module_names or root in allowed or path.is_relative_to(Path(sys.argv[1])):
+            if standard(root, path) or root in allowed or path.is_relative_to(Path(sys.argv[1])):
                 continue
             unexpected.add(root)
         assert not unexpected, sorted(unexpected)

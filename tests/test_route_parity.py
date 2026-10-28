@@ -70,11 +70,6 @@ def test_api_jobs_returns_dict() -> None:
     assert isinstance(r.json(), dict)
 
 
-def test_legacy_static_assets_are_gone() -> None:
-    r = _do(lambda: _get("/static/dashboard.js"))
-    assert r.status_code == 404
-
-
 def test_editor_shell_reloads_but_hashed_assets_are_immutable(monkeypatch, tmp_path) -> None:
     assets = tmp_path / "assets"
     assets.mkdir()

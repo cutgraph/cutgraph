@@ -182,7 +182,7 @@ export function perform(ctx: Ctx, slot: DuoSlot, x: number, lift: number, k: num
   ctx.scale(slot.face * (1 + k), 1 - k);
   drawCharacter(ctx, 0, 0, slot.h, lift ? { ...p, lift } : p, env, false);
   ctx.restore();
-  drawMissingCharacter(ctx, Math.round(x), Math.round(slot.by), slot.h, p.character, env);
+  drawMissingCharacter(ctx, Math.round(x), Math.round(slot.by), slot.h, p, env, slot.face * (1 + k));
 }
 
 function dot(ctx: Ctx, x: number, y: number, q: number, color: string): void {
