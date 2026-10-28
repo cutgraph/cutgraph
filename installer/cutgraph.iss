@@ -104,7 +104,11 @@ begin
   if PathHelperExe = '' then begin
     PathHelperExe := ExpandConstant('{tmp}\path-check.exe');
     if IsUninstaller then begin
+#if VER >= EncodeVer(6, 7, 0)
+      if not CopyFile(ExpandConstant('{app}\Cutgraph Studio.exe'), PathHelperExe, False) then
+#else
       if not FileCopy(ExpandConstant('{app}\Cutgraph Studio.exe'), PathHelperExe, False) then
+#endif
         RaiseException('The application safety helper could not be prepared.');
     end
     else ExtractTemporaryFile('path-check.exe');

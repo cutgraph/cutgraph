@@ -94,10 +94,13 @@ function contactSheet(): Buffer {
     y += Math.ceil(items.length / 3) * (FRAME_H + 40);
   };
 
+  // A diagram without its own sample scene borrows a diagram scene's timing.
+  const diagramScene = project.scenes.findIndex((sc) => sc.shot?.diagram);
   frames('DIAGRAMS (sample scenes, 16:9, 1.4 s after the cue word)', DIAGRAMS, (d) => {
-    const si = project.scenes.findIndex((sc) => sc.shot?.diagram === d);
+    const own = project.scenes.findIndex((sc) => sc.shot?.diagram === d);
+    const si = own >= 0 ? own : diagramScene;
     const sc = project.scenes[si], { lt } = shotTime(si);
-    if (sc.shot) drawShot(ctx, sc.shot, lt, TL.scenes[si], 1920, 1080, env);
+    if (sc.shot) drawShot(ctx, { ...sc.shot, diagram: d }, lt, TL.scenes[si], 1920, 1080, env);
   });
 
   const GRAPHIC_TEXT: Record<string, string> = {
