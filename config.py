@@ -27,7 +27,7 @@ RUNTIME_DIR = STATE_HOME / "runtime"
 
 # Update checks remain disabled until the release verification key is pinned.
 UPDATE_REPOSITORY = "cutgraph/cutgraph"
-UPDATE_PUBLIC_KEY = ""
+UPDATE_PUBLIC_KEY = "/taMIPy1bkUrLiprJ9RCHwFK+vRY6Yaqzt0jxmmJFg8="
 
 TRANSCRIPTS_DIR = OUTPUTS_DIR / "transcripts"
 BROLL_DIR       = OUTPUTS_DIR / "broll"

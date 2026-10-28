@@ -17,8 +17,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   add-on using your own Anthropic API key.
 - A first-run welcome screen and Settings → Add-ons for installation and management.
 - An in-app stable update check with an automatic preference enabled by default
-  and an off switch. Network checks remain disabled until the release verification
-  key is configured.
+  and an off switch. Updates come from Ed25519-signed release manifests verified
+  against the key built into the app.
 - An LGPL FFmpeg encoder ladder using hardware encoders and Windows Media
   Foundation, while source installations retain libx264 support.
 - Fair Source licensing, community policies, third-party licence notices, a

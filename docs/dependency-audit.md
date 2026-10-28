@@ -111,10 +111,9 @@ only with a row in the table below, and renew it only after repeating the
 review. The scanner ignores an advisory by ID alone, so
 `tests/test_ci_workflow.py` fails when a listed package's locked version
 changes, forcing that review. A new advisory still fails the scan.
-pip-audit covers every Python lock. The transcription locks run as a separate
-step that ignores exactly the IDs in `osv-scanner.toml`; the same tests keep the
-two lists equal. pip-audit cannot see the `+cu128` and `+cpu` torch builds on
-PyPI; the OSV scan reports them.
+pip-audit covers the core, agent, dev and REUSE locks with no exceptions. The
+transcription locks pin `+cu128` and `+cpu` torch builds that PyPI does not
+host, so pip-audit cannot resolve them; the OSV scan covers those locks.
 
 ## Auditing
 

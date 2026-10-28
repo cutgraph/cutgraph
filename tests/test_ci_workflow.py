@@ -247,9 +247,11 @@ def test_security_jobs_skip_private_repositories_and_use_scoped_permissions() ->
     assert "no-deps: true" in jobs["pip-audit"]
     assert "disable-pip" not in jobs["pip-audit"]
     assert "--config=osv-scanner.toml" in jobs["osv-scanner"]
-    for lock in ("requirements-core.txt", "requirements-agent.txt", "requirements-dev.txt", "requirements-reuse.txt",
-                 "requirements-local-ai-nvidia.txt", "requirements-local-ai-cpu.txt"):
+    for lock in ("requirements-core.txt", "requirements-agent.txt", "requirements-dev.txt", "requirements-reuse.txt"):
         assert lock in jobs["pip-audit"]
+        assert lock in jobs["osv-scanner"]
+    for lock in ("requirements-local-ai-nvidia.txt", "requirements-local-ai-cpu.txt"):
+        assert lock not in jobs["pip-audit"]
         assert lock in jobs["osv-scanner"]
     for lock in ("ui/package-lock.json", "motion-core/package-lock.json"):
         assert lock in jobs["osv-scanner"]
@@ -263,15 +265,16 @@ def test_security_jobs_skip_private_repositories_and_use_scoped_permissions() ->
     assert re.search(r"(?m)^    - cron: '.+ \* \* 1'$", workflow)
 
 
-def test_pip_audit_accepts_only_the_recorded_transcription_advisories() -> None:
+def test_pip_audit_covers_the_pypi_locks_without_exceptions() -> None:
+    # The transcription locks pin local-version torch builds that PyPI does not host, so
+    # pip-audit cannot resolve them; the OSV scan above covers those locks instead.
     steps = yaml.load((_ROOT / ".github/workflows/security.yml").read_text(encoding="utf-8"),
                       Loader=yaml.BaseLoader)["jobs"]["pip-audit"]["steps"]
     audits = [step["with"] for step in steps if step.get("uses", "").startswith("pypa/gh-action-pip-audit@")]
-    assert [audit.get("ignore-vulns") is None for audit in audits] == [True, False]
-    assert all(audit["require-hashes"] == audit["no-deps"] == "true" for audit in audits)
-    assert audits[1]["inputs"].split() == ["requirements-local-ai-nvidia.txt", "requirements-local-ai-cpu.txt"]
-    accepted = tomllib.loads((_ROOT / "osv-scanner.toml").read_text(encoding="utf-8"))["IgnoredVulns"]
-    assert audits[1]["ignore-vulns"].split() == [entry["id"] for entry in accepted]
+    assert len(audits) == 1 and audits[0].get("ignore-vulns") is None
+    assert audits[0]["require-hashes"] == audits[0]["no-deps"] == "true"
+    assert audits[0]["inputs"].split() == [
+        "requirements-core.txt", "requirements-agent.txt", "requirements-dev.txt", "requirements-reuse.txt"]
 
 
 def test_ci_reuse_lint_blocks() -> None:

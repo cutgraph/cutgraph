@@ -73,34 +73,6 @@ jobs:
             requirements-reuse.txt
           require-hashes: true
           no-deps: true
-      # The accepted advisories are the osv-scanner.toml entries; tests keep both lists equal.
-      - name: Audit hash-locked transcription requirements
-        uses: pypa/gh-action-pip-audit@1220774d901786e6f652ae159f7b6bc8fea6d266 # v1.1.0
-        with:
-          inputs: |
-            requirements-local-ai-nvidia.txt
-            requirements-local-ai-cpu.txt
-          require-hashes: true
-          no-deps: true
-          ignore-vulns: |
-            GHSA-29pf-2h5f-8g72
-            PYSEC-2026-2289
-            GHSA-69w3-r845-3855
-            PYSEC-2026-2288
-            GHSA-fgcw-684q-jj6r
-            PYSEC-2026-2290
-            GHSA-xrqw-3rrv-vx5w
-            PYSEC-2026-3929
-            GHSA-x9r9-c232-4q39
-            PYSEC-2025-217
-            GHSA-vgrw-7cvw-pwgx
-            GHSA-rrmf-rvhw-rf47
-            GHSA-qfhq-4f3w-5fph
-            PYSEC-2025-203
-            PYSEC-2025-204
-            PYSEC-2025-206
-            PYSEC-2026-139
-            PYSEC-2026-2286
 
   osv-scanner:
     if: ${{ !github.event.repository.private }}

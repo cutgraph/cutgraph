@@ -119,9 +119,16 @@ test('continuous camera framing keeps sprite colours crisp and places the rig gr
       const i = (y * W + px) * 4;
       if (cropped[i + 3] !== 255) continue;
       assert.ok(colours.has(`${cropped[i]},${cropped[i + 1]},${cropped[i + 2]}`), 'nearest-neighbour framing invents no blended sprite colours');
-      const sx = Math.floor((px + 0.5 - W / 2 * (1 - k)) / k), sy = Math.floor((y + 0.5 - H / 2 * (1 - k)) / k);
-      const j = (sy * W + sx) * 4;
-      assert.deepEqual(cropped.slice(i, i + 4), still.slice(j, j + 4), 'rig cells follow the centre crop at device-pixel sampling');
+      // A sample landing exactly on a cell edge may resolve to either side; Skia's Linux and
+      // Windows builds round it differently, so only that tie accepts the neighbouring cell.
+      const cells = (p: number) => {
+        const s = Math.floor(p);
+        return Math.abs(p - Math.round(p)) < 1e-6 ? [s, Math.round(p) - 1] : [s];
+      };
+      const fx = (px + 0.5 - W / 2 * (1 - k)) / k, fy = (y + 0.5 - H / 2 * (1 - k)) / k;
+      const actual = cropped.slice(i, i + 4).join();
+      const sources = cells(fy).flatMap((sy) => cells(fx).map((sx) => still.slice((sy * W + sx) * 4, (sy * W + sx) * 4 + 4).join()));
+      assert.ok(sources.includes(actual), `rig cells follow the centre crop at device-pixel sampling (${px},${y})`);
       checked++;
       foot = Math.max(foot, y);
     }

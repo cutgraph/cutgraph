@@ -86,10 +86,13 @@ def test_unconfigured_feed_is_closed(tmp_path, repository, key):
     assert not manager.root.exists()
 
 
-def test_public_feed_without_verification_key_never_checks_or_installs(tmp_path):
+def test_public_feed_ships_a_valid_release_verification_key():
     assert config.UPDATE_REPOSITORY == "cutgraph/cutgraph"
-    assert config.UPDATE_PUBLIC_KEY == ""
-    manager = updates.Updates(tmp_path, config.UPDATE_REPOSITORY, config.UPDATE_PUBLIC_KEY,
+    assert len(release_manifest.decode_key(config.UPDATE_PUBLIC_KEY)) == 32
+
+
+def test_public_feed_without_verification_key_never_checks_or_installs(tmp_path):
+    manager = updates.Updates(tmp_path, config.UPDATE_REPOSITORY, "",
                               version.__version__, launcher=tmp_path / "launcher.exe",
                               transport=httpx.MockTransport(lambda _: pytest.fail("Network was called")))
     try:
