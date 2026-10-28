@@ -77,13 +77,25 @@ def download(item: dict, cache: Path, *, offline: bool = False) -> Path:
     if offline:
         raise ValueError(f'Missing cached input in offline mode: {item["name"]}')
     partial = path.with_suffix(path.suffix + ".partial")
+    # Some hosts generate archives on demand with different bytes each time, so a
+    # byte-exact mirror is tried first; the upstream URL stays the fallback and provenance.
+    locations = [item["mirror"], item["url"]] if item.get("mirror") else [item["url"]]
     try:
-        request = urllib.request.Request(item["url"], headers={"User-Agent": "portable-runtime-build"})
-        with urllib.request.urlopen(request, timeout=180) as response, partial.open("wb") as output:
-            shutil.copyfileobj(response, output)
-        if digest(partial) != item["sha256"]:
-            raise ValueError(f'Hash mismatch in downloaded input: {item["name"]}')
-        partial.replace(path)
+        for index, location in enumerate(locations):
+            last = index == len(locations) - 1
+            try:
+                request = urllib.request.Request(location, headers={"User-Agent": "portable-runtime-build"})
+                with urllib.request.urlopen(request, timeout=180) as response, partial.open("wb") as output:
+                    shutil.copyfileobj(response, output)
+            except OSError:
+                if last:
+                    raise
+                continue
+            if digest(partial) == item["sha256"]:
+                partial.replace(path)
+                return path
+            if last:
+                raise ValueError(f'Hash mismatch in downloaded input: {item["name"]}')
     finally:
         partial.unlink(missing_ok=True)
     return path

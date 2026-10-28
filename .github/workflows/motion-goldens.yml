@@ -31,6 +31,23 @@ jobs:
           cache: npm
           cache-dependency-path: motion-core/package-lock.json
 
+      # The renderer CLI tests pipe frames to ffmpeg, as in the main checks job.
+      - name: Install verified Linux ffmpeg
+        run: |
+          $archive = Join-Path $env:RUNNER_TEMP 'ffmpeg-8.1.3-linux64-gpl.tar.xz'
+          Invoke-WebRequest -Uri 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-09-30-13-08/ffmpeg-n8.1.3-9-g29e619e767-linux64-gpl-8.1.tar.xz' -OutFile $archive
+          $expected = '97ce978979194b5cf7e06a5e68020dbdaa7a4f3294c5452b6a1bc347100dbb79'
+          if ((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expected) {
+            throw 'ffmpeg archive checksum mismatch'
+          }
+          $destination = Join-Path $env:RUNNER_TEMP 'ffmpeg'
+          New-Item -ItemType Directory -Path $destination -Force | Out-Null
+          tar -xJf $archive -C $destination
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $bins = @(Get-ChildItem -LiteralPath $destination -Directory -Recurse -Filter bin)
+          if ($bins.Count -ne 1) { throw 'Expected one ffmpeg bin directory' }
+          $bins[0].FullName >> $env:GITHUB_PATH
+
       - name: Install motion-core dependencies
         working-directory: motion-core
         run: npm ci

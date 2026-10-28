@@ -999,6 +999,7 @@
     {
       "name": "canvas-source",
       "url": "https://codeload.github.com/Brooooooklyn/canvas/zip/adce718ec8ff82f9e896875752fd621c46b1c04e",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/7a80985df82db6cfb2013162d028d451d395c26312ecae9eec2dbe9bc4895baa-adce718ec8ff82f9e896875752fd621c46b1c04e",
       "sha256": "7a80985df82db6cfb2013162d028d451d395c26312ecae9eec2dbe9bc4895baa",
       "license": "MIT",
       "group": "canvas",
@@ -1008,6 +1009,7 @@
     {
       "name": "ffmpeg-amf",
       "url": "https://codeload.github.com/GPUOpen-LibrariesAndSDKs/AMF/zip/6277e353fd625121a8f627b1d0540323ef372a49",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/04cbcfcaaa56639bac825019ff927078d9d82695d4d8d773e9c034c45d4f2e78-6277e353fd625121a8f627b1d0540323ef372a49",
       "sha256": "04cbcfcaaa56639bac825019ff927078d9d82695d4d8d773e9c034c45d4f2e78",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1020,6 +1022,7 @@
       "license": "BSD-2-Clause",
       "recipe": "50-aom.sh",
       "url": "https://aomedia.googlesource.com/aom/+archive/b4ce2cd097b00921b0327bfb5f07b5f8361ade99.tar.gz",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/1abe7f637fcc3a46263b05b8fb247edd9caa8459c424de7c0a11a4a29a2a82c1-b4ce2cd097b00921b0327bfb5f07b5f8361ade99.tar.gz",
       "sha256": "1abe7f637fcc3a46263b05b8fb247edd9caa8459c424de7c0a11a4a29a2a82c1",
       "group": "ffmpeg",
       "version": "b4ce2cd097b00921b0327bfb5f07b5f8361ade99",
@@ -1028,6 +1031,7 @@
     {
       "name": "ffmpeg-brotli",
       "url": "https://codeload.github.com/google/brotli/zip/a3abcbee0d945e51dddeec81e647ffe0cde182c2",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/db42a3ebd11fc8df068e49879d3675580116564510bceb12c584fc2fd3554226-a3abcbee0d945e51dddeec81e647ffe0cde182c2",
       "sha256": "db42a3ebd11fc8df068e49879d3675580116564510bceb12c584fc2fd3554226",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1040,6 +1044,7 @@
       "license": "LGPL-2.1-only OR MPL-1.1",
       "recipe": "50-librsvg/20-cairo.sh",
       "url": "https://gitlab.freedesktop.org/cairo/cairo/-/archive/74755964edef651691d5cd36ff140108298e4e6e/cairo-74755964edef651691d5cd36ff140108298e4e6e.tar.gz",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/b9fdbe04623d904d821e521d5aabb0f0445e1307ac1b0d478de3e23f0ae95043-cairo-74755964edef651691d5cd36ff140108298e4e6e.tar.gz",
       "sha256": "b9fdbe04623d904d821e521d5aabb0f0445e1307ac1b0d478de3e23f0ae95043",
       "group": "ffmpeg",
       "version": "74755964edef651691d5cd36ff140108298e4e6e",
@@ -1048,6 +1053,7 @@
     {
       "name": "ffmpeg-chromaprint",
       "url": "https://codeload.github.com/acoustid/chromaprint/zip/aed8eba2202dd9d7b3b0a56c77904cc805490d72",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/4bfc53ca1eb7820b02ca85f9f5e25515741041d9c2611e41cbf65645d091aa0e-aed8eba2202dd9d7b3b0a56c77904cc805490d72",
       "sha256": "4bfc53ca1eb7820b02ca85f9f5e25515741041d9c2611e41cbf65645d091aa0e",
       "license": "LGPL-2.1-or-later",
       "group": "ffmpeg",
@@ -1058,6 +1064,7 @@
     {
       "name": "ffmpeg-dav1d",
       "url": "https://codeload.github.com/videolan/dav1d/zip/9711965b60bb692ae24004659acf61f5c7d9ed61",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/095b17b7029947fcd0a1ad5a0dee427565088990f8f5843bef630638591c3541-9711965b60bb692ae24004659acf61f5c7d9ed61",
       "sha256": "095b17b7029947fcd0a1ad5a0dee427565088990f8f5843bef630638591c3541",
       "license": "BSD-2-Clause",
       "group": "ffmpeg",
@@ -1068,6 +1075,7 @@
     {
       "name": "ffmpeg-ffnvcodec",
       "url": "https://codeload.github.com/FFmpeg/nv-codec-headers/zip/eddcea9e27f6b772057c9b3f87de2cc1737faffc",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/365351aae5bdc7339412977f6829c8952845c9c933b596c8bd9eb8baa6aa756d-eddcea9e27f6b772057c9b3f87de2cc1737faffc",
       "sha256": "365351aae5bdc7339412977f6829c8952845c9c933b596c8bd9eb8baa6aa756d",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1079,6 +1087,7 @@
     {
       "name": "ffmpeg-fontconfig",
       "url": "https://codeload.github.com/fontconfig/fontconfig/zip/bd8f7b597de96761750d0365abb49b19d2f8d5c3",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/58ec86dbc82473666f96a90e8105492ed869d573b23374761818366a10c7ac56-bd8f7b597de96761750d0365abb49b19d2f8d5c3",
       "sha256": "58ec86dbc82473666f96a90e8105492ed869d573b23374761818366a10c7ac56",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1089,6 +1098,7 @@
     {
       "name": "ffmpeg-freetype",
       "url": "https://codeload.github.com/freetype/freetype/zip/d333439633039de426f943f28a2926c7f97b5ae5",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/f45caab0ed7dfecdd5b0187b64106d66859f5cc5d6684a8dc666863bac96f72c-d333439633039de426f943f28a2926c7f97b5ae5",
       "sha256": "f45caab0ed7dfecdd5b0187b64106d66859f5cc5d6684a8dc666863bac96f72c",
       "license": "FTL OR GPL-2.0-only",
       "group": "ffmpeg",
@@ -1099,6 +1109,7 @@
     {
       "name": "ffmpeg-fribidi",
       "url": "https://codeload.github.com/fribidi/fribidi/zip/4c914a92e94a9fe4f30ae83a1130099841566448",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/90d44f084b9bc5b0a4cfe68127f023126299ebe2daf77cd7b543290a55beca19-4c914a92e94a9fe4f30ae83a1130099841566448",
       "sha256": "90d44f084b9bc5b0a4cfe68127f023126299ebe2daf77cd7b543290a55beca19",
       "license": "LGPL-2.1-or-later",
       "group": "ffmpeg",
@@ -1109,6 +1120,7 @@
     {
       "name": "ffmpeg-glib",
       "url": "https://codeload.github.com/GNOME/glib/zip/5a124d1e66a6c2dc56989303b4d6d4781c2952ed",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/cb7efb30685681fbbb1d945e7af54a4c9fa1a4577c2a47f2b39eb7e4e6ee6b1d-5a124d1e66a6c2dc56989303b4d6d4781c2952ed",
       "sha256": "cb7efb30685681fbbb1d945e7af54a4c9fa1a4577c2a47f2b39eb7e4e6ee6b1d",
       "license": "LGPL-2.1-or-later",
       "group": "ffmpeg",
@@ -1119,6 +1131,7 @@
     {
       "name": "ffmpeg-gme",
       "url": "https://codeload.github.com/libgme/game-music-emu/zip/f68963b1de0633149b05732113d3c3113c6f63a1",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/0954124b1935210f74e0632f64899bccc6db9c471cdce07438a8092035e49f90-f68963b1de0633149b05732113d3c3113c6f63a1",
       "sha256": "0954124b1935210f74e0632f64899bccc6db9c471cdce07438a8092035e49f90",
       "license": "LGPL-2.1-or-later",
       "group": "ffmpeg",
@@ -1129,6 +1142,7 @@
     {
       "name": "ffmpeg-gmp",
       "url": "https://codeload.github.com/BtbN/gmplib/zip/763b40df71c0f4d5f5d7b33dc55038c8c9377ecf",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/1994a87514331337529fe9b91c8ca1ce14698ab19a41a21d212856b4f1bd40c6-763b40df71c0f4d5f5d7b33dc55038c8c9377ecf",
       "sha256": "1994a87514331337529fe9b91c8ca1ce14698ab19a41a21d212856b4f1bd40c6",
       "license": "LGPL-3.0-or-later OR GPL-2.0-or-later",
       "group": "ffmpeg",
@@ -1139,6 +1153,7 @@
     {
       "name": "ffmpeg-harfbuzz",
       "url": "https://codeload.github.com/harfbuzz/harfbuzz/zip/b3bab62307017934dd7f532c52a696fefb12b3ad",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/ef553b0f28908705c4aa828747015e3e9d0512c2f61288931743b7a2fef2998e-b3bab62307017934dd7f532c52a696fefb12b3ad",
       "sha256": "ef553b0f28908705c4aa828747015e3e9d0512c2f61288931743b7a2fef2998e",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1149,6 +1164,7 @@
     {
       "name": "ffmpeg-kvazaar",
       "url": "https://codeload.github.com/ultravideo/kvazaar/zip/2b06691bb5844404c0e703f12a5d7b0fee914ec7",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/8d29a6e3ce99a765f98e56239f92c94f21afce5b7c160cea26098bcb4dff0076-2b06691bb5844404c0e703f12a5d7b0fee914ec7",
       "sha256": "8d29a6e3ce99a765f98e56239f92c94f21afce5b7c160cea26098bcb4dff0076",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1159,6 +1175,7 @@
     {
       "name": "ffmpeg-lcevcdec",
       "url": "https://codeload.github.com/v-novaltd/LCEVCdec/zip/17804ac54db8fbb42717f3275b1e73f3c0b067d3",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/c3ef2879d677c129194d6bd36c85c06dc79667177c3b2c72495fefc557e8ea8b-17804ac54db8fbb42717f3275b1e73f3c0b067d3",
       "sha256": "c3ef2879d677c129194d6bd36c85c06dc79667177c3b2c72495fefc557e8ea8b",
       "license": "BSD-3-Clause-Clear",
       "group": "ffmpeg",
@@ -1169,6 +1186,7 @@
     {
       "name": "ffmpeg-lcms2",
       "url": "https://codeload.github.com/mm2/Little-CMS/zip/35cef8775e0ab46f0dda0b46aae1e69d27524432",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/60e00e96f5457412328c1088c3cc3c5c86f0a02882bf7a0dd48eb81e80c0b378-35cef8775e0ab46f0dda0b46aae1e69d27524432",
       "sha256": "60e00e96f5457412328c1088c3cc3c5c86f0a02882bf7a0dd48eb81e80c0b378",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1179,6 +1197,7 @@
     {
       "name": "ffmpeg-libaribb24",
       "url": "https://codeload.github.com/nkoriyama/aribb24/zip/5e9be272f96e00f15a2f3c5f8ba7e124862aec38",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/4c78db4044d9dc6344846c22d2aa70849ebfa46966906ecf9f43bffc6abc15e0-5e9be272f96e00f15a2f3c5f8ba7e124862aec38",
       "sha256": "4c78db4044d9dc6344846c22d2aa70849ebfa46966906ecf9f43bffc6abc15e0",
       "license": "LGPL-3.0-or-later",
       "group": "ffmpeg",
@@ -1189,6 +1208,7 @@
     {
       "name": "ffmpeg-libaribcaption",
       "url": "https://codeload.github.com/xqq/libaribcaption/zip/c64c23b8905ba514b87c9789269e9f66f949ffe0",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/48179d37197b6975d5496b8e5e15098f8e94cb36e56d935cecd88e5fc1b725c4-c64c23b8905ba514b87c9789269e9f66f949ffe0",
       "sha256": "48179d37197b6975d5496b8e5e15098f8e94cb36e56d935cecd88e5fc1b725c4",
       "license": "ISC",
       "group": "ffmpeg",
@@ -1199,6 +1219,7 @@
     {
       "name": "ffmpeg-libass",
       "url": "https://codeload.github.com/libass/libass/zip/f61db567e6593df3470e91594bcd4ad2d0473aff",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/9789631bd37831bdab4f781e7aa76c27646132d85d0d87098528a8eb51202de9-f61db567e6593df3470e91594bcd4ad2d0473aff",
       "sha256": "9789631bd37831bdab4f781e7aa76c27646132d85d0d87098528a8eb51202de9",
       "license": "ISC",
       "group": "ffmpeg",
@@ -1211,6 +1232,7 @@
       "license": "LGPL-2.1-or-later",
       "recipe": "50-libbluray.sh",
       "url": "https://code.videolan.org/videolan/libbluray/-/archive/a24f4fad4d62893de647abc8671397747b2359dd/libbluray-a24f4fad4d62893de647abc8671397747b2359dd.tar.gz",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/f596c2ede4131fa4471bb292c28c327ea2115b1a3ea010d6ddfb75f0935600b7-libbluray-a24f4fad4d62893de647abc8671397747b2359dd.tar.gz",
       "sha256": "f596c2ede4131fa4471bb292c28c327ea2115b1a3ea010d6ddfb75f0935600b7",
       "group": "ffmpeg",
       "version": "a24f4fad4d62893de647abc8671397747b2359dd",
@@ -1219,6 +1241,7 @@
     {
       "name": "ffmpeg-libcurl",
       "url": "https://codeload.github.com/curl/curl/zip/4c67658f953751de9e66bb5f9729af821a641341",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/b64a09e6309c9cee0b2ceb65e28c7d921a8c2de38b795e53cc5d73ea1de7f81a-4c67658f953751de9e66bb5f9729af821a641341",
       "sha256": "b64a09e6309c9cee0b2ceb65e28c7d921a8c2de38b795e53cc5d73ea1de7f81a",
       "license": "curl",
       "group": "ffmpeg",
@@ -1229,6 +1252,7 @@
     {
       "name": "ffmpeg-libffi",
       "url": "https://codeload.github.com/libffi/libffi/zip/bc553867367246d140cd156f060bd0409f57f157",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/5dda25077a379cb6adfab04f3632d005dd0c2e0455e2beb201daa644338db894-bc553867367246d140cd156f060bd0409f57f157",
       "sha256": "5dda25077a379cb6adfab04f3632d005dd0c2e0455e2beb201daa644338db894",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1239,6 +1263,7 @@
     {
       "name": "ffmpeg-libiconv",
       "url": "https://codeload.github.com/arthenica/libiconv/zip/1df3087ba8110c7f3ed3eb5f8869b814dbbe00b0",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/41dcd434c1477017ac7df390248bdef46cf907fd24594cbf2ae02748522806ec-1df3087ba8110c7f3ed3eb5f8869b814dbbe00b0",
       "sha256": "41dcd434c1477017ac7df390248bdef46cf907fd24594cbf2ae02748522806ec",
       "license": "LGPL-2.1-or-later",
       "group": "ffmpeg",
@@ -1249,6 +1274,7 @@
     {
       "name": "ffmpeg-libjxl",
       "url": "https://codeload.github.com/libjxl/libjxl/zip/b87738951c1254cd8cccaa6d47712ba735da56d8",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/1029523923898854ab9adaf86e8191d096ef1357bf2d5879f5319c7115d684de-b87738951c1254cd8cccaa6d47712ba735da56d8",
       "sha256": "1029523923898854ab9adaf86e8191d096ef1357bf2d5879f5319c7115d684de",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1269,6 +1295,7 @@
     {
       "name": "ffmpeg-libogg",
       "url": "https://codeload.github.com/xiph/ogg/zip/06a5e0262cdc28aa4ae6797627a783b5010440f0",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/985b8ec736d249efa1a3afb80c0bb62dc3777d516b29d1c061d10a791450c771-06a5e0262cdc28aa4ae6797627a783b5010440f0",
       "sha256": "985b8ec736d249efa1a3afb80c0bb62dc3777d516b29d1c061d10a791450c771",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1279,6 +1306,7 @@
     {
       "name": "ffmpeg-libopus",
       "url": "https://codeload.github.com/xiph/opus/zip/503d81b138d76621aae4b12786e90de48aa8db3a",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/c76d878cab5e90db5594fa68b08fbdd2bd357177aafa896679c12b416e12dc7c-503d81b138d76621aae4b12786e90de48aa8db3a",
       "sha256": "c76d878cab5e90db5594fa68b08fbdd2bd357177aafa896679c12b416e12dc7c",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1289,6 +1317,7 @@
     {
       "name": "ffmpeg-libplacebo",
       "url": "https://codeload.github.com/haasn/libplacebo/zip/1937beef3a2f508266c68efea1491e3fc4600e04",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/640665e0c2108f8c550556ed10caa2bdace01e07ebdf37e38c694cb2fc8c9dfc-1937beef3a2f508266c68efea1491e3fc4600e04",
       "sha256": "640665e0c2108f8c550556ed10caa2bdace01e07ebdf37e38c694cb2fc8c9dfc",
       "license": "LGPL-2.1-or-later",
       "group": "ffmpeg",
@@ -1299,6 +1328,7 @@
     {
       "name": "ffmpeg-libpng",
       "url": "https://codeload.github.com/glennrp/libpng/zip/964b4135949703b705fc760fc3fb546b86e5ab47",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/26200c21a47e5dec3b04021092a07f442e54a118c155c10c931dbaad4051edbd-964b4135949703b705fc760fc3fb546b86e5ab47",
       "sha256": "26200c21a47e5dec3b04021092a07f442e54a118c155c10c931dbaad4051edbd",
       "license": "Libpng",
       "group": "ffmpeg",
@@ -1309,6 +1339,7 @@
     {
       "name": "ffmpeg-libpsl",
       "url": "https://codeload.github.com/rockdaboot/libpsl/zip/a629c831d09011f76974d931be7f6167be90673e",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/f42aff102d7aa143adb2f8bdf97e993325d52d0cffa0d87bac8e9c25b94ade27-a629c831d09011f76974d931be7f6167be90673e",
       "sha256": "f42aff102d7aa143adb2f8bdf97e993325d52d0cffa0d87bac8e9c25b94ade27",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1321,6 +1352,7 @@
       "license": "BSD-2-Clause",
       "recipe": "50-librist/50-librist.sh",
       "url": "https://code.videolan.org/rist/librist/-/archive/4f45ef8f78983892d52ccd52d9f675435b23738f/librist-4f45ef8f78983892d52ccd52d9f675435b23738f.tar.gz",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/391c2fbb081445a3260cccf97a083bd95a4ece6d7241d219ec5aec80582f5b0a-librist-4f45ef8f78983892d52ccd52d9f675435b23738f.tar.gz",
       "sha256": "391c2fbb081445a3260cccf97a083bd95a4ece6d7241d219ec5aec80582f5b0a",
       "group": "ffmpeg",
       "version": "4f45ef8f78983892d52ccd52d9f675435b23738f",
@@ -1329,6 +1361,7 @@
     {
       "name": "ffmpeg-librsvg",
       "url": "https://codeload.github.com/GNOME/librsvg/zip/7612431eb02dc009319094f8513d63c1faaecfb4",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/28fd4262390b8f30309dde3646ec2c4de95ad2ccb325e545a666927a9cd6662d-7612431eb02dc009319094f8513d63c1faaecfb4",
       "sha256": "28fd4262390b8f30309dde3646ec2c4de95ad2ccb325e545a666927a9cd6662d",
       "license": "LGPL-2.1-or-later",
       "group": "ffmpeg",
@@ -1339,6 +1372,7 @@
     {
       "name": "ffmpeg-libssh",
       "url": "https://codeload.github.com/libssh/libssh-mirror/zip/76e0a8639e61436c28d877586f65a7707edc6ee5",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/2c6800bdb39950231ef9e96008952723ecd416b3642fb50234e317b286396e20-76e0a8639e61436c28d877586f65a7707edc6ee5",
       "sha256": "2c6800bdb39950231ef9e96008952723ecd416b3642fb50234e317b286396e20",
       "license": "LGPL-2.1-or-later",
       "group": "ffmpeg",
@@ -1349,6 +1383,7 @@
     {
       "name": "ffmpeg-libtheora",
       "url": "https://codeload.github.com/xiph/theora/zip/28fd5ec77f0ad0e07a371cef1047828116f6bd8a",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/02791717c167ecaac428c8f74d2e2b8e147ffa9369afb2bd00ad98b05b8a0d80-28fd5ec77f0ad0e07a371cef1047828116f6bd8a",
       "sha256": "02791717c167ecaac428c8f74d2e2b8e147ffa9369afb2bd00ad98b05b8a0d80",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1361,6 +1396,7 @@
       "license": "LGPL-2.1-or-later",
       "recipe": "45-libudfread.sh",
       "url": "https://code.videolan.org/videolan/libudfread/-/archive/b0bc6957e7e07d5f35391f210596d9eb71cffdd9/libudfread-b0bc6957e7e07d5f35391f210596d9eb71cffdd9.tar.gz",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/c04bb96b72dd0760030d880ad6c9ea2ae80abbdd648de127adb1b2e8555186aa-libudfread-b0bc6957e7e07d5f35391f210596d9eb71cffdd9.tar.gz",
       "sha256": "c04bb96b72dd0760030d880ad6c9ea2ae80abbdd648de127adb1b2e8555186aa",
       "group": "ffmpeg",
       "version": "b0bc6957e7e07d5f35391f210596d9eb71cffdd9",
@@ -1369,6 +1405,7 @@
     {
       "name": "ffmpeg-libunibreak",
       "url": "https://codeload.github.com/adah1972/libunibreak/zip/28a2756b864c343f438cd22537d49d394d4666a5",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/376d7ccd3b686c1b88c05ccd609b1ba40a410ff9fe44492e318c3331448b0005-28a2756b864c343f438cd22537d49d394d4666a5",
       "sha256": "376d7ccd3b686c1b88c05ccd609b1ba40a410ff9fe44492e318c3331448b0005",
       "license": "Zlib",
       "group": "ffmpeg",
@@ -1379,6 +1416,7 @@
     {
       "name": "ffmpeg-libvorbis",
       "url": "https://codeload.github.com/xiph/vorbis/zip/1b75110b5a2754ba1931d82dd83cb822b266a21d",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/cc2b170eff8bc1a389930292f5869b97c53314fdd6c80d9b95827fc26ef17eee-1b75110b5a2754ba1931d82dd83cb822b266a21d",
       "sha256": "cc2b170eff8bc1a389930292f5869b97c53314fdd6c80d9b95827fc26ef17eee",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1389,6 +1427,7 @@
     {
       "name": "ffmpeg-libvpx",
       "url": "https://codeload.github.com/webmproject/libvpx/zip/5e680f30801d03c21078f8c4b772464752516211",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/825b4a2168636e171d19ffd6030fc23de8291242985c25a14940a943411689a2-5e680f30801d03c21078f8c4b772464752516211",
       "sha256": "825b4a2168636e171d19ffd6030fc23de8291242985c25a14940a943411689a2",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1399,6 +1438,7 @@
     {
       "name": "ffmpeg-libwebp",
       "url": "https://codeload.github.com/webmproject/libwebp/zip/5c168cd23b1872969c38e34b01b04dcf29849288",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/1970e913054625395ee34f2e24984a4743231ee35cfb41a77708fc9d1238f4cb-5c168cd23b1872969c38e34b01b04dcf29849288",
       "sha256": "1970e913054625395ee34f2e24984a4743231ee35cfb41a77708fc9d1238f4cb",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1409,6 +1449,7 @@
     {
       "name": "ffmpeg-libxml2",
       "url": "https://codeload.github.com/GNOME/libxml2/zip/91586dc6742ab335682235120363f6e126eea5e2",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/1d38e775172f50c3f1c873af38a9a8dfa7b727db97010f72589e3f12fd1d678b-91586dc6742ab335682235120363f6e126eea5e2",
       "sha256": "1d38e775172f50c3f1c873af38a9a8dfa7b727db97010f72589e3f12fd1d678b",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1419,6 +1460,7 @@
     {
       "name": "ffmpeg-libzmq",
       "url": "https://codeload.github.com/zeromq/libzmq/zip/46493370217ac135246617fa2f6ac819d8b61bfc",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/6028371f1c3033dcb5d46f8b06915cb3e05b1196e90cadccc45d5eb5055242c6-46493370217ac135246617fa2f6ac819d8b61bfc",
       "sha256": "6028371f1c3033dcb5d46f8b06915cb3e05b1196e90cadccc45d5eb5055242c6",
       "license": "MPL-2.0",
       "group": "ffmpeg",
@@ -1429,6 +1471,7 @@
     {
       "name": "ffmpeg-lilv",
       "url": "https://codeload.github.com/lv2/lilv/zip/4b8f30055fa5cb4134a2eb45fc1555bc04289314",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/912a9b9e22021ff2b0b03b72fdd435fea665233002a4424e2e65efd545fdecdd-4b8f30055fa5cb4134a2eb45fc1555bc04289314",
       "sha256": "912a9b9e22021ff2b0b03b72fdd435fea665233002a4424e2e65efd545fdecdd",
       "license": "ISC",
       "group": "ffmpeg",
@@ -1439,6 +1482,7 @@
     {
       "name": "ffmpeg-lv2",
       "url": "https://codeload.github.com/lv2/lv2/zip/3c57dae600a5ad8d05acd53ee3490f7d91cb7be6",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/342416d36c743a1fe5c469550a6fa71cc28cebd161b16415fc3273fc57e42261-3c57dae600a5ad8d05acd53ee3490f7d91cb7be6",
       "sha256": "342416d36c743a1fe5c469550a6fa71cc28cebd161b16415fc3273fc57e42261",
       "license": "ISC",
       "group": "ffmpeg",
@@ -1449,6 +1493,7 @@
     {
       "name": "ffmpeg-mbedtls",
       "url": "https://codeload.github.com/ARMmbed/mbedtls/zip/v4.2.0",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/5dcdf4ce12a00ba6e278378708d7d35f9166a77b10257881b754468e13fa44c5-v4.2.0",
       "sha256": "5dcdf4ce12a00ba6e278378708d7d35f9166a77b10257881b754468e13fa44c5",
       "license": "Apache-2.0",
       "group": "ffmpeg",
@@ -1459,6 +1504,7 @@
     {
       "name": "ffmpeg-mingw",
       "url": "https://codeload.github.com/mingw-w64/mingw-w64/zip/57b595039040eaa15bece85b7cc71d952281b269",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/a951cf5fab050aee27333a77777c65bb2eb61a94e9733e09af04da34cafbdd9d-57b595039040eaa15bece85b7cc71d952281b269",
       "sha256": "a951cf5fab050aee27333a77777c65bb2eb61a94e9733e09af04da34cafbdd9d",
       "license": "ZPL-2.1",
       "group": "ffmpeg",
@@ -1469,6 +1515,7 @@
     {
       "name": "ffmpeg-mingw-std-threads",
       "url": "https://codeload.github.com/meganz/mingw-std-threads/zip/c931bac289dd431f1dd30fc4a5d1a7be36668073",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/2297e98c5ea445650490a636397594bc8781eb92fecf344df2b0400e9beac815-c931bac289dd431f1dd30fc4a5d1a7be36668073",
       "sha256": "2297e98c5ea445650490a636397594bc8781eb92fecf344df2b0400e9beac815",
       "license": "BSD-2-Clause",
       "group": "ffmpeg",
@@ -1479,6 +1526,7 @@
     {
       "name": "ffmpeg-nghttp2",
       "url": "https://codeload.github.com/nghttp2/nghttp2/zip/19d06e62185d93d2398d85241cdbb460349bfe44",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/7b16f03fca134e4853891cb07005c1a2200037ee0f9ac08c3620197fd30f85d5-19d06e62185d93d2398d85241cdbb460349bfe44",
       "sha256": "7b16f03fca134e4853891cb07005c1a2200037ee0f9ac08c3620197fd30f85d5",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1489,6 +1537,7 @@
     {
       "name": "ffmpeg-nghttp3",
       "url": "https://codeload.github.com/ngtcp2/nghttp3/zip/2304973e5a0c8b1fa4bb380b47945a000357f87f",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/ed4605308042ec66e9b7650c42244aa359c70e3c4d93dde1e35798718472f081-2304973e5a0c8b1fa4bb380b47945a000357f87f",
       "sha256": "ed4605308042ec66e9b7650c42244aa359c70e3c4d93dde1e35798718472f081",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1499,6 +1548,7 @@
     {
       "name": "ffmpeg-ngtcp2",
       "url": "https://codeload.github.com/ngtcp2/ngtcp2/zip/a4925d70647b75286b28c37be260de3729c2de3d",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/5872ce3d331113cafcf39f72b1baa7dd7805b379710996d54ec1124ca435af9f-a4925d70647b75286b28c37be260de3729c2de3d",
       "sha256": "5872ce3d331113cafcf39f72b1baa7dd7805b379710996d54ec1124ca435af9f",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1509,6 +1559,7 @@
     {
       "name": "ffmpeg-onevpl",
       "url": "https://codeload.github.com/intel/libvpl/zip/674d015bcb294bc39fa276e99a652ea045423e82",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/874daaef5cb7d8b18b6a48fe7b2b8022419aacd198a14d254ede8f3b34491d5c-674d015bcb294bc39fa276e99a652ea045423e82",
       "sha256": "874daaef5cb7d8b18b6a48fe7b2b8022419aacd198a14d254ede8f3b34491d5c",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1519,6 +1570,7 @@
     {
       "name": "ffmpeg-openal",
       "url": "https://codeload.github.com/kcat/openal-soft/zip/c89b8cf7bba4822f230c69f0a6696a52e5322dca",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/3ddba407825f932d6953359d036dce3c36928072e6f02b09e3f166f249ff9bea-c89b8cf7bba4822f230c69f0a6696a52e5322dca",
       "sha256": "3ddba407825f932d6953359d036dce3c36928072e6f02b09e3f166f249ff9bea",
       "license": "LGPL-2.0-or-later",
       "group": "ffmpeg",
@@ -1529,6 +1581,7 @@
     {
       "name": "ffmpeg-openapv",
       "url": "https://codeload.github.com/AcademySoftwareFoundation/openapv/zip/a58ce739be0dfb083643d929aee8f0e0ba9bdf63",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/933eccd9fa503872b574188abdc4cafd7743e86e84a8db84a8ecded2823e5f87-a58ce739be0dfb083643d929aee8f0e0ba9bdf63",
       "sha256": "933eccd9fa503872b574188abdc4cafd7743e86e84a8db84a8ecded2823e5f87",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1539,6 +1592,7 @@
     {
       "name": "ffmpeg-opencl",
       "url": "https://codeload.github.com/KhronosGroup/OpenCL-Headers/zip/e6060189f4ebe8b52d885c37af71b9a50c272154",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/51b8ec2ed1a105e2eb77cfc322a69934704a60d1783224a52b31d29d0839469e-e6060189f4ebe8b52d885c37af71b9a50c272154",
       "sha256": "51b8ec2ed1a105e2eb77cfc322a69934704a60d1783224a52b31d29d0839469e",
       "license": "Apache-2.0",
       "group": "ffmpeg",
@@ -1559,6 +1613,7 @@
     {
       "name": "ffmpeg-openh264",
       "url": "https://codeload.github.com/cisco/openh264/zip/8b2d28faade10d74d99ac80e199aef664c9c5a3b",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/b04b01ccb4c7c7fe3b8bfe358366c83e1d7f56c97eb637686ca5c84504f9c1d6-8b2d28faade10d74d99ac80e199aef664c9c5a3b",
       "sha256": "b04b01ccb4c7c7fe3b8bfe358366c83e1d7f56c97eb637686ca5c84504f9c1d6",
       "license": "BSD-2-Clause",
       "group": "ffmpeg",
@@ -1569,6 +1624,7 @@
     {
       "name": "ffmpeg-openjpeg",
       "url": "https://codeload.github.com/uclouvain/openjpeg/zip/8314119b067c0fc77834731168daaebd379fdb12",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/3d83091b3e410b2c55d11c1a92533aaaee701818723f7fffa2d966d081fbb425-8314119b067c0fc77834731168daaebd379fdb12",
       "sha256": "3d83091b3e410b2c55d11c1a92533aaaee701818723f7fffa2d966d081fbb425",
       "license": "BSD-2-Clause",
       "group": "ffmpeg",
@@ -1579,6 +1635,7 @@
     {
       "name": "ffmpeg-openmpt",
       "url": "https://codeload.github.com/OpenMPT/openmpt/zip/f83cedb0cd5446e4dfaa83ac97e3087107e26767",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/281ad635e2fb3ba1568df862122d371e9069c58d73e0b10d0c9591c5b44c04c7-f83cedb0cd5446e4dfaa83ac97e3087107e26767",
       "sha256": "281ad635e2fb3ba1568df862122d371e9069c58d73e0b10d0c9591c5b44c04c7",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1589,6 +1646,7 @@
     {
       "name": "ffmpeg-pango",
       "url": "https://codeload.github.com/GNOME/pango/zip/8e74c27c113c98664b77272d16b14bbce542c184",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/5ca7c4e9d3751804a87370df31e4382988938e2e8c0aa9a32a309040ba3f28d9-8e74c27c113c98664b77272d16b14bbce542c184",
       "sha256": "5ca7c4e9d3751804a87370df31e4382988938e2e8c0aa9a32a309040ba3f28d9",
       "license": "LGPL-2.1-or-later",
       "group": "ffmpeg",
@@ -1599,6 +1657,7 @@
     {
       "name": "ffmpeg-pcre2",
       "url": "https://codeload.github.com/PCRE2Project/pcre2/zip/09eb19dc1102b34e7557408f33318364cb97d2b0",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/1ce919dcf9ea67d4010bb81498c2dc025248c4bcf50429f6793334ff8c9329b7-09eb19dc1102b34e7557408f33318364cb97d2b0",
       "sha256": "1ce919dcf9ea67d4010bb81498c2dc025248c4bcf50429f6793334ff8c9329b7",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1611,6 +1670,7 @@
       "license": "MIT",
       "recipe": "45-pixman.sh",
       "url": "https://gitlab.freedesktop.org/pixman/pixman/-/archive/96c04d1b87934dc4b9396197a2dff737698ab310/pixman-96c04d1b87934dc4b9396197a2dff737698ab310.tar.gz",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/1ce8b9e9a51eab8b57dfe12549e6439f7a8f2b49b01185dbebd762be5271db79-pixman-96c04d1b87934dc4b9396197a2dff737698ab310.tar.gz",
       "sha256": "1ce8b9e9a51eab8b57dfe12549e6439f7a8f2b49b01185dbebd762be5271db79",
       "group": "ffmpeg",
       "version": "96c04d1b87934dc4b9396197a2dff737698ab310",
@@ -1619,6 +1679,7 @@
     {
       "name": "ffmpeg-rav1e",
       "url": "https://codeload.github.com/xiph/rav1e/zip/31435de9d76fddd38f6dcc31d4014574cebb2092",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/d0b7ec4559527492a8513bb663d2301b4cbaa371f0c0047fa66e0525c0a16ea8-31435de9d76fddd38f6dcc31d4014574cebb2092",
       "sha256": "d0b7ec4559527492a8513bb663d2301b4cbaa371f0c0047fa66e0525c0a16ea8",
       "license": "BSD-2-Clause",
       "group": "ffmpeg",
@@ -1629,6 +1690,7 @@
     {
       "name": "ffmpeg-recipe",
       "url": "https://codeload.github.com/BtbN/FFmpeg-Builds/zip/937868360a21d711ec94a33f5591d345ad9b7754",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/3d782f1b71b4f6cef89c9e0014176542d071b1dfbf5de41b9f96aac6a442b1af-937868360a21d711ec94a33f5591d345ad9b7754",
       "sha256": "3d782f1b71b4f6cef89c9e0014176542d071b1dfbf5de41b9f96aac6a442b1af",
       "license": "MIT",
       "group": "recipe",
@@ -1638,6 +1700,7 @@
     {
       "name": "ffmpeg-sdl",
       "url": "https://codeload.github.com/libsdl-org/SDL/zip/b90ac95029d801c5abc59472ba8e2200dff31e1e",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/f47fb60f1a7e3132e7d20930900b158488d1f1debca97fa6e03309e238c6acd6-b90ac95029d801c5abc59472ba8e2200dff31e1e",
       "sha256": "f47fb60f1a7e3132e7d20930900b158488d1f1debca97fa6e03309e238c6acd6",
       "license": "Zlib",
       "group": "ffmpeg",
@@ -1648,6 +1711,7 @@
     {
       "name": "ffmpeg-serd",
       "url": "https://codeload.github.com/drobilla/serd/zip/b6053bb2a4533e6a8e3821c1061f140d5e666938",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/76a65963f8f0a2f2042fc74c30bbac9ba4de609032236cd7bec4b4dbeb31f262-b6053bb2a4533e6a8e3821c1061f140d5e666938",
       "sha256": "76a65963f8f0a2f2042fc74c30bbac9ba4de609032236cd7bec4b4dbeb31f262",
       "license": "ISC",
       "group": "ffmpeg",
@@ -1658,6 +1722,7 @@
     {
       "name": "ffmpeg-shaderc",
       "url": "https://codeload.github.com/google/shaderc/zip/a8abeb0b8a9d4b11e3d59ca9f4550b8213e733ab",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/4baf200246f6692ca25ee5119c1445d8d2bb2b42d0aab6f3ded11338c15a6d49-a8abeb0b8a9d4b11e3d59ca9f4550b8213e733ab",
       "sha256": "4baf200246f6692ca25ee5119c1445d8d2bb2b42d0aab6f3ded11338c15a6d49",
       "license": "Apache-2.0",
       "group": "ffmpeg",
@@ -1668,6 +1733,7 @@
     {
       "name": "ffmpeg-snappy",
       "url": "https://codeload.github.com/google/snappy/zip/9c28114a38866f6deeaa826db918293bc28ae410",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/7419f9dccfb737c8865f26bd45a1b2f032574fb83b9a05ed2d20cca3e23be8a8-9c28114a38866f6deeaa826db918293bc28ae410",
       "sha256": "7419f9dccfb737c8865f26bd45a1b2f032574fb83b9a05ed2d20cca3e23be8a8",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1678,6 +1744,7 @@
     {
       "name": "ffmpeg-sord",
       "url": "https://codeload.github.com/drobilla/sord/zip/4b5232bb91e7f2f1b84df384494d073fabbcd312",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/8693f67ac2bc040a7792ba300d4e0412aee7fb85d7933d5e7be571d4b10f6b16-4b5232bb91e7f2f1b84df384494d073fabbcd312",
       "sha256": "8693f67ac2bc040a7792ba300d4e0412aee7fb85d7933d5e7be571d4b10f6b16",
       "license": "ISC",
       "group": "ffmpeg",
@@ -1688,6 +1755,7 @@
     {
       "name": "ffmpeg-source",
       "url": "https://codeload.github.com/FFmpeg/FFmpeg/zip/92611900bb112123e9bf997fdcc2d78e4c4922fc",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/e5c6103f465827a934612d4ac5c823c98411c62f1c2b9a37edeb49e39f405ab3-92611900bb112123e9bf997fdcc2d78e4c4922fc",
       "sha256": "e5c6103f465827a934612d4ac5c823c98411c62f1c2b9a37edeb49e39f405ab3",
       "license": "LGPL-3.0-or-later",
       "group": "ffmpeg",
@@ -1697,6 +1765,7 @@
     {
       "name": "ffmpeg-soxr",
       "url": "https://codeload.github.com/chirlu/soxr/zip/945b592b70470e29f917f4de89b4281fbbd540c0",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/c3a73976077cdb7cd87325b449bb31296b377358ef00b41b91cc3623374356e2-945b592b70470e29f917f4de89b4281fbbd540c0",
       "sha256": "c3a73976077cdb7cd87325b449bb31296b377358ef00b41b91cc3623374356e2",
       "license": "LGPL-2.1-or-later",
       "group": "ffmpeg",
@@ -1707,6 +1776,7 @@
     {
       "name": "ffmpeg-spirv-cross",
       "url": "https://codeload.github.com/KhronosGroup/SPIRV-Cross/zip/aa217aeb6c9f0ace7a0ab233b28807edf45eb165",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/3ba07cb2514d0837c1fc3545a777c362e5b17b13dee450f1e2a357bc0de88334-aa217aeb6c9f0ace7a0ab233b28807edf45eb165",
       "sha256": "3ba07cb2514d0837c1fc3545a777c362e5b17b13dee450f1e2a357bc0de88334",
       "license": "Apache-2.0",
       "group": "ffmpeg",
@@ -1717,6 +1787,7 @@
     {
       "name": "ffmpeg-spirv-headers",
       "url": "https://codeload.github.com/KhronosGroup/SPIRV-Headers/zip/2b7475f6d664efbad4d4315c94ecec9640831e5b",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/b89d5ce7cc6791de0b359b351e6fd7e6d1135bc3e0c5a5ee465248b7a2270a10-2b7475f6d664efbad4d4315c94ecec9640831e5b",
       "sha256": "b89d5ce7cc6791de0b359b351e6fd7e6d1135bc3e0c5a5ee465248b7a2270a10",
       "license": "MIT",
       "group": "ffmpeg",
@@ -1727,6 +1798,7 @@
     {
       "name": "ffmpeg-sratom",
       "url": "https://codeload.github.com/lv2/sratom/zip/9e8ee84eed502e6030ce8bb49694fd28542b08fc",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/6720b78750047fa98abf3da82c44684d84a80a8e002a1ebe0079abc01c6695d7-9e8ee84eed502e6030ce8bb49694fd28542b08fc",
       "sha256": "6720b78750047fa98abf3da82c44684d84a80a8e002a1ebe0079abc01c6695d7",
       "license": "ISC",
       "group": "ffmpeg",
@@ -1737,6 +1809,7 @@
     {
       "name": "ffmpeg-srt",
       "url": "https://codeload.github.com/Haivision/srt/zip/ff8ab25c57aece5b7351defe36dacc94fc28527f",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/f8b2b573c2604ff947181a7a7943271e59ea0ff5201b1b431787970e9c764dad-ff8ab25c57aece5b7351defe36dacc94fc28527f",
       "sha256": "f8b2b573c2604ff947181a7a7943271e59ea0ff5201b1b431787970e9c764dad",
       "license": "MPL-2.0",
       "group": "ffmpeg",
@@ -1747,6 +1820,7 @@
     {
       "name": "ffmpeg-svtav1",
       "url": "https://codeload.github.com/AOMediaCodec/SVT-AV1/zip/5ed9ffbcb5086da23f30fe9bc5b00145358462da",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/6733667cab2b89006abbbab16186a7a219abedb68d94510bf818563347e3f736-5ed9ffbcb5086da23f30fe9bc5b00145358462da",
       "sha256": "6733667cab2b89006abbbab16186a7a219abedb68d94510bf818563347e3f736",
       "license": "BSD-3-Clause-Clear",
       "group": "ffmpeg",
@@ -1757,6 +1831,7 @@
     {
       "name": "ffmpeg-twolame",
       "url": "https://codeload.github.com/njh/twolame/zip/6fced852d4d5cfad58cf9dbe3ea619b08e87d398",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/d8a8e1576711e79f2527230b81844c4b9cc990d4b4b788c6dbfca2c4f557d0ac-6fced852d4d5cfad58cf9dbe3ea619b08e87d398",
       "sha256": "d8a8e1576711e79f2527230b81844c4b9cc990d4b4b788c6dbfca2c4f557d0ac",
       "license": "LGPL-2.1-or-later",
       "group": "ffmpeg",
@@ -1767,6 +1842,7 @@
     {
       "name": "ffmpeg-uavs3d",
       "url": "https://codeload.github.com/uavs3/uavs3d/zip/0e20d2c291853f196c68922a264bcd8471d75b68",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/ffb1b483c3bc8cfd74b1020f42727ee6692cae0659b1397ec9062b6054d24184-0e20d2c291853f196c68922a264bcd8471d75b68",
       "sha256": "ffb1b483c3bc8cfd74b1020f42727ee6692cae0659b1397ec9062b6054d24184",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1777,6 +1853,7 @@
     {
       "name": "ffmpeg-vapoursynth",
       "url": "https://codeload.github.com/vapoursynth/vapoursynth/zip/R80",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/272518124c1967ccb7dac2437a61fc13f10c1aa2593dd8223cad8e50fd5dca9a-R80",
       "sha256": "272518124c1967ccb7dac2437a61fc13f10c1aa2593dd8223cad8e50fd5dca9a",
       "license": "LGPL-2.1-or-later",
       "group": "ffmpeg",
@@ -1787,6 +1864,7 @@
     {
       "name": "ffmpeg-vmaf",
       "url": "https://codeload.github.com/Netflix/vmaf/zip/86da14d0306a138fd3f01319860b905169746516",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/db4d65e144fa3d3da6317457dd639ad6a91dccd3d33216d80ae1a78dd90ec847-86da14d0306a138fd3f01319860b905169746516",
       "sha256": "db4d65e144fa3d3da6317457dd639ad6a91dccd3d33216d80ae1a78dd90ec847",
       "license": "BSD-2-Clause-Patent",
       "group": "ffmpeg",
@@ -1797,6 +1875,7 @@
     {
       "name": "ffmpeg-vulkan-headers",
       "url": "https://codeload.github.com/KhronosGroup/Vulkan-Headers/zip/v1.4.363",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/112c94f35e6ff2f85d4b92b50d0611883a6467dab202a2547312defb87351c16-v1.4.363",
       "sha256": "112c94f35e6ff2f85d4b92b50d0611883a6467dab202a2547312defb87351c16",
       "license": "Apache-2.0",
       "group": "ffmpeg",
@@ -1807,6 +1886,7 @@
     {
       "name": "ffmpeg-vulkan-loader",
       "url": "https://codeload.github.com/BtbN/Vulkan-Shim-Loader/zip/65b3936528cd92eb4ea3de485d03f858a3850484",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/9d18a772fe9e2c8e209f9414b80c9138a262dbe7e13c2f880b1556c5cb45385d-65b3936528cd92eb4ea3de485d03f858a3850484",
       "sha256": "9d18a772fe9e2c8e209f9414b80c9138a262dbe7e13c2f880b1556c5cb45385d",
       "license": "Apache-2.0",
       "group": "ffmpeg",
@@ -1817,6 +1897,7 @@
     {
       "name": "ffmpeg-vvenc",
       "url": "https://codeload.github.com/fraunhoferhhi/vvenc/zip/b1cfb2ad495af6ae4cc214b7a060e8b4166c4629",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/5c2b175d623feb3b8a4925913b2c8442e52ab7140c270f754adcfaac1ca8cf07-b1cfb2ad495af6ae4cc214b7a060e8b4166c4629",
       "sha256": "5c2b175d623feb3b8a4925913b2c8442e52ab7140c270f754adcfaac1ca8cf07",
       "license": "BSD-3-Clause-Clear",
       "group": "ffmpeg",
@@ -1827,6 +1908,7 @@
     {
       "name": "ffmpeg-xxhash",
       "url": "https://codeload.github.com/Cyan4973/xxHash/zip/680bf463fa1ca0461b9a7c2dab7556e1f54cf4cf",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/2c495ce972cb11510186fcd0f15740be26f8c75b476f82dee2c26e473c220b09-680bf463fa1ca0461b9a7c2dab7556e1f54cf4cf",
       "sha256": "2c495ce972cb11510186fcd0f15740be26f8c75b476f82dee2c26e473c220b09",
       "license": "BSD-2-Clause",
       "group": "ffmpeg",
@@ -1837,6 +1919,7 @@
     {
       "name": "ffmpeg-xz",
       "url": "https://codeload.github.com/tukaani-project/xz/zip/3b1efb04d17c3a9ef7f473d73af13f1531428ffe",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/65a4c7b107c287c19afcb9b54b2187f4ecf992bff33609eef3896479162fbb0b-3b1efb04d17c3a9ef7f473d73af13f1531428ffe",
       "sha256": "65a4c7b107c287c19afcb9b54b2187f4ecf992bff33609eef3896479162fbb0b",
       "license": "0BSD",
       "group": "ffmpeg",
@@ -1847,6 +1930,7 @@
     {
       "name": "ffmpeg-zimg",
       "url": "https://codeload.github.com/sekrit-twc/zimg/zip/67e0603271c080e22c8429856dd4a8a56587e61e",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/10762074a1ce6ed97873c93ca507b81784243d1157b4407be83218b781bac017-67e0603271c080e22c8429856dd4a8a56587e61e",
       "sha256": "10762074a1ce6ed97873c93ca507b81784243d1157b4407be83218b781bac017",
       "license": "WTFPL",
       "group": "ffmpeg",
@@ -1857,6 +1941,7 @@
     {
       "name": "ffmpeg-zix",
       "url": "https://codeload.github.com/drobilla/zix/zip/17d632393f5addb6fa24dda2927b96515407cca7",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/04cb9ef4c954b0a1d6f5026741fe1d237a7740147c5a51c4a12867971c137cd1-17d632393f5addb6fa24dda2927b96515407cca7",
       "sha256": "04cb9ef4c954b0a1d6f5026741fe1d237a7740147c5a51c4a12867971c137cd1",
       "license": "ISC",
       "group": "ffmpeg",
@@ -1867,6 +1952,7 @@
     {
       "name": "ffmpeg-zlib",
       "url": "https://codeload.github.com/madler/zlib/zip/767c4c947852e143f582c85f14cf573411df1b35",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/7416fc424ed245c961e998e149ffca387c572db63db25a86bf17f81306ed4201-767c4c947852e143f582c85f14cf573411df1b35",
       "sha256": "7416fc424ed245c961e998e149ffca387c572db63db25a86bf17f81306ed4201",
       "license": "Zlib",
       "group": "ffmpeg",
@@ -1877,6 +1963,7 @@
     {
       "name": "ffmpeg-zstd",
       "url": "https://codeload.github.com/facebook/zstd/zip/01b7154f1172432f8abe9b3bb9909e14a1176b7d",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/2aaf456b163c3f61f6f45138cfb7561c8219a1667985762c82f956829ffa3fe8-01b7154f1172432f8abe9b3bb9909e14a1176b7d",
       "sha256": "2aaf456b163c3f61f6f45138cfb7561c8219a1667985762c82f956829ffa3fe8",
       "license": "BSD-3-Clause",
       "group": "ffmpeg",
@@ -1887,6 +1974,7 @@
     {
       "name": "ffmpeg-zvbi",
       "url": "https://codeload.github.com/zapping-vbi/zvbi/zip/d3a5ee9f2b047bf16cd1ee5ccf6ec05ee75409d0",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/e011e3323a4d0ab4e7a650a93231beb8adc816f6eb2203708823e12222dae657-d3a5ee9f2b047bf16cd1ee5ccf6ec05ee75409d0",
       "sha256": "e011e3323a4d0ab4e7a650a93231beb8adc816f6eb2203708823e12222dae657",
       "license": "LGPL-2.0-or-later",
       "group": "ffmpeg",
@@ -1906,6 +1994,7 @@
     {
       "name": "skia-source",
       "url": "https://codeload.github.com/google/skia/zip/95ee33d7ec7791ab9c071675710a14fe6408ae4f",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/87e49bcbf91c894dde7ee52d650b59831eee4c0defb06cf8f63697b4b517cfbd-95ee33d7ec7791ab9c071675710a14fe6408ae4f",
       "sha256": "87e49bcbf91c894dde7ee52d650b59831eee4c0defb06cf8f63697b4b517cfbd",
       "license": "BSD-3-Clause",
       "group": "canvas",
@@ -1976,6 +2065,7 @@
     {
       "name": "python-notices",
       "url": "https://codeload.github.com/python/cpython/zip/v3.12.10",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/156640ce1c4a58de57dc84f5cd1f6d50020edbc26f1e42de95fe8a1b765a3105-v3.12.10",
       "sha256": "156640ce1c4a58de57dc84f5cd1f6d50020edbc26f1e42de95fe8a1b765a3105",
       "version": "3.12.10",
       "license": "PSF-2.0",
@@ -2005,6 +2095,7 @@
     {
       "name": "ffmpeg-gnulib",
       "url": "https://codeload.github.com/coreutils/gnulib/zip/eb72eb6f75f5621c5d648acd11467fd124584617",
+      "mirror": "https://github.com/cutgraph/build-inputs/releases/download/inputs-2026-10-28/5aa9a47050c6a5f02874614f3b60cf1ec0a17fd1433052c7b54ad40cd689cf75-eb72eb6f75f5621c5d648acd11467fd124584617",
       "sha256": "5aa9a47050c6a5f02874614f3b60cf1ec0a17fd1433052c7b54ad40cd689cf75",
       "version": "eb72eb6f75f5621c5d648acd11467fd124584617",
       "license": "LGPL-2.1-or-later AND GPL-3.0-or-later",

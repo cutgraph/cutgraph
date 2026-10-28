@@ -23,7 +23,8 @@ def load_inputs(path: Path) -> dict:
     for item in data["inputs"]:
         if (not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", item["name"])
                 or not re.fullmatch(r"[0-9a-f]{64}", item["sha256"])
-                or not item["url"].startswith("https://")):
+                or not item["url"].startswith("https://")
+                or not str(item.get("mirror", "https://")).startswith("https://")):
             raise ValueError("Source inputs require safe names, HTTPS and SHA-256")
         if item["name"] in names:
             raise ValueError("Duplicate source input")

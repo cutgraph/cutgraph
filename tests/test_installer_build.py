@@ -34,6 +34,45 @@ def test_download_rejects_hash_mismatch(tmp_path, monkeypatch, cached):
     assert not list(tmp_path.glob("*.partial"))
 
 
+def _serve(monkeypatch, responses, seen):
+    def urlopen(request, **_kwargs):
+        seen.append(request.full_url)
+        body = responses[request.full_url]
+        if isinstance(body, Exception):
+            raise body
+        return io.BytesIO(body)
+    monkeypatch.setattr(build.urllib.request, "urlopen", urlopen)
+
+
+def test_download_prefers_the_byte_exact_mirror(tmp_path, monkeypatch):
+    data, seen = b"pinned source", []
+    pin = {"name": "src", "url": "https://upstream.invalid/src.tar.gz", "mirror": "https://mirror.invalid/src.tar.gz",
+           "sha256": hashlib.sha256(data).hexdigest()}
+    _serve(monkeypatch, {pin["mirror"]: data, pin["url"]: b"regenerated"}, seen)
+    assert build.download(pin, tmp_path).read_bytes() == data
+    assert seen == [pin["mirror"]]
+
+
+@pytest.mark.parametrize("mirror", [b"stale mirror", OSError("mirror unavailable")])
+def test_download_falls_back_to_upstream_when_the_mirror_fails(tmp_path, monkeypatch, mirror):
+    data, seen = b"pinned source", []
+    pin = {"name": "src", "url": "https://upstream.invalid/src.tar.gz", "mirror": "https://mirror.invalid/src.tar.gz",
+           "sha256": hashlib.sha256(data).hexdigest()}
+    _serve(monkeypatch, {pin["mirror"]: mirror, pin["url"]: data}, seen)
+    assert build.download(pin, tmp_path).read_bytes() == data
+    assert seen == [pin["mirror"], pin["url"]]
+    assert not list(tmp_path.glob("*.partial"))
+
+
+def test_download_rejects_when_neither_location_matches(tmp_path, monkeypatch):
+    pin = {"name": "src", "url": "https://upstream.invalid/src.tar.gz", "mirror": "https://mirror.invalid/src.tar.gz",
+           "sha256": "0" * 64}
+    _serve(monkeypatch, {pin["mirror"]: b"one", pin["url"]: b"two"}, [])
+    with pytest.raises(ValueError, match="Hash mismatch in downloaded input"):
+        build.download(pin, tmp_path)
+    assert not list(tmp_path.iterdir())
+
+
 def test_download_verifies_then_reuses_cache(tmp_path, monkeypatch):
     data = b"pinned runtime"
     pin = {"name": "runtime", "url": "https://example.invalid/runtime.zip",

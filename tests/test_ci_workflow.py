@@ -200,11 +200,18 @@ def test_linux_goldens_are_recorded_for_review_without_write_access() -> None:
     assert "permissions" not in job
     steps = job["steps"]
     assert [step["name"] for step in steps] == [
-        "Checkout", "Set up Node", "Install motion-core dependencies", "Record goldens",
-        "Verify recordings", "Render contact sheet", "Upload goldens",
+        "Checkout", "Set up Node", "Install verified Linux ffmpeg", "Install motion-core dependencies",
+        "Record goldens", "Verify recordings", "Render contact sheet", "Upload goldens",
     ]
     named = {step["name"]: step for step in steps}
     assert named["Set up Node"]["with"]["node-version-file"] == ".nvmrc"
+    ffmpeg = named["Install verified Linux ffmpeg"]["run"]
+    checks = yaml.load((_ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8"),
+                       Loader=yaml.BaseLoader)["jobs"]["checks"]["steps"]
+    pinned = next(step["run"] for step in checks if step.get("name") == "Install verified Linux ffmpeg")
+    recorded, checked = re.search(r"'([0-9a-f]{64})'", ffmpeg), re.search(r"'([0-9a-f]{64})'", pinned)
+    assert recorded and checked and recorded[1] == checked[1]
+    assert "throw 'ffmpeg archive checksum mismatch'" in ffmpeg
     for name in ("Install motion-core dependencies", "Record goldens", "Verify recordings", "Render contact sheet"):
         assert named[name]["working-directory"] == "motion-core"
     assert named["Install motion-core dependencies"]["run"] == "npm ci"
